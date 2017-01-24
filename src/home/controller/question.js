@@ -9,37 +9,35 @@ export default class extends Base {
      * @return {Promise} []
      */
 
+    async __before() {
+        let user = await this.session('user')
+        // console.log('###### 打印了 ######');
+        this.assign('user', user)
+    }
+
     async findAction() {
         let question = this.model('question')
         let queList = await question.select()
         let user = this.session("userInfo");
         this.assign('queList', queList)
-        this.assign('user', user)
+        // this.assign('user', user)
 
-        return this.display('/')
+        return this.display('index/index')
     }
 
     async addAction() {
-        if (this.isGet()) {
-            return this.display()
-        }
+        let user = this.session('user')
+
         let model = this.model('question')
         let id = this.post('id')
-        let title = this.post('title')
-        let content = this.post('content')
+        let question = this.post()
         //if is old
         if (id) {
-            await model.where({ id: id }).update({
-                title: title,
-                content: content
-            })
+            await model.where({ id: id }).update(question)
             return this.redirect('find')
         }
         //if is new
-        if (await model.add({
-                title: title,
-                content: content
-            })) {
+        if (await model.add(questioin)) {
             // this.findAction()
             this.redirect('find')
         } else {

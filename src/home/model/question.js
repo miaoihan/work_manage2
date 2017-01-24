@@ -19,11 +19,6 @@ export default class extends think.model.base {
                 return null
             }
         },
-        content: { //
-            default: function() { 
-                return null
-            }
-        },
         a_id: { //
             default: function() { 
                 return null

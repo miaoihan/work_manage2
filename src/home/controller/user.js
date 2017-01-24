@@ -64,6 +64,11 @@ export default class extends Base {
         return this.redirect('/')
     }
 
+    async logoutAction() {
+        this.session()
+        this.redirect('login')
+    }
+
     async editAction() {
         let model = this.model('user')
         let user = model.where({ id: this.get('id') }).find()

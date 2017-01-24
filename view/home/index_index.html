@@ -18,11 +18,12 @@
                 <div class="e-t-wrapp">
                     <input type="text" placeholder="请输入标题..." style="border:none;font-size: 20px;
     padding-left: 8px;width: 90%;" name="title">
-                    <button class="btn right" onclick="subme()">提交</button>
+                    <a class="btn right" onclick="subme()">提交</a>
                 </div>
                 <div class="clear"></div>
                 <div id="editormd">
-                    <textarea name="content"> </textarea>
+                    <textarea name="content_html" id="txt_html"></textarea>
+                    <textarea name="content_md" id="txt_md"> </textarea>
                 </div>
             </form>
         </div>
@@ -37,9 +38,10 @@
         <!--导航栏-->
         <nav class="nav-top">
             <div class="nav-wrapper"> <a href="/" class="left brand-logo" style="font-size:22px;">码蜂社</a>
-                <ul id="nav-mobile" class="right">
+                <ul id="nav-mobile" class="right" style="margin-right: 20px">
                     {% if user %}
                     <li>你好，{{user.username}}</li>
+                    <li><a href="/user/logout">登出</a></li>
                     {% else %}
                     <li><a href="/user/login">登录</a></li>
                     <li><a href="/user/register">注册</a></li>
@@ -52,7 +54,12 @@
             <div class="crumbs-wrapper zcard content-20"> <a href="#!" class="">首页</a> / <a href="#!" class="">论坛</a> / <a href="#!" class="active">前端</a> </div>
             <div style="margin-bottom: 15px;">
                 <!-- Modal Trigger -->
-                <a class="modal-trigger waves-effect waves-light btn" href="#modal1">新主题</a> </div>
+                {% if user %}
+                <a class="modal-trigger waves-effect waves-light btn" href="#modal1">新主题</a> 
+                {% else %}
+                <a class="modal-trigger waves-effect waves-light btn" href="/user/login">登陆后发表</a> 
+                {% endif %}
+            </div>
 
             <div class="c-content row">
                 <div class="col m8 s12">
@@ -126,14 +133,7 @@
         <script src="/static/js/materialize.min.js"></script>
         <script src='/static/editor/editormd.min.js'></script>
         <script>
-            $(function() {
-                var testEditor = editormd("editormd", {
-                    width: "90%",
-                    height: 640,
-                    syncScrolling: "single",
-                    path: "/static/editor/lib/"
-                });
-            });
+            
 
             function showModal() {
                 // document.getElementById('editor').style.display = 'block'
@@ -144,17 +144,29 @@
             $(document).ready(function() {
                 // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
                 $('.modal').modal();
-                //md 文本编辑器
+                
+            });
+
+            //md 文本编辑器
+            var testEditor = editormd("editormd", {
+                width: "90%",
+                height: 640,
+                syncScrolling: "single",
+                saveHTMLToTextarea : true,
+                path: "/static/editor/lib/"
             });
 
             function checkForm() {
-
+                return true
             }
 
             function subme() {
-                if (checkForm) {
+                // console.log(testEditor.getHTML());
+                $('#txt_html').val = testEditor.getHTML()
+                $('#txt_md').val = testEditor.getMarkdown()
+                if (checkForm()) {
                     $('#form1').submit(() => {
-                        // alert('提交成功')
+                        // alert(testEditor.getHTML())
                     })
                 }
             }
