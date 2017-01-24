@@ -40,7 +40,7 @@
                         <span>{{question.created_time | parseTime}}</span>
                     </div>
                     <div class="que-content">
-                        {{question.content}}
+                        {{question.content_html | safe}}
                     </div>
                 </div>
                 <div class="ans-text">

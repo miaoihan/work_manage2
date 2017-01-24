@@ -9,10 +9,12 @@ export default class extends Base {
    */
   async indexAction(){
     let question = this.model('question')
-    let queList = await question.select()
+    let queList = await question.order("created_time DESC").select()
+    let newQue = queList.shift()
     let user = await this.session('user')
     this.assign('queList', queList)
     this.assign('user', user)
+    this.assign('newQue', newQue)
     return this.display()
   }
 }

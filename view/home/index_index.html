@@ -22,9 +22,9 @@
                 </div>
                 <div class="clear"></div>
                 <div id="editormd">
-                    <textarea name="content_html" id="txt_html"></textarea>
-                    <textarea name="content_md" id="txt_md"> </textarea>
+                    <textarea name="content_md" id="txt_md"></textarea>
                 </div>
+                <input name="content_html" id="txt_html" type="hidden">
             </form>
         </div>
         <!--
@@ -72,9 +72,11 @@
                             </div>
                             <div class="hot-right col m5 s12">
                                 <div class="h-r-top">
-                                    <h2><a href="./details.html">学习JavaScript</a></h2> <span class="right"><img src="" alt=""></span> </div>
+                                    <h2><a href="./details.html">{{ newQue.title }}</a></h2> <span class="right"><img src="" alt=""></span> </div>
                                 <div class="clear"></div>
-                                <div class="h-r-content"> 如果您已经把我们的 JavaScript 教程学习完毕，并且需要更深入地学习这门语言，那么 w3school 提供的 《JavaScript 高级教程》绝对是您最好的选择。 本教程从 JavaScript 的历史开始讲起。 </div>
+                                <div class="h-r-content">
+                                    {{ newQue.content_html | safe }}
+                                </div>
                             </div>
                         </div>
                         {% for question in queList %}
@@ -84,7 +86,7 @@
                                 <span class="i-t-time right">{{question.created_time | parseTime}}</span>
                             </h2>
                             <div class="clear"></div>
-                            <div class="item-content"> {{question.content}}</div>
+                            <div class="item-content"> {{question.content_html | safe}}</div>
                             <div class="item-meta"> <span>Jason</span> <span>任务</span> <span>116</span> <span>12</span> </div>
                         </div>
                         {% endfor %}
@@ -162,12 +164,11 @@
 
             function subme() {
                 // console.log(testEditor.getHTML());
-                $('#txt_html').val = testEditor.getHTML()
-                $('#txt_md').val = testEditor.getMarkdown()
+                $('#txt_html').val(testEditor.getHTML())
+                $('#txt_md').val(testEditor.getMarkdown())
+                alert($('#txt_html').val());
                 if (checkForm()) {
-                    $('#form1').submit(() => {
-                        // alert(testEditor.getHTML())
-                    })
+                    $('#form1').submit()
                 }
             }
         </script>

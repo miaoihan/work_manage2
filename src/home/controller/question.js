@@ -17,7 +17,7 @@ export default class extends Base {
 
     async findAction() {
         let question = this.model('question')
-        let queList = await question.select()
+        let queList = await question.order("id DESC").select()
         let user = this.session("userInfo");
         this.assign('queList', queList)
         // this.assign('user', user)
@@ -37,7 +37,7 @@ export default class extends Base {
             return this.redirect('find')
         }
         //if is new
-        if (await model.add(questioin)) {
+        if (await model.add(question)) {
             // this.findAction()
             this.redirect('find')
         } else {
