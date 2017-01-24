@@ -17,10 +17,12 @@ export default class extends Base {
 
     async findAction() {
         let question = this.model('question')
-        let queList = await question.order("id DESC").select()
-        let user = this.session("userInfo");
+        let queList = await question.order("created_time DESC").select()
+        let newQue = queList.shift()
+        let user = await this.session('user')
         this.assign('queList', queList)
-        // this.assign('user', user)
+        this.assign('user', user)
+        this.assign('newQue', newQue)
 
         return this.display('index/index')
     }
