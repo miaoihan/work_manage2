@@ -11,7 +11,8 @@ export default class extends Base {
 
     async __before() {
         let user = await this.session('user')
-        // console.log('###### 打印了 ######');
+        // let question = this.model('question')
+        console.log('###### 打印了 ######');
         this.assign('user', user)
     }
 
@@ -19,9 +20,9 @@ export default class extends Base {
         let question = this.model('question')
         let queList = await question.order("created_time DESC").select()
         let newQue = queList.shift()
-        let user = await this.session('user')
+        // let user = await this.session('user')
         this.assign('queList', queList)
-        this.assign('user', user)
+        // this.assign('user', user)
         this.assign('newQue', newQue)
 
         return this.display('index/index')

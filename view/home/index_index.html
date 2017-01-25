@@ -72,14 +72,14 @@
                             </div>
                             <div class="hot-right col m5 s12">
                                 <div class="h-r-top">
-                                    <h2><a href="./details.html">{{ newQue.title }}</a></h2> <span class="right"><img src="" alt=""></span> </div>
+                                    <h2><a href="/question/details?id={{newQue.id}}">{{ newQue.title }}</a></h2> <span class="right"><img src="" alt=""></span> </div>
                                 <div class="clear"></div>
                                 <div class="h-r-content">
                                     {{ newQue.content_html | safe }}
                                 </div>
                             </div>
                         </div>
-                        {% for question in queList %}
+                        {% for question in quePageData.data %}
                         <div class="que-item">
                             <h2 class="item-title">
                                 <a href="/question/details?id={{question.id}}"><span>{{question.title}}</span></a>
@@ -90,18 +90,17 @@
                             <div class="item-meta"> <span>Jason</span> <span>任务</span> <span>116</span> <span>12</span> </div>
                         </div>
                         {% endfor %}
-                        
                     </div>
                     <!-- end list -->
+
+                    <!-- 分页 -->
                     <div style="text-align:center;margin:20px 0;">
                         <ul class="pagination">
-                            <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-                            <li class="active"><a href="#!">1</a></li>
-                            <li class="waves-effect"><a href="#!">2</a></li>
-                            <li class="waves-effect"><a href="#!">3</a></li>
-                            <li class="waves-effect"><a href="#!">4</a></li>
-                            <li class="waves-effect"><a href="#!">5</a></li>
-                            <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                            <li class="waves-effect" id="page_pre"><a href="?page={{quePageData.currentPage-1}}"><i class="material-icons">chevron_left</i></a></li>
+                            {% for i in range(1,quePageData.totalPages+1) %}
+                            <li id="page_{{i}}"><a href="?page={{i}}">{{i}}</a></li>
+                            {% endfor %}
+                            <li class="waves-effect" id="page_next"><a href="?page={{quePageData.currentPage+1}}"><i class="material-icons">chevron_right</i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -147,6 +146,21 @@
                 // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
                 $('.modal').modal();
                 
+                //分页
+                $('#page_{{quePageData.currentPage}}').addClass('active')
+                if({{quePageData.currentPage == 1}})
+                    $('#page_pre').addClass('disabled')
+                if({{quePageData.currentPage == quePageData.totalPages}})
+                    $('#page_next').addClass('disabled')
+
+                $('#page_pre > a').click((e) => {
+                    if({{quePageData.currentPage == 1}})
+                        e.preventDefault()
+                })
+                $('#page_next > a').click((e) => {
+                    if({{quePageData.currentPage == quePageData.totalPages}})
+                        e.preventDefault()
+                })
             });
 
             //md 文本编辑器
