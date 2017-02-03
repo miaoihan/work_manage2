@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Document</title>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="/static/editor/css/editormd.css">
     <link rel="stylesheet" href="/static/css/materialize.min.css">
     <link rel="stylesheet" href="/static/css/style.css">
+    <script src="/static/js/materialize.min.js"></script>
 </head>
 
 <body>
@@ -31,7 +31,7 @@
         <div class="crumbs-wrapper zcard content-20"> <a href="#!" class="">首页</a> / <a href="#!" class="">论坛</a> / <a href="#!" class="active">前端</a>
         </div>
         <div class="row">
-            <div class="col m12 s12">
+            <div class="col m8 s12">
                 <div class="zcard que-dtl">
                     <h2>{{question.title}}</h2>
                     <div class="que-meta">
@@ -44,18 +44,14 @@
                     </div>
                 </div>
                 <div class="ans-text">
-                        {% if user %}
-                        <a class="modal-trigger waves-effect waves-light btn right" type="submit" name="action" 
+                    <form id="form1" action="/answer/answer" method="post">
+                        <input type="hidden" value="{{question.id}}" name="qid">
+                        <textarea name="content" id="" class="zcard" style="height:100px;background:#fff;border:none"></textarea>
+                        <button class="btn waves-effect waves-light right" type="submit" name="action" 
                                 style="background: #ef1255;margin:10px 0 20px;"
-                                href="#modal1">回复
-                        </a>
-                        {% else %}
-                        <a class="btn waves-effect waves-light right" 
-                            href="/user/login" 
-                            style="background: #ef1255;margin:10px 0 20px;"
-                            >登陆后回复
-                        </a>
-                        {% endif %}
+                                onclick="subme">发布
+                        </button>
+                    </form>
                 </div>
                 <div class="clear"></div>
                 <div class="ans-list">
@@ -68,11 +64,11 @@
                         </div>
                         <div class="col s10" style="margin:5px 0 10px -10px;">
                             <div class="meta">
-                                <span>{{user.username}}</span>
+                                <span>steven</span>
                                 <span>{{question.created_time | parseTime}}</span>
                             </div>
                             <div class="ans-content">
-                                {{answer.content_html | safe}}
+                                {{answer.content}}
                             </div>
                             <div style="margin-top:10px;color:#8590a6;">
                                 <span></span>
@@ -109,58 +105,43 @@
                     </div>
                 </div>
             </div>
-            
-        </div>
-    </div>
-    <!-- markdown editor -->
-        <!-- Modal Structure -->
-        <div id="modal1" class="modal bottom-sheet" style="max-height:90%;padding: 20px 0">
-            <form id="form1" action="/answer/answer" method="post">
-                <!-- 保存该回答的主题的id -->
-                <input type="hidden" value="{{question.id}}" name="q_id">
-                <div class="clear"></div>
-                <div id="editormd" style="margin-bottom:20px">
-                    <textarea name="content_md" id="txt_md"></textarea>
+            <div class="col m3 s12">
+                <div class="zcard user-card ">
+                    <div class="avator">
+                        <img src="/static/imgs/l1.jpg" alt="" class="avator">
+                    </div>
+                    <div class="ucard-username">
+                        杰克
+                    </div>
+                    <div class="ucard-intro">
+                        知识就是power
+                    </div>
+                    <hr style="width:60%;margin:10px auto; m">
+                    <div class="ucard-somethings ">
+                        <div style="font-size:12px;color:#999;">评论</div>
+                        <div style="">66</div>
+                    </div>
                 </div>
-                <input name="content_html" id="txt_html" type="hidden">
-            </form>
-            <div class="e-t-wrapp">
-                <a class="btn right" onclick="subme()">提交</a>
             </div>
         </div>
+    </div>
     <footer>
         <div class="Copyright ">
             Copyright © 2016 码蜂社 京公网安备 26015792005034号
         </div>
     </footer>
-    <script src="/static/js/jquery.min.js"></script>
-    <script src="/static/js/materialize.min.js"></script>
-    <script src='/static/editor/editormd.min.js'></script>
 </body>
 <script>
-    //md 文本编辑器
-    var testEditor = editormd("editormd", {
-        width: "90%",
-        height: 640,
-        syncScrolling: "single",
-        saveHTMLToTextarea : true,
-        path: "/static/editor/lib/"
-    });
-
     function checkForm() {
-        return true
-    }
+
+            }
 
     function subme() {
-        $('#txt_html').val(testEditor.getHTML())
-        if (checkForm()) {
-            $('#form1').submit()
+        if (checkForm) {
+            $('#form1').submit(() => {
+                // alert('提交成功')
+            })
         }
     }
-    
-    $(document).ready(function() {
-        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-        $('.modal').modal();
-    })
 </script>
 </html>

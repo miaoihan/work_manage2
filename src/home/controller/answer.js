@@ -10,13 +10,10 @@ export default class extends Base {
   async answerAction() {
         let answer = this.model('answer')
         let content = this.post('content')
-        let q_id = this.post('qid')
-        if (await answer.add({  
-                content: content,
-                q_id: q_id
-            })) {
+        let qid = this.post('q_id')
+        if (await answer.add(this.post())) {
             // this.findAction()
-            this.redirect(`/question/details?id=${q_id}`)
+            this.redirect(`/question/details?id=${qid}`)
         } else {
             this.assign('info', 'error')
         }

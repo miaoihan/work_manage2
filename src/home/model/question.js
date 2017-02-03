@@ -40,6 +40,6 @@ export default class extends think.model.base {
 
     async findByPage(page){
         console.log(page);
-        return await this.page(page, 10).order("created_time DESC").countSelect();
+        return await this.page(page, 10).order("level ASC").countSelect();
     }
 }

@@ -9,11 +9,6 @@ export default class extends think.model.base {
      * @type {Object}
      */
     schema = {
-        content: { //回复内容
-            default: function() { 
-                return null
-            }
-        },
         q_id: { //问题的id
             default: function() { 
                 return null

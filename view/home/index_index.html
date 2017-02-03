@@ -11,30 +11,6 @@
     <link rel="stylesheet" href="/static/css/style.css">
 
     <body>
-        <!-- markdown editor -->
-        <!-- Modal Structure -->
-        <div id="modal1" class="modal bottom-sheet" style="max-height:90%;">
-            <form id="form1" action="/question/add" method="post">
-                <div class="e-t-wrapp">
-                    <input type="text" placeholder="请输入标题..." style="border:none;font-size: 20px;
-    padding-left: 8px;width: 90%;" name="title">
-                    <a class="btn right" onclick="subme()">提交</a>
-                </div>
-                <div class="clear"></div>
-                <div id="editormd">
-                    <textarea name="content_md" id="txt_md"></textarea>
-                </div>
-                <input name="content_html" id="txt_html" type="hidden">
-            </form>
-        </div>
-        <!--
-                <div class="editor-modal" id="editor">
-                    <div>提交</div>
-                    <div id="editormd" style="position:fixed;bottom:0;margin-left:5%;">
-                        <textarea> </textarea>
-                    </div>
-                </div>
--->
         <!--导航栏-->
         <nav class="nav-top">
             <div class="nav-wrapper"> <a href="/" class="left brand-logo" style="font-size:22px;">码蜂社</a>
@@ -54,15 +30,34 @@
             <div class="crumbs-wrapper zcard content-20"> <a href="#!" class="">首页</a> / <a href="#!" class="">论坛</a> / <a href="#!" class="active">前端</a> </div>
             <div style="margin-bottom: 15px;">
                 <!-- Modal Trigger -->
-                {% if user %}
-                <a class="modal-trigger waves-effect waves-light btn" href="#modal1">新主题</a> 
-                {% else %}
-                <a class="modal-trigger waves-effect waves-light btn" href="/user/login">登陆后发表</a> 
+                {% if user.role < 2 %}
+                <a class="modal-trigger waves-effect waves-light btn" href="#modal1">新任务</a> 
                 {% endif %}
             </div>
-
             <div class="c-content row">
-                <div class="col m8 s12">
+                <!-- 任务卡片组 -->
+                {% for que in quePageData.data %}
+                    <div class="col s12 m3">
+                        {% if user.level < que.level%}
+                        <div class="card deep-orange darken-3">
+                        {% else %}
+                        <div class="card green">
+                        {% endif %}
+                            <div class="card-content" style="text-align: center">
+                                <span style="color:#fff;font-size: 32px">
+                                    {{que.level}}
+                                </span>
+                            </div>
+                            <div class="card-action white">
+                                <a href="/question/details?id={{que.id}}">{{que.title}}</a>
+                            </div>
+                        </div>
+                    </div>
+                 {% endfor %} 
+                    <div class="clear"></div>
+                    
+                    
+                <!--<div class="col m8 s12">
                     <div class="que-list  zcard">
                         <div class="que-item row">
                             <div class="hot-left col m7 s12">
@@ -72,7 +67,7 @@
                             </div>
                             <div class="hot-right col m5 s12">
                                 <div class="h-r-top">
-                                    <h2><a href="/question/details?id={{newQue.id}}">{{ newQue.title }}</a></h2> <span class="right"><img src="" alt=""></span> </div>
+                                    <h2><a href="/question/details?id={{newQue.id}}">{{ newQue.title }}</a></h2> <span class="right"><img src=""></span> </div>
                                 <div class="clear"></div>
                                 <div class="h-r-content">
                                     {{ newQue.content_html | safe }}
@@ -90,7 +85,7 @@
                             <div class="item-meta"> <span>Jason</span> <span>任务</span> <span>116</span> <span>12</span> </div>
                         </div>
                         {% endfor %}
-                    </div>
+                    </div>-->
                     <!-- end list -->
 
                     <!-- 分页 -->
@@ -104,28 +99,28 @@
                         </ul>
                     </div>
                 </div>
-                <section class="c-right  col m3 s10 zcard" style="padding:30px 15px;margin-left:30px">
-                    <div style="color:#999;font-size:14px;font-weight:600">热门任务</div>
-                    <div class="hot-tesk-list">
-                        <div class="tesk-item">
-                            <div class="hot-tesk-title"><a href="#">关于微信交互的认知</a></div>
-                            <div class="hot-tesk-meta"> <span>7168</span> <span style="margin-left:15px;">532</span> </div>
-                        </div>
-                        <div class="tesk-item">
-                            <div class="hot-tesk-title"><a href="">从接触编程到工作，你们对编程的认识是一个怎样的变化过程</a></div>
-                            <div class="hot-tesk-meta"> <span>7168</span> <span style="margin-left:15px;">532</span> </div>
-                        </div>
-                        <div class="tesk-item">
-                            <div class="hot-tesk-title"><a href="">国内有哪些公司在用Vue.js</a></div>
-                            <div class="hot-tesk-meta"> <span>7168</span> <span style="margin-left:15px;">532</span> </div>
-                        </div>
-                        <div class="tesk-item">
-                            <div class="hot-tesk-title"><a href="">如何看待 CSS 中 BEM 的命名方式</a></div>
-                            <div class="hot-tesk-meta"> <span>7168</span> <span style="margin-left:15px;">532</span> </div>
-                        </div>
-                    </div>
-                </section>
             </div>
+        </div>
+        <!-- markdown editor -->
+        <!-- Modal Structure -->
+        <div id="modal1" class="modal bottom-sheet" style="max-height:90%;">
+            <form id="form1" action="/question/add" method="post">
+                <div class="e-t-wrapp">
+                    <input type="text" placeholder="请输入标题..." style="border:none;font-size: 20px;
+    padding-left: 8px;width: 70%;" name="title">
+                    任务级别:
+                        <div class="input-field inline">
+                            <input id="tesk_id" type="text" name="level">
+                            <label for="tesk_id" data-error="wrong" data-success="right">级别</label>
+                        </div>
+                    <a class="btn right" onclick="subme()">提交</a>
+                </div>
+                <div class="clear"></div>
+                <div id="editormd">
+                    <textarea name="content_md" id="txt_md"></textarea>
+                </div>
+                <input name="content_html" id="txt_html" type="hidden">
+            </form>
         </div>
         <footer>
             <div class="Copyright "> Copyright © 2016 码蜂社 京公网安备 26015792005034号 </div>
@@ -180,7 +175,7 @@
                 // console.log(testEditor.getHTML());
                 $('#txt_html').val(testEditor.getHTML())
                 $('#txt_md').val(testEditor.getMarkdown())
-                alert($('#txt_html').val());
+                // alert($('#txt_html').val());
                 if (checkForm()) {
                     $('#form1').submit()
                 }
