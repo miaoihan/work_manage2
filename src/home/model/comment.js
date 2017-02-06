@@ -3,18 +3,13 @@
  * model
  */
 import moment from 'moment'
-export default class extends think.model.relation {
+export default class extends think.model.base {
     /**
      * 数据表字段定义
      * @type {Object}
      */
     schema = {
         u_id: { //
-            default: function() { 
-                return null
-            }
-        },
-        title: { //
             default: function() { 
                 return null
             }
@@ -38,8 +33,4 @@ export default class extends think.model.relation {
         }
     }
 
-    async findByPage(page){
-        console.log(page);
-        return await this.page(page, 10).order("level ASC").countSelect();
-    }
 }

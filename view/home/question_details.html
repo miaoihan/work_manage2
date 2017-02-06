@@ -69,7 +69,7 @@
                         <div class="col s10" style="margin:5px 0 10px -10px;">
                             <div class="meta">
                                 <span>{{user.username}}</span>
-                                <span>{{question.created_time | parseTime}}</span>
+                                <span>{{answer.created_time | parseTime}}</span>
                             </div>
                             <div class="ans-content">
                                 {{answer.content_html | safe}}
@@ -81,6 +81,7 @@
                         </div>
                     </div>
                     <!-- 回复的回复 -->
+                    {% if answer.comment %}
                     <div class="ans-item row zcard" style="margin-left: 50px;">
                         <div class="col">
                             <div class="ans-avator">
@@ -90,17 +91,18 @@
                         <div class="col s10" style="margin:5px 0 10px -10px;">
                             <div class="meta">
                                 <span>steven</span>
-                                <span>question.created_time | parseTime</span>
+                                <span>{{answer.comment.created_time | parseTime}}</span>
                             </div>
                             <div class="ans-content">
-                                answer.content
+                                {{answer.comment.content_html | safe}}
                             </div>
                             <div style="margin-top:10px;color:#8590a6;">
                                 <span></span>
-                                <span>回复</span>
+                                <a href="/answer/comment">回复</a>
                             </div>
                         </div>
                     </div>
+                    {% endif %}
                     {% endfor %}
                     <!-- end item -->
                    

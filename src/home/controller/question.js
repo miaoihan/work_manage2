@@ -83,7 +83,16 @@ export default class extends Base {
         let answer = this.model('answer')
         let id = this.get('id')
         let question = await questionM.where({ id: id }).find()
-        let answerList = await answer.where({ q_id: id }).order("id DESC").select()
+        console.log('###### 打印了1 ######'+question.id);
+        let sql = `select * from answer left join comment on answer.id = comment.a_id 
+                   where answer.q_id = ${id} order by answer.id DESC`
+        // console.log(sql);
+        // let answerList = await answer.query(sql)
+        // let answerList = await answer.join('comment on answer.id = comment.a_id').
+        //                               where({ q_id: id }).order('answer.id DESC').select()
+        let answerList = await answer.where({ q_id: id }).order('id DESC').select()
+        // this.success(answerList);
+        
         if (question) {
             //self in the find url,so need another
             this.assign('question', question)

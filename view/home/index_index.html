@@ -38,7 +38,7 @@
                 <!-- 任务卡片组 -->
                 {% for que in quePageData.data %}
                     <div class="col s12 m3">
-                        {% if user.level < que.level%}
+                        {% if (user.level < que.level or not user ) %}
                         <div class="card deep-orange darken-3">
                         {% else %}
                         <div class="card green">

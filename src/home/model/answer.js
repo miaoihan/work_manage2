@@ -3,7 +3,28 @@
  * model
  */
 import moment from 'moment'
-export default class extends think.model.base {
+export default class extends think.model.relation {
+  /**
+   * init
+   * @param  {} args []
+   * @return {}         []
+   */
+    init(...args){
+        super.init(...args);
+
+        this.relation = {
+            comment: {
+                type: think.model.HAS_ONE, //relation type
+                model: "comment", //model name
+                name: "comment", //data name
+                key: "id", 
+                fKey: "a_id", //forign key
+                // order: "",
+                // limit: "",
+            }
+        }
+    }
+
     /**
      * 数据表字段定义
      * @type {Object}
@@ -14,7 +35,7 @@ export default class extends think.model.base {
                 return null
             }
         },
-        a_id: { //回复的回复
+        c_id: { //回复的回复
             default: function() { 
                 return null
             }
