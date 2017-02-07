@@ -9,13 +9,14 @@ export default class extends Base {
    */
   async indexAction(){
     let question = this.model('question')
+    let userDao = this.model('user')
     let que1 = await question.findByPage(1)
     let page = this.get('page') || 1
     // console.log(page)
     let quePageData = await question.findByPage(page)
     // console.log(quePageData);
-    // let queList = await question.order("created_time DESC").select()
-    let user = await this.session('user')
+    let uid = await this.session('uid') //从session里uid找user
+    let user = await userDao.where({id: uid}).select()
     this.assign('quePageData', quePageData)
     // this.assign('queList', queList)
     this.assign('user', user)

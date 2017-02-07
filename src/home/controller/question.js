@@ -16,6 +16,7 @@ export default class extends Base {
         this.assign('user', user)
     }
 
+    //此方法不再更新，转到index
     async findAction() {
         let question = this.model('question')
         let que1 = await question.findByPage(1)
@@ -41,12 +42,13 @@ export default class extends Base {
         //if is old
         if (id) {
             await model.where({ id: id }).update(question)
-            return this.redirect('find')
+            // return this.redirect('find')
+            return this.action('home/index', index)
         }
         //if is new
         if (await model.add(question)) {
             // this.findAction()
-            this.redirect('find')
+            this.action('home/index', index)
         } else {
             this.assign('info', 'error')
         }
@@ -67,13 +69,13 @@ export default class extends Base {
     }
 
     async deleteAction() {
-        let user = this.model('user')
+        let question = this.model('question')
         let id = this.get('id')
             //返回影响的行数
-        let result = await user.where({ id: id }).delete()
+        let result = await question.where({ id: id }).delete()
         if (result) {
             //self in the find url,so need another
-            this.redirect('/user/find')
+            this.redirect('/question/find')
                 // this.findAction()
         }
     }
@@ -83,7 +85,7 @@ export default class extends Base {
         let answer = this.model('answer')
         let id = this.get('id')
         let question = await questionM.where({ id: id }).find()
-        console.log('###### 打印了1 ######'+question.id);
+        // console.log('###### 打印了1 ######'+question.id);
         let sql = `select * from answer left join comment on answer.id = comment.a_id 
                    where answer.q_id = ${id} order by answer.id DESC`
         // console.log(sql);

@@ -39,7 +39,10 @@ export default class extends Base {
             this.assign('info', 'error')
         }
     }
-
+    /**
+     * session 存用户id
+     * 解决不登出 也可更新用户信息
+     */  
     async loginAction() {
         if (this.isGet()) return this.display()
         let model = this.model('user')
@@ -53,10 +56,10 @@ export default class extends Base {
         password = shasum.digest('hex');
         
         let user = await model.where({ username: username, password: password }).find()
-        this.session("user",user);
-        console.log(user);
+        // session 存用户id
+        this.session("uid",user.id);
+        // console.log(user);
         if(think.isEmpty(user)){
-            console.log(888888888888);
             this.assign('info', '用户名或密码错误')
             return this.display()
         }

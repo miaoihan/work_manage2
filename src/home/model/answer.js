@@ -21,6 +21,13 @@ export default class extends think.model.relation {
                 fKey: "a_id", //forign key
                 // order: "",
                 // limit: "",
+            },
+            user: {
+                type: think.model.BELONG_TO, //relation type
+                model: "user", //model name
+                name: "user", //data name
+                key: "u_id", 
+                fKey: "id", //forign key
             }
         }
     }
