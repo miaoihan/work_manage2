@@ -37,5 +37,9 @@ export default class extends think.model.base {
 
     }
 
+    async findById(id){
+        return await this.where({id: id}).find()
+    }
+
 
 }
