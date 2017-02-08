@@ -16,6 +16,8 @@ export default class extends Base {
     let quePageData = await question.findByPage(page)
     // console.log(quePageData);
     let uid = await this.session('uid') //从session里uid找user
+    console.log('###### 打印了3 ######'+uid);
+    
     let user = await userDao.findById(uid)
     this.assign('quePageData', quePageData)
     // this.assign('queList', queList)

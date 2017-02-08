@@ -74,23 +74,23 @@ export default class extends Base {
 
     async editAction() {
         let model = this.model('user')
-        let user = model.where({ id: this.get('id') }).find()
+        let id = this.get('id')
+        let user = model.where({ id: id }).find()
         if (this.isGet()) {
             this.assign('user', user)
-            return this.display('add')
+            return this.display()
         }
-        let id = this.get('id')
-        let result = await model.where({ id: id }).upadte({
-            username: this.post('username'),
-            password: this.post('password')
-        })
+        let postID = this.post('id')
+        // this.success(this.post())
+        let result = await model.where({ id: postID }).update(this.post())
+        return this.redirect(`/user/profile?id=${postID}`)
     }
 
     async deleteAction() {
         // console.log(66666);
         let user = this.model('user')
         let id = this.get('id')
-            //返回影响的行数
+            //返回影响的行数   
         let result = await user.where({ id: id }).delete()
         if (result) {
             //self in the find url,so need another
@@ -104,6 +104,14 @@ export default class extends Base {
         let userList = await user.select()
         this.assign('userList', userList)
         return this.display('find')
+    }
+
+    async profileAction() {
+        let userDao = this.model('user')
+        let id = this.get('id')
+        let user = await userDao.where({id: id}).find()
+        this.assign('user', user)
+        return this.display()
     }
 
 }

@@ -1,0 +1,10 @@
+{% extends './base.html' %}
+{% block body %}
+
+    <p> 头像：<img src="{{user.logo}}" alt=""> </p>
+    <p> 账号：{{user.username}} </p>
+    <p> 等级： {{user.level}} </p>
+    <p> 昵称： {{user.nickname}} </p>
+    <a href="/user/edit?id={{user.id}}" class="btn">编辑个个人资料</a>
+{% endblock %}
+

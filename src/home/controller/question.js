@@ -42,13 +42,13 @@ export default class extends Base {
         //if is old
         if (id) {
             await model.where({ id: id }).update(question)
-            // return this.redirect('find')
-            return this.action('home/index', index)
+            // return this.action('home/index', index)
+            return this.redirect('/')
         }
         //if is new
         if (await model.add(question)) {
             // this.findAction()
-            this.action('home/index', index)
+            this.redirect('/')
         } else {
             this.assign('info', 'error')
         }
@@ -75,7 +75,7 @@ export default class extends Base {
         let result = await question.where({ id: id }).delete()
         if (result) {
             //self in the find url,so need another
-            this.redirect('/question/find')
+            this.redirect('/')
                 // this.findAction()
         }
     }

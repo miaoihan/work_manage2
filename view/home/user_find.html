@@ -8,7 +8,7 @@
 
 <body>
     用户列表 {% for user in userList %}
-    <div>姓名：{{user.name}} 密码：{{user.password}}
+    <div>用户名：{{user.username}} 密码：{{user.password}}
         <a href="/user/edit/?id={{user.id}}">编辑</a>
         <a href="/user/delete/?id={{user.id}}">删除</a> {% endfor %}</div>
 

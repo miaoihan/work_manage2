@@ -1,16 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
-</head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{title}}</title>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/static/editor/css/editormd.css">
+    <link rel="stylesheet" href="/static/css/materialize.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
 
-<body>
-    <table>
-        <tr>
-            <td></td>
-        </tr>
-    </table>
-</body>
+    <body>
+        <!--导航栏-->
+        <nav class="nav-top">
+            <div class="nav-wrapper"> <a href="/" class="left brand-logo" style="font-size:22px;">码蜂社</a>
+                <ul id="nav-mobile" class="right" style="margin-right: 20px">
+                    {% if user %}
+                    <li><a href="/user/profile?id={{user.id}}">你好，{{user.username}}</a></li>
+                    <li><a href="/user/logout">登出</a></li>
+                    {% else %}
+                    <li><a href="/user/login">登录</a></li>
+                    <li><a href="/user/register">注册</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+
+            {% block body %}  body  {% endblock %}
+
+        </div> <!-- end container -->
+        <div class="clear"></div>
+        <footer>
+            <div class="Copyright "> Copyright © 2016 码蜂社 京公网安备 26015792005034号 </div>
+        </footer>
+
+        <script src="/static/js/jquery.min.js"></script>
+    </body>
 
 </html>
