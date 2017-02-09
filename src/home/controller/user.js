@@ -5,6 +5,7 @@ import fs from 'fs-promise';
 
 export default class extends Base {
     /**
+		 * 代码即注释
      * index action
      * @return {Promise} []
      */
