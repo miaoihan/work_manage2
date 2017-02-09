@@ -1,8 +1,10 @@
 'use strict';
+import gravatar from 'gravatar';
+import lodash from 'lodash';
+import moment from 'moment'
 /**
  * model
  */
-import moment from 'moment'
 export default class extends think.model.base {
     /**
      * 数据表字段定义
@@ -39,10 +41,18 @@ export default class extends think.model.base {
 
     async findById(id){
 			if (id == undefined)
-				return null
+					return null
 			return await this.where({id: id}).find()
-			
     }
+
+		getAvatarUrl(email){
+			let url = gravatar.url(email, {s: '100', r: 'G', d: 'retro'});
+			url = lodash.replace(url, 'www.gravatar.com', 'gravatar.duoshuo.com');
+			return url;
+		}
+
+
+
 
 
 }

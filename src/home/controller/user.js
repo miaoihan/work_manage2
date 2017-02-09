@@ -21,6 +21,8 @@ export default class extends Base {
         let model = this.model('user')
         let id = this.post('id')
         let user = this.post()
+				//生成gravator头像url
+				let logo = this.model('user').getAvatarUrl(this.post('email'))
 
         let crypto = require('crypto');
         let password = this.post('password');
@@ -28,6 +30,7 @@ export default class extends Base {
         shasum.update(password);
         password = shasum.digest('hex');
         user.password = password
+				user.logo = logo
         //if is old
         if (id) {
             await model.where({ id: id }).update(user)
@@ -49,7 +52,7 @@ export default class extends Base {
         if (this.isGet()) return this.display()
         let model = this.model('user')
         // let user = this.post()
-        let username = this.post('username')
+        let email = this.post('email')
         let password = this.post('password');
 
         let crypto = require('crypto');
@@ -57,7 +60,7 @@ export default class extends Base {
         shasum.update(password);
         password = shasum.digest('hex');
         
-        let user = await model.where({ username: username, password: password }).find()
+        let user = await model.where({ email: email, password: password }).find()
         // session 存用户id
         this.session("uid",user.id);
         // console.log(user);
@@ -75,6 +78,7 @@ export default class extends Base {
     }
 
     async editAction() {
+			  
         let model = this.model('user')
         let id = this.get('id')
         let user = model.where({ id: id }).find()
@@ -95,7 +99,11 @@ export default class extends Base {
         } 
         // this.success(this.post())
         let result = await model.where({ id: postID }).update(this.post())
-        await model.where({ id: postID }).update({logo: newPath})
+				//上传了才更新
+				if (!file){
+        	await model.where({ id: postID }).update({logo: newPath})
+					// this.success(666)
+				}
         return this.redirect(`/user/profile?id=${postID}`)
     }
 

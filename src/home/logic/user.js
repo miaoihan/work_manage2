@@ -21,8 +21,9 @@ export default class extends think.logic.base {
 
   async editAction(){
     if (this.isPost()) {
-      
-      // this.success(file)
+      //禁止修改等级
+      if (this.post('level'))
+        this.fail('小伙子／菇凉，哪能这么容易让你改等级！')
     }
   }
 }

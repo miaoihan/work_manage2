@@ -474,3 +474,8 @@ footer {}
 .e-t-wrapp {
     margin: 20px;
 }
+
+.avatar-nav{
+    width: 30px;
+    margin-bottom: -9px;
+}
