@@ -1,6 +1,7 @@
 'use strict';
 
 import Base from './base.js';
+import fs from 'fs-promise';
 
 export default class extends Base {
     /**
@@ -81,8 +82,19 @@ export default class extends Base {
             return this.display()
         }
         let postID = this.post('id')
+        //图片上传
+        let file = this.file('logo')  //用户头像
+        let newName = 'pic' + new Date().getTime()  // a new name
+        let newPath = '/static/upload/user/' + newName + '.jpg'
+        // this.success(file)
+        try {
+          await fs.move(file.path, think.RESOURCE_PATH + newPath)
+        } catch (error) { 
+          throw error
+        } 
         // this.success(this.post())
         let result = await model.where({ id: postID }).update(this.post())
+        await model.where({ id: postID }).update({logo: newPath})
         return this.redirect(`/user/profile?id=${postID}`)
     }
 

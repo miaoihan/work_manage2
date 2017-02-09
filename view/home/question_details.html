@@ -37,7 +37,7 @@
                     <div class="ans-item row zcard">
                         <div class="col">
                             <div class="ans-avator">
-                                <img src="/static/imgs/t2.jpg" alt="" class="avator">
+                                <img src="{{answer.user.logo}}" alt="" class="avator">
                             </div>
                         </div>
                         <div class="col s10" style="margin:5px 0 10px -10px;">
@@ -61,7 +61,7 @@
                     <div class="ans-item row zcard" style="margin-left: 50px;">
                         <div class="col">
                             <div class="ans-avator">
-                                <img src="/static/imgs/t2.jpg" alt="" class="avator">
+                                <img src="{{answer.comment.user.logo}}" alt="" class="avator">
                             </div>
                         </div>
                         <div class="col s10" style="margin:5px 0 10px -10px;">
@@ -161,11 +161,11 @@
             $('#form2').submit()
         }
     }
-    
+    //设置回答的id和回答者uid
     function setAid(aid,auid) {
         // document.getElementById('inputAid')
-        $('#inputAid').val(aid)
-        $('#inputAuid').val(auid)
+        $('#inputAid').val(aid)   //答案id
+        $('#inputAuid').val(auid) //回答者
         // alert($('#inputAid').val())
     }
 

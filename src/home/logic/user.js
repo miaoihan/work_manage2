@@ -1,4 +1,6 @@
 'use strict';
+import fs from 'fs-promise';
+
 /**
  * logic
  * @param  {} []
@@ -15,5 +17,12 @@ export default class extends think.logic.base {
 
   async loginAction(){
     
+  }
+
+  async editAction(){
+    if (this.isPost()) {
+      
+      // this.success(file)
+    }
   }
 }

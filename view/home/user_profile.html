@@ -1,7 +1,11 @@
 {% extends './base.html' %}
 {% block body %}
 
-    <p> 头像：<img src="{{user.logo}}" alt=""> </p>
+    <p> 头像：
+        <div class="" style="width: 100px">
+            <img src="{{user.logo}}" alt="" > 
+        </div>
+        </p>
     <p> 账号：{{user.username}} </p>
     <p> 等级： {{user.level}} </p>
     <p> 昵称： {{user.nickname}} </p>
