@@ -11,7 +11,7 @@ export default class extends think.model.relation {
    */
     init(...args){
         super.init(...args);
-
+        //建立和用户以及评论的关联
         this.relation = {
             comment: {
                 type: think.model.HAS_ONE, //relation type
