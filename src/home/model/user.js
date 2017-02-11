@@ -1,6 +1,5 @@
 'use strict';
 import gravatar from 'gravatar';
-
 import lodash from 'lodash';
 import moment from 'moment'
 /**
@@ -46,11 +45,11 @@ export default class extends think.model.base {
 			return await this.where({id: id}).find()
     }
 
-		getAvatarUrl(email){
-			let url = gravatar.url(email, {s: '100', r: 'G', d: 'retro'});
-			url = lodash.replace(url, 'www.gravatar.com', 'gravatar.duoshuo.com');
-			return url;
-		}
+    getAvatarUrl(email){
+        let url = gravatar.url(email, {s: '100', r: 'G', d: 'retro'});
+        url = lodash.replace(url, 'www.gravatar.com', 'gravatar.duoshuo.com');
+        return url;
+    }
 
 
 

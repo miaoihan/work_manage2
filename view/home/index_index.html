@@ -10,12 +10,34 @@
             </div>
             <div class="c-content row">
                 <!-- 任务卡片组 -->
+                <!-- 可回答：蓝色 已回答：绿色 未解锁：红色 -->
                 {% for que in quePageData.data %}
                     <div class="col s12 m3">
-                        {% if (user.level < que.level or not user ) %}
-                        <div class="card deep-orange darken-3">
-                        {% else %}
+                        {% if user.role < 2 %}
                         <div class="card green">
+                            <div class="card-content" style="text-align: center">
+                                <span style="color:#fff;font-size: 32px">
+                                    {{que.level}}
+                                </span>
+                            </div>
+                            <div class="card-action white">
+                                <a href="/question/details?id={{que.id}}">{{que.title}}</a>
+                            </div>
+                        </div>
+                        {% else %}
+                        <!-- 未解锁 -->
+                        {% if (can_answer < que.level or not user ) %}
+                        <div class="card deep-orange darken-3">
+                        <!-- 已解锁 -->
+                        {% else %}
+                        {% set color = 'blue' %}
+                        {% for i in hasAnswerList  %}
+                            {% if i == que.level %}
+                                {% set color = 'green' %}
+                            {% endif %}
+                        {% endfor %}
+                        <!-- 可回答 -->
+                        <div class="card {{color}}">
                         {% endif %}
                             <div class="card-content" style="text-align: center">
                                 <span style="color:#fff;font-size: 32px">
@@ -26,6 +48,7 @@
                                 <a href="/question/details?id={{que.id}}">{{que.title}}</a>
                             </div>
                         </div>
+                        {% endif %}
                     </div>
                  {% endfor %} 
                     <div class="clear"></div>

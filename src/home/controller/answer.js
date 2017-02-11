@@ -21,18 +21,23 @@ export default class extends Base {
 
 	async commentAction() {
 		let comment = this.model('comment')
-		let user = this.model('user')
+		let userDao = this.model('user')
 		let qid = this.post('q_id')
+		let level = this.post('level')
 		// 学员id
 		let auid = this.post('a_u_id')
-		console.log('###### 打印了 ######'+ auid);
-		
+		// console.log('###### 打印了 ######'+ auid);
 		// >60分学员升一级
-		console.log('###### 打印了2 ######'+ this.post('scored'));
-		
 		if (this.post('scored') >= 60){
-			await user.where({id: auid}).increment('level', 1)
-			
+			let user = await userDao.where({id: auid}).find()
+			//如果比用户级别高则升级
+			let old_level = user.level
+			if (level > old_level){
+				await userDao.where({id: auid}).update({level: level})
+			}
+			let has_answer = user.has_answer + level + ','
+			//更新已回答列表
+			await userDao.where({id: auid}).update({has_answer: has_answer})
 			//通知学员通过
 		} else{
 			//通知学员没通过

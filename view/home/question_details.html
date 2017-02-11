@@ -31,7 +31,7 @@
                         {% endif %}
                 </div>
                 <div class="clear"></div>
-								<!-- 回答列表 -->
+				<!-- 回答列表 -->
                 <div class="ans-list">
                     {% for answer in answerList %}
                     <div class="ans-item row zcard">
@@ -77,7 +77,7 @@
                     {% endif %}
                     {% endfor %}
                     <!-- end item -->
-                   <!-- Modal Trigger 评语-->
+                    <!-- 教师批改model-->
                     <div id="modal2" class="modal">
                         <div class="modal-content">
                             <form action="/answer/comment" method="post" id="form2">
@@ -85,6 +85,7 @@
                                 <input type="hidden" name="u_id" value="{{user.id}}">
                                 <input type="hidden" name="a_u_id" id="inputAuid">
                                 <input type="hidden" name="q_id" value="{{question.id}}">
+                                <input type="hidden" name="level" value="{{question.level}}" >
                                 <p class="range-field">
                                 打分 ( 0-100 )
                                 <input type="range" id="scored" min="0" max="100" name="scored"/>
@@ -110,7 +111,7 @@
             </div>
         </div>
     <!-- markdown editor -->
-        <!-- Modal Structure -->
+        <!-- 学生回答model -->
         <div id="modal1" class="modal bottom-sheet" style="max-height:90%;padding: 20px 0">
             <form id="form1" action="/answer/answer" method="post">
                 <!-- 保存该回答的主题的id -->
