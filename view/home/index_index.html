@@ -45,7 +45,11 @@
                                 </span>
                             </div>
                             <div class="card-action white">
+                                {% if can_answer < que.level%}
+                                <span class="disabled" style="color:silver">{{que.title}}</span>
+                                {% else %}
                                 <a href="/question/details?id={{que.id}}">{{que.title}}</a>
+                                {% endif %}
                             </div>
                         </div>
                         {% endif %}

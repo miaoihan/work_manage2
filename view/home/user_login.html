@@ -7,9 +7,9 @@
 <body>
     {{info}}
     <form action="/user/login" method="post">
-        用户名：<input type="text" name="email"></br>
-        密码： <input type="text" name="password"></br>
-        <input type="submit" value="登陆">
+        邮箱：<input type="email" name="email" required ></br>
+        密码： <input type="text" name="password" required></br>
+        <input type="submit" value="登陆">    
     </form>
     没有注册？<a href="/user/register">去注册</a>
 </body>

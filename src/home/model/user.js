@@ -22,6 +22,11 @@ export default class extends think.model.base {
                 return 2;
             }
         },
+        has_answer: { // 已回答的问题，默认“”
+            default: function() { 
+                return "";
+            }
+        },
         created_time: { //创建时间
             default: () => { //获取当前时间
 				return new Date().getTime()

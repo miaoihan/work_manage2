@@ -20,15 +20,15 @@ export default class extends Base {
     // console.log('###### 打印了3 ######'+uid);
     
     let user = await userDao.findById(uid)
-    let can_answer = 0, hasAnswerList
+    let can_answer = 0, hasAnswerList = ""
+    // this.success(think.isEmpty(hasAnswerList))
     if (user) {
       hasAnswerList = user.has_answer.split(',')
       // this.success(hasAnswerList)
     //最高能回答的答案等级，默认为1；over_level越级回答，默认为3
-    let over_level = 3, pass_time 
-    if (hasAnswerList == "") // 尚未回答问题
-      can_answer = 1
-    else 
+    
+      let over_level = 3, pass_time 
+    
       can_answer = hasAnswerList.length-1 + over_level
     }
     this.assign('hasAnswerList', hasAnswerList)
@@ -37,5 +37,6 @@ export default class extends Base {
     // this.assign('queList', queList)
     this.assign('user', user)
     return this.display()
+    
   }
 }
