@@ -1,7 +1,7 @@
 {% extends './base.html' %}
     {% block body %}
         <!--面包屑-->
-        <div class="crumbs-wrapper zcard content-20"> <a href="#!" class="">首页</a> / <a href="#!" class="">论坛</a> / <a href="#!" class="active">前端</a>
+        <div class="crumbs-wrapper zcard content-20"> <a href="/" class="">首页</a> / <a href="#!" class="active">问答</a>
         </div>
         <div class="row">
             <div class="col m12 s12">
@@ -112,7 +112,7 @@
         </div>
     <!-- markdown editor -->
         <!-- 学生回答model -->
-        <div id="modal1" class="modal bottom-sheet" style="max-height:90%;padding: 20px 0">
+        <div id="modal1" class="modal bottom-sheet" style="max-height:90%;padding: 20px 0;display: block">
             <form id="form1" action="/answer/answer" method="post">
                 <!-- 保存该回答的主题的id -->
                 <input type="hidden" value="{{question.id}}" name="q_id">
@@ -133,13 +133,13 @@
 </body>
 <script>
     //md 文本编辑器
-    var testEditor = editormd("editormd", {
-        width: "90%",
-        height: 640,
-        syncScrolling: "single",
-        saveHTMLToTextarea : true,
-        path: "/static/editor/lib/"
-    });
+        var testEditor = editormd("editormd", {
+            width: "90%",
+            height: 640,
+            syncScrolling: "single",
+            saveHTMLToTextarea : true,
+            path: "/static/editor/lib/"
+        });
 
     function checkForm() {
         return true
@@ -150,6 +150,7 @@
     }
 
     function subme() {
+        // alert(6767)
         $('#txt_html').val(testEditor.getHTML())
         if (checkForm()) {
             $('#form1').submit()
@@ -171,8 +172,9 @@
     }
 
     $(document).ready(function() {
+        $('.modal').modal()
+        
         // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-        $('.modal').modal();
     })
 </script>
 {% endblock %}

@@ -1,11 +1,11 @@
 {% extends './base.html' %}
     {% block body %}
             <!--面包屑-->
-            <div class="crumbs-wrapper zcard content-20"> <a href="#!" class="">首页</a> / <a href="#!" class="">论坛</a> / <a href="#!" class="active">前端</a> </div>
+            <div class="crumbs-wrapper zcard content-20"> <a href="/" class="active">首页 </a></div>
             <div style="margin-bottom: 15px;">
                 <!-- Modal Trigger -->
                 {% if user.role < 2 %}
-                <a class="modal-trigger waves-effect waves-light btn" href="#modal1">新任务</a> 
+                <a class="modal-trigger waves-effect waves-light btn" onclick="openModal(); ">新任务</a> 
                 {% endif %}
             </div>
             <div class="c-content row">
@@ -70,7 +70,7 @@
             </div>
         <!-- markdown editor -->
         <!-- Modal Structure -->
-        <div id="modal1" class="modal bottom-sheet" style="max-height:90%;">
+        <div id="modal1" class="modal bottom-sheet" style="max-height:90%;display: block">
             <form id="form1" action="/question/add" method="post">
                 <div class="e-t-wrapp">
                     <input type="text" placeholder="请输入标题..." style="border:none;font-size: 20px;
@@ -94,16 +94,11 @@
         <script src="/static/js/materialize.min.js"></script>
         <script src='/static/editor/editormd.min.js'></script>
         <script>
-            
-
-            function showModal() {
-                // document.getElementById('editor').style.display = 'block'
-                //                $('editor').css('display','block')
-
-            }
 
             $(document).ready(function() {
                 // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+                //md 文本编辑器
+                // $('.modal-trigger').leanModal();
                 $('.modal').modal();
                 
                 //分页
@@ -123,14 +118,18 @@
                 })
             });
 
-            //md 文本编辑器
             var testEditor = editormd("editormd", {
-                width: "90%",
-                height: 640,
-                syncScrolling: "single",
-                saveHTMLToTextarea : true,
-                path: "/static/editor/lib/"
-            });
+                            width: "90%",
+                            height: 640,
+                            syncScrolling: "single",
+                            saveHTMLToTextarea : true,
+                            path: "/static/editor/lib/"
+                        });
+
+            function openModal(){
+                 $('#editormd').modal('open');
+                //  alert(667)
+            }
 
             function checkForm() {
                 return true

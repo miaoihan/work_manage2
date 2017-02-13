@@ -259,8 +259,24 @@ html {
     color: #a1aebf;
 }
 
-bd-none {
+.bd-none {
     border: none;
+}
+
+.fz-12{
+    font-size: 12px;
+}
+.fz-13{
+    font-size: 13px;
+}
+.fz-14{
+    font-size: 14px;
+}
+.fz-15{
+    font-size: 15px;
+}
+.fz-16{
+    font-size: 16px;
 }
 
 
@@ -277,7 +293,7 @@ html {
 .nav-top {
     height: 50px;
     line-height: 50px;
-    /*background: #1d1d1d;*/
+    /*background: #4285f4;*/
 }
 
 .brand-logo {
@@ -464,6 +480,7 @@ footer {}
     margin-bottom: 10px;
 }
 
+
 .ans-item {
     padding: 15px 0 5px 10px
 }
@@ -480,4 +497,42 @@ footer {}
 .avatar-nav{
     width: 30px;
     margin-bottom: -9px;
+}
+
+.message-modal {
+    width: 320px;
+    height: 420px;
+    /*border: 1px solid black;*/
+    position: absolute;
+    top: 40px;
+    right: 150px;
+    display: none;
+    z-index: 1003;
+    transition: width 2s;
+}
+
+.msg-tittle {
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-bottom: 1px solid #ebebeb;
+}
+
+.msg-content {
+    height: 308px;
+    border-bottom: 1px solid #ebebeb;
+}
+
+.msg-footer{
+    padding: 0 10px;
+    text-align: center
+}
+
+.msg-footer div{
+    height: 35px;
+    line-height: 35px;
+}
+
+.m-f-d1 {
+    border-bottom: 1px solid #efefef;
 }
