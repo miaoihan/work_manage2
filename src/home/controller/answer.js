@@ -30,10 +30,7 @@ export default class extends Base {
 		let level = this.post('level')
 		// 学员id
 		let auid = this.post('a_u_id')
-		let message = {
-			content: '',
-			is_read: 0
-		} // content and is_read
+		let message = {} // content and is_read
 		// console.log('###### 打印了 ######'+ auid);
 		// >60分学员升一级
 		if (this.post('scored') >= 60){
@@ -47,15 +44,14 @@ export default class extends Base {
 			//更新已回答列表
 			await userDao.where({id: auid}).update({has_answer: has_answer})
 			//通知学员通过
-			message.content = '恭喜你回答通过了，你升了一级，离50级大神又近了一步！'
+			message.link = `/question/details?id=${qid}`
 		} else{
 			//通知学员没通过
-			message.content = '你的回答没有通过！'
+			message.link = `/question/details?id=${qid}`
 		}
 		await comment.add(this.post())
 		//update message
-		message = JSON.stringify(message)
-		await userDao.where({id: auid}).update({message: message})
+		await this.model('message').add(message)
 
 		this.redirect(`/question/details?id=${qid}`)
   }

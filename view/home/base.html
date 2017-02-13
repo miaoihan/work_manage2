@@ -15,7 +15,7 @@
             <div class="nav-wrapper"> <a href="/" class="left brand-logo" style="font-size:22px;">码蜂社</a>
                 <ul id="nav-mobile" class="right" style="margin-right: 20px">
                     {% if user %}
-                    <li><a onclick="openMessage()">消息 </a></li>
+                    <li><a onclick="openMessage()"> {{"消息" if user.message | length == 0 else "消息 "+ user.message | length}}</a></li>
                     <li><a href="/user/profile?id={{user.id}}"><img src="{{user.logo}}" alt="" class="avatar-nav cicle"> </a></li>
                     <li><a href="/user/logout">登出</a></li>
                     {% else %}
@@ -39,8 +39,12 @@
             <div class="msg-tittle fz-13">
                 通知
             </div>
-            <div class="msg-content">
-
+            <div class="msg-content fz-14">
+                {% for message in user.message %}
+                <div class="m-c-item ">
+                    {{message.content}}
+                </div>
+                {% endfor %}
             </div>
             <div class="msg-footer fz-14">
                 <div class="m-f-d1"><a href="">全部标记为已读</a> </div>

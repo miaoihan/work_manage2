@@ -2,15 +2,14 @@
 /**
  * model
  */
-import moment from 'moment'
-export default class extends think.model.relation {
+export default class extends think.model.base {
 
     /**
      * 数据表字段定义
      * @type {Object}
      */
     schema = {
-        u_id: { //
+        uid: { //
             default: function() { 
                 return null
             }
