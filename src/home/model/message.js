@@ -9,9 +9,24 @@ export default class extends think.model.base {
      * @type {Object}
      */
     schema = {
-        uid: { //
+        to: { // 接受者
             default: function() { 
                 return null
+            }
+        },
+        from: { // 发送者
+            default: function() { 
+                return 0
+            }
+        },
+        link: { // 消息链接
+            default: function() { 
+                return ''
+            }
+        },
+        type: { // 消息类型 0: 系统推送
+            default: function() { 
+                return 0
             }
         },
         del_state: { //

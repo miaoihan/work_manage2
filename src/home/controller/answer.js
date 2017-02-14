@@ -28,9 +28,17 @@ export default class extends Base {
 		let userDao = this.model('user')
 		let qid = this.post('q_id')
 		let level = this.post('level')
+		let title = this.post('title')
 		// 学员id
 		let auid = this.post('a_u_id')
-		let message = {} // content and is_read
+		let message = {
+			to: auid,
+			from: 0, //默认系统发送
+			content: '',
+			link: '',
+			type: '',
+			is_read: 0
+		} // content and is_read
 		// console.log('###### 打印了 ######'+ auid);
 		// >60分学员升一级
 		if (this.post('scored') >= 60){
@@ -45,9 +53,11 @@ export default class extends Base {
 			await userDao.where({id: auid}).update({has_answer: has_answer})
 			//通知学员通过
 			message.link = `/question/details?id=${qid}`
+			message.content = 
 		} else{
 			//通知学员没通过
 			message.link = `/question/details?id=${qid}`
+
 		}
 		await comment.add(this.post())
 		//update message
