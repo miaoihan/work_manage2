@@ -53,10 +53,11 @@ export default class extends Base {
 			await userDao.where({id: auid}).update({has_answer: has_answer})
 			//通知学员通过
 			message.link = `/question/details?id=${qid}`
-			message.content = 
+			message.content = '你通过了关于'+title+' 的回答，你升了一级！'
 		} else{
 			//通知学员没通过
 			message.link = `/question/details?id=${qid}`
+			message.content = '你的回答 '+title+' 没有通过'
 
 		}
 		await comment.add(this.post())

@@ -259,6 +259,13 @@ html {
     color: #a1aebf;
 }
 
+.fenge {
+    background-color: #ebebeb;
+    border: none;
+    height: 1px;
+    margin: 0 10px;
+}
+
 .bd-none {
     border: none;
 }
@@ -519,15 +526,25 @@ footer {}
 }
 
 .msg-content {
-    height: 308px;
-    padding: 0 15px;
+    height: 338px;
+    /*padding: 0 15px;*/
     border-bottom: 1px solid #ebebeb;
 }
 
 .m-c-item{
-    padding: 10px 0;
-    border-bottom: 1px solid #ebebeb;
+    padding: 10px;
 }
+
+/*.m-c-item:after {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 100%;
+    padding: 0 15px;
+    height: 1px;
+    background-color: #ebebeb;
+    content: ""
+} */
 
 .msg-footer{
     padding: 0 10px;

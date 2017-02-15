@@ -2,11 +2,12 @@
 import gravatar from 'gravatar';
 import lodash from 'lodash';
 import moment from 'moment'
+import http from 'http'
 /**
  * model
  */
 export default class extends think.model.relation {
-
+    
     init(...args){
         super.init(...args);
 
@@ -14,9 +15,10 @@ export default class extends think.model.relation {
             message: {
                 type: think.model.HAS_MANY, //relation type
                 model: "message", //model name
-                name: "message", //data name
+                name: "messageList", //data name
                 key: "id", 
-                fKey: "uid", //forign key
+                fKey: "to", //forign key
+                order: 'created_time DESC'
             }
         }
     }
@@ -60,15 +62,30 @@ export default class extends think.model.relation {
     }
 
     async findById(id){
-			if (id == undefined)
-					return null
-			return await this.where({id: id}).find()
+        if (id == undefined)
+            return null
+        return await this.where({id: id}).find()
     }
+
+    // *findUser(){
+    //     let uid = yield http.session('uid') //从session里uid找user
+    //     return yield this.findById(uid)
+    // }
 
     getAvatarUrl(email){
         let url = gravatar.url(email, {s: '100', r: 'G', d: 'retro'});
         url = lodash.replace(url, 'www.gravatar.com', 'gravatar.duoshuo.com');
         return url;
+    }
+
+    async getNoReadNum(id){
+        let user = await this.findById(id)  
+        let num = 0
+        for(let i of user.messageList){
+            if (i.is_read == 0)
+                num++
+        }
+        return num
     }
 
 

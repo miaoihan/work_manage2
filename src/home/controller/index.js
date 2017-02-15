@@ -15,9 +15,9 @@ export default class extends Base {
     let page = this.get('page') || 1
     // console.log(page)
     let quePageData = await question.findByPage(page)
-    // console.log(quePageData);
-    let uid = await this.session('uid') //从session里uid找user
-    let user = await userDao.findById(uid)
+    //从session里uid找user
+    let user = await userDao.findById(await this.session('uid'))
+    let noReadNum = userDao.getNoReadNum(await this.session('uid'))
     // this.success(user)
     let can_answer = 0, hasAnswerList = ""
     // this.success(think.isEmpty(hasAnswerList))
@@ -33,6 +33,7 @@ export default class extends Base {
     this.assign('hasAnswerList', hasAnswerList)
     this.assign('can_answer', can_answer)
     this.assign('quePageData', quePageData)
+    this.assign('noReadNum', noReadNum)
     // this.assign('queList', queList)
     this.assign('user', user)
     return this.display()
