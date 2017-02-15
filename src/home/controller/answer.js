@@ -39,7 +39,6 @@ export default class extends Base {
 			type: '',
 			is_read: 0
 		} // content and is_read
-		// console.log('###### 打印了 ######'+ auid);
 		// >60分学员升一级
 		if (this.post('scored') >= 60){
 			let user = await userDao.where({id: auid}).find() //学员
