@@ -81,9 +81,11 @@ export default class extends think.model.relation {
     async getNoReadNum(id){
         let user = await this.findById(id)  
         let num = 0
-        for(let i of user.messageList){
-            if (i.is_read == 0)
-                num++
+        if (user) {
+            for(let i of user.messageList){
+                if (i.is_read == 0)
+                    num++
+            }
         }
         return num
     }

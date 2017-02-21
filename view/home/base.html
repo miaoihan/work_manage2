@@ -21,6 +21,26 @@
                     </li>
                     <li><a href="/user/profile?id={{user.id}}"><img src="{{user.logo}}" alt="" class="avatar-nav cicle"> </a></li>
                     <li><a href="/user/logout">登出</a></li>
+                    <!--消息modal-->
+                    <section class="message-modal white z-depth-2" tabindex="1">
+                      <div class="msg-tittle fz-14">
+                          通知
+                      </div>
+                      <div class="msg-content fz-14">
+                          {% for message in user.messageList %}
+                          <div class="item-wrapper" {% if message.is_read == 0 %} style="background: #F4F8FB" {% endif %}>
+                              <div class="m-c-item">
+                              <a href="{{message.link}}" onclick="readMessage({{message.id}})">{{message.content}}</a>  
+                              </div>
+                              <hr class="fenge">
+                          </div>
+                          {% endfor %}
+                      </div>
+                      <div class="msg-footer fz-14">
+                          <!--<div class="m-f-d1"><a href="">全部标记为已读</a> </div>-->
+                          <div><a href="">查看全部消息</a></div>
+                      </div>
+                  </section>
                     {% else %}
                     <li><a href="/user/login">登录</a></li>
                     <li><a href="/user/register">注册</a></li>
@@ -38,25 +58,7 @@
             <div class="Copyright "> Copyright © 2016 码蜂社 京公网安备 26015792005034号 </div>
         </footer>
         
-        <section class="message-modal white z-depth-2" tabindex="1">
-            <div class="msg-tittle fz-14">
-                通知
-            </div>
-            <div class="msg-content fz-14">
-                {% for message in user.messageList %}
-                <div class="item-wrapper" {% if message.is_read == 0 %} style="background: #F4F8FB" {% endif %}>
-                    <div class="m-c-item">
-                    <a href="{{message.link}}" onclick="readMessage({{message.id}})">{{message.content}}</a>  
-                    </div>
-                    <hr class="fenge">
-                </div>
-                {% endfor %}
-            </div>
-            <div class="msg-footer fz-14">
-                <!--<div class="m-f-d1"><a href="">全部标记为已读</a> </div>-->
-                <div><a href="">查看全部消息</a></div>
-            </div>
-        </section>
+        
     <script>
         let message = $('.message-modal')
         function openMessage(){
@@ -69,17 +71,14 @@
                 message.css({display:'none'})
             }, 50)
         })
-
         function readMessage(id) {
             $.post("/message/readMessage",{msgId: id},function(res){
                 // alert(res)
             });
         }
-
         $.get("/user/noReadNum",function(res){
             // alert(res)
         });
-
     </script>   
     </body>
 
