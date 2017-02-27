@@ -11,7 +11,6 @@ export default class extends think.logic.base {
    * @return {} []
    */
   async indexAction(){
-   
   }
   
 }
