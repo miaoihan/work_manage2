@@ -1,47 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>登陆</title>
+  <meta charset="UTF-8">
+  <title>登陆</title>
+  <link rel="stylesheet" href="/static/css/login.css">
 </head>
+
 <body>
-    {{info}}
-    <form action="/user/login" method="post">
-        邮箱：<input type="email" name="email" required ></br>
-        密码： <input type="text" name="password" required></br>
-        <input type="submit" value="登陆">    
-    </form>
-    没有注册？<a href="/user/register">去注册</a>
-    <div id="clouds">
-	<div class="cloud x1"></div>
-	<!-- Time for multiple clouds to dance around -->
-	<div class="cloud x2"></div>
-	<div class="cloud x3"></div>
-	<div class="cloud x4"></div>
-	<div class="cloud x5"></div>
-</div>
+  {{info}}
+  <div id="clouds">
+    <div class="cloud x1"></div>
+    <!-- Time for multiple clouds to dance around -->
+    <div class="cloud x2"></div>
+    <div class="cloud x3"></div>
+    <div class="cloud x4"></div>
+    <div class="cloud x5"></div>
+  </div>
 
- <div class="container">
+  <div class="container">
+    <div id="login">
 
+      <form method="post" id="form1" action="/user/login">
 
-      <div id="login">
+        <fieldset class="clearfix">
 
-        <form method="post">
+          <p><span class="fontawesome-user"></span><input type="email" value="邮箱" name="email" onBlur="if(this.value == '') this.value = '邮箱'" onFocus="if(this.value == '邮箱') this.value = ''" required></p>
+          <!-- JS because of IE support; better: placeholder="Username" -->
+          <p><span class="fontawesome-lock"></span><input type="password" value="Password" name="password" onBlur="if(this.value == '') this.value = 'Password'" onFocus="if(this.value == 'Password') this.value = ''" required></p>
+          <!-- JS because of IE support; better: placeholder="Password" -->
+          <p><input type="submit" value="登录"></p>
 
-          <fieldset class="clearfix">
+        </fieldset>
 
-            <p><span class="fontawesome-user"></span><input type="text" value="Username" onBlur="if(this.value == '') this.value = 'Username'" onFocus="if(this.value == 'Username') this.value = ''" required></p> <!-- JS because of IE support; better: placeholder="Username" -->
-            <p><span class="fontawesome-lock"></span><input type="password"  value="Password" onBlur="if(this.value == '') this.value = 'Password'" onFocus="if(this.value == 'Password') this.value = ''" required></p> <!-- JS because of IE support; better: placeholder="Password" -->
-            <p><input type="submit" value="登录"></p>
+      </form>
 
-          </fieldset>
-
-        </form>
-
-        <p>尚未注册? <a href="#" class="blue">现在注册</a><span class="fontawesome-arrow-right"></span></p>
-
-      </div> <!-- end login -->
+      <p>尚未注册? <a href="/user/register" class="blue">现在注册</a><span class="fontawesome-arrow-right"></span></p>
 
     </div>
+    <!-- end login -->
+
+  </div>
+
+  <script>
+    function checkForm() {
+      return true
+    }
+
+    function subme() {
+      if (checkForm()) {
+        $('#form1').submit()
+      }
+    }
+  </script>
+
+
 </body>
+
 </html>

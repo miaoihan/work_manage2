@@ -1,15 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>注册</title>
+  <meta charset="UTF-8">
+  <title>登陆</title>
+  <link rel="stylesheet" href="/static/css/login.css">
 </head>
+
 <body>
-    <form action="/user/register" method="post">
-        邮箱：<input type="email" name="email" required ></br>
-        密码： <input type="password" name="password" required></br>
-        <input type="submit" value="注册">
-    </form>
-    已有账号？<a href="/user/login">去登陆</a>
+  {{info}}
+  <div id="clouds">
+    <div class="cloud x1"></div>
+    <!-- Time for multiple clouds to dance around -->
+    <div class="cloud x2"></div>
+    <div class="cloud x3"></div>
+    <div class="cloud x4"></div>
+    <div class="cloud x5"></div>
+  </div>
+
+  <div class="container">
+    <div id="login" style="margin-top: 64px;">
+
+      <form method="post" id="form1" action="/user/register">
+
+        <fieldset class="clearfix">
+
+          <p><span class="fontawesome-user"></span><input type="text" name="nickname" placeholder="昵称" required></p>
+          <!-- JS because of IE support; better: placeholder="Username" -->
+          <p><span class="fontawesome-user"></span><input type="email" name="email" placeholder="邮箱" required></p>
+          <p><span class="fontawesome-lock"></span><input type="password" name="password" required></p>
+          <!-- JS because of IE support; better: placeholder="Password" -->
+          <p><input type="submit" value="注册"></p>
+
+        </fieldset>
+
+      </form>
+
+      <p>已有账号? <a href="/user/login" class="blue">现在登录</a><span class="fontawesome-arrow-right"></span></p>
+
+    </div>
+    <!-- end login -->
+
+  </div>
+
+  <script>
+    function checkForm() {
+      return true
+    }
+
+    function subme() {
+      if (checkForm()) {
+        $('#form1').submit()
+      }
+    }
+  </script>
+
+
 </body>
+
 </html>
