@@ -10,15 +10,17 @@ export default class extends Base {
    */
   
     async readmessageAction() {
-			let msgId = this.post('msgId')
-			// 设置成已读
-			await this.model('message').where({id: msgId}).update({is_read: 1})
-		}
+        let msgId = this.post('msgId')
+        // 设置成已读
+        await this.model('message').where({id: msgId}).update({is_read: 1})
+	}
 
+    /**
+     * 
+     */
     async getMessageAction() {
-      let user = await this.model('user').findById(await this.session('uid'))
-			let message = user.message
-      
+        let user = await this.model('user').findById(await this.session('uid'))
+		    let message = user.message
 		}
 
     // async getMessageAction() {
