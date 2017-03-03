@@ -70,7 +70,7 @@ DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `to` int(11) DEFAULT NULL,
-  `from` int(11) DEFAULT NULL,
+  `from` int(11) DEFA ULT NULL,
   `content` text,
   `link` varchar(255) DEFAULT NULL,
   `type` int(11) DEFAULT NULL,

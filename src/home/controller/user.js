@@ -93,14 +93,14 @@ export default class extends Base {
         // this.success(file)
         await model.where({ id: postID }).update(this.post())
         if (file.size != 0){
-					try {
-						//用户上传头像了才会更新
-						await fs.move(file.path, think.RESOURCE_PATH + newPath)
-						await model.where({ id: postID }).update({logo: newPath})
-					} catch (error) { 
-						throw error
-					} 
-				}
+            try {
+                //用户上传头像了才会更新
+                await fs.move(file.path, think.RESOURCE_PATH + newPath)
+                await model.where({ id: postID }).update({logo: newPath})
+            } catch (error) { 
+                throw error
+            } 
+        }
         // this.success(this.post())
         return this.redirect(`/user/profile?id=${postID}`)
     }
