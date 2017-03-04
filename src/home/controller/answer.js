@@ -66,5 +66,18 @@ export default class extends Base {
 		this.redirect(`/question/details?id=${qid}`)
   }
 
+	async tmpsaveAction() {
+        let answerDao = this.model('answer')
+        let answer = this.post()
+        // 设置成暂存
+        answer.is_commit = 0
+        if (await answerDao.add(answer)) {
+            // this.findAction()
+            return this.success()
+        } else {
+            return this.fail(1000,'error')
+        }
+    }
+
 
 }
