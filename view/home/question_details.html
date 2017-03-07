@@ -120,12 +120,13 @@
                 <input type="hidden" value="{{user.id}}" name="u_id">
                 <div class="clear"></div>
                 <div id="editormd" style="margin-bottom:20px">
-                    <textarea name="content_md" id="txt_md"></textarea>
+                    <textarea name="content_md" id="txt_md">{{ answer }}</textarea>
                 </div>
                 <input name="content_html" id="txt_html" type="hidden">
             </form>
             <div class="e-t-wrapp">
-                <a class="btn right" onclick="subme()">提交</a>
+                <a class="btn right" onclick="subme()" style="margin-left: 20px;">提交</a>
+                <a class="btn right" onclick="saveAnswer()">保存</a>
             </div>
         </div>
     <script src="/static/js/jquery.min.js"></script>
@@ -170,6 +171,16 @@
         $('#inputAid').val(aid)   //答案id
         $('#inputAuid').val(auid) //回答者
         // alert($('#inputAid').val())
+    }
+
+    function saveAnswer(){
+        $.post("/answer/tmpsave", $("#form1").serialize(), data => {
+            if (data.errno == 0){
+                alert('保存成功！')
+            } else{
+                alert(data.errmsg)
+            }
+        });
     }
 
     $(document).ready(function() {

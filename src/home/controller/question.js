@@ -36,7 +36,6 @@ export default class extends Base {
 
     async addAction() {
         let user = this.session('user')
-
         let model = this.model('question')
         let id = this.post('id')
         let question = this.post()
@@ -82,10 +81,10 @@ export default class extends Base {
     }
 
     async detailsAction() {
-        let questionM = this.model('question')
-        let answer = this.model('answer')
+        let questionDao = this.model('question')
+        let answerDao = this.model('answer')
         let id = this.get('id')
-        let question = await questionM.where({ id: id }).find()
+        let question = await questionDao.where({ id: id }).find()
         let user = this.model('user').findById(await this.session('uid'))
         let noReadNum = this.model('user').getNoReadNum(await this.session('uid'))
         let sql = `select * from answer left join comment on answer.id = comment.a_id 
@@ -93,8 +92,22 @@ export default class extends Base {
         // let answerList = await answer.query(sql)
         // let answerList = await answer.join('comment on answer.id = comment.a_id').
         //                               where({ q_id: id }).order('answer.id DESC').select()
+<<<<<<< HEAD
         let answerList = await answer.where({ q_id: id }).order('id DESC').select()
 
+=======
+        let answerList = await answerDao.where({ q_id: id, is_commit: 1 }).order('id DESC').select()
+        // this.success(answerList);
+        
+        //判断该用户对该问题有无暂存
+        let answer = await answerDao.where({ q_id: id, u_id: await this.session('uid') }).select()
+        // console.log(answer.length+'hahah');
+        if ( answer.length > 0 ){
+            // this.success(answer[0].content_md)
+            // 渲染文本编辑器的暂存内容
+            this.assign('answer', answer[0].content_md)
+        }
+>>>>>>> 4ebfab5e004066add31388657d001b81da1f7cf1
         if (question) {
             this.assign('question', question)
             this.assign('answerList', answerList)
@@ -104,20 +117,7 @@ export default class extends Base {
         }
     }
 
-    // async answerAction() {
-    //     let answer = this.model('answer')
-    //     let content = this.post('content')
-    //     let q_id = this.post('qid')
-    //     if (await answer.add({  
-    //             content: content,
-    //             q_id: q_id
-    //         })) {
-    //         // this.findAction()
-    //         this.redirect(`/question/details/${q_id}`)
-    //     } else {
-    //         this.assign('info', 'error')
-    //     }
-    // }
+    
 
     
 
