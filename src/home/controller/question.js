@@ -91,11 +91,7 @@ export default class extends Base {
                    where answer.q_id = ${id} order by answer.id DESC`
         // let answerList = await answer.query(sql)
         // let answerList = await answer.join('comment on answer.id = comment.a_id').
-        //                               where({ q_id: id }).order('answer.id DESC').select()
-<<<<<<< HEAD
-        let answerList = await answer.where({ q_id: id }).order('id DESC').select()
-
-=======
+        // where({ q_id: id }).order('answer.id DESC').select()
         let answerList = await answerDao.where({ q_id: id, is_commit: 1 }).order('id DESC').select()
         // this.success(answerList);
         
@@ -107,7 +103,6 @@ export default class extends Base {
             // 渲染文本编辑器的暂存内容
             this.assign('answer', answer[0].content_md)
         }
->>>>>>> 4ebfab5e004066add31388657d001b81da1f7cf1
         if (question) {
             this.assign('question', question)
             this.assign('answerList', answerList)
