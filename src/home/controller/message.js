@@ -11,7 +11,7 @@ export default class extends Base {
 
   async readmessageAction() {
     let msgId = this.post('msgId')
-      // 设置 成已读; 
+      // 设置成已读; 
     await this.model('message').where({ id: msgId }).update({ is_read: 1 })
   }
 

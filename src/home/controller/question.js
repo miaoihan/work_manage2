@@ -88,16 +88,13 @@ export default class extends Base {
         let question = await questionM.where({ id: id }).find()
         let user = this.model('user').findById(await this.session('uid'))
         let noReadNum = this.model('user').getNoReadNum(await this.session('uid'))
-        // console.log('###### 打印了1 ######'+question.id);
         let sql = `select * from answer left join comment on answer.id = comment.a_id 
                    where answer.q_id = ${id} order by answer.id DESC`
-        // console.log(sql);
         // let answerList = await answer.query(sql)
         // let answerList = await answer.join('comment on answer.id = comment.a_id').
         //                               where({ q_id: id }).order('answer.id DESC').select()
         let answerList = await answer.where({ q_id: id }).order('id DESC').select()
-        // this.success(answerList);
-        
+
         if (question) {
             this.assign('question', question)
             this.assign('answerList', answerList)
