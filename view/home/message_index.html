@@ -1,0 +1,192 @@
+{% extends './base.html' %}
+    {% block body %}
+        <!--面包屑-->
+        <div class="crumbs-wrapper zcard content-20"> <a href="/" class="">首页</a> / <a href="#!" class="active">问答</a>
+        </div>
+        <div class="row">
+            <div class="col m12 s12">
+                <div class="zcard que-dtl">
+                    <h2>{{question.title}}</h2>
+                    <div class="que-meta">
+                        <span>116</span>
+                        <span>56</span>
+                        <span>{{question.created_time | parseTime}}</span>
+                    </div>
+                    <div class="que-content">
+                        {{question.content_html | safe}}
+                    </div>
+                </div>
+                <div class="ans-text">
+                        {% if user %}
+                        <a class="modal-trigger waves-effect waves-light btn right" type="submit" name="action" 
+                                style="background: #ef1255;margin:10px 0 20px;"
+                                href="#modal1">回复
+                        </a>
+                        {% else %}
+                        <a class="btn waves-effect waves-light right" 
+                            href="/user/login" 
+                            style="background: #ef1255;margin:10px 0 20px;"
+                            >登陆后回复
+                        </a>
+                        {% endif %}
+                </div>
+                <div class="clear"></div>
+				<!-- 回答列表 -->
+                <div class="ans-list">
+                    {% for answer in answerList %}
+                    <div class="ans-item row zcard">
+                        <div class="col">
+                            <div class="">
+                                <img src="{{answer.user.logo}}" alt="" class="avatar-50">
+                            </div>
+                        </div>
+                        <div class="col s10" style="margin:5px 0 10px -10px;">
+                            <div class="meta">
+                                <span>{{answer.user.username}}</span>
+                                <span>{{answer.created_time | parseTime}}</span>
+                            </div>
+                            <div class="ans-content">
+                                {{answer.content_html | safe}}
+                            </div>
+                            <div style="margin-top:10px;color:#8590a6;">
+                                <span></span>
+                                {% if not answer.comment and user.role < 2%}
+                                <a href="#modal2" onclick="setAid({{answer.id}},{{answer.u_id}})">回复</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 评语 -->
+                    {% if answer.comment %}
+                    <div class="ans-item row zcard" style="margin-left: 50px;">
+                        <div class="col">
+                            <div class="ans-avator">
+                                <img src="{{answer.comment.user.logo}}" alt="" class="avatar-50">
+                            </div>
+                        </div>
+                        <div class="col s10" style="margin:5px 0 10px -10px;">
+                            <div class="meta">
+                                <span>{{answer.comment.user.username}}</span>
+                                <span>{{answer.comment.created_time | parseTime}}</span>
+                            </div>
+                            <div class="ans-content">
+                                {{answer.comment.content_html | safe}}
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    <!-- end item -->
+                    <!-- 教师批改model-->
+                    <div id="modal2" class="modal">
+                        <div class="modal-content">
+                            <form action="/answer/comment" method="post" id="form2">
+                                <input type="hidden" name="a_id" id="inputAid">
+                                <input type="hidden" name="u_id" value="{{user.id}}">
+                                <input type="hidden" name="a_u_id" id="inputAuid">
+                                <input type="hidden" name="q_id" value="{{question.id}}">
+                                <input type="hidden" name="level" value="{{question.level}}" >
+                                <input type="hidden" name="title" value="{{question.title}}" >
+                                <p class="range-field">
+                                打分 ( 0-100 )
+                                <input type="range" id="scored" min="0" max="100" name="scored"/>
+                                </p>
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                        <textarea id="textarea1" class="materialize-textarea" name="content_html"></textarea>
+                                        <label for="textarea1">评语</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                        <a class="modal-action waves-effect waves-green btn-flat" onclick="subme2()">提交</a>
+                        </div>
+                    </div>
+                    <div class="seemore-wrap">
+                        <a href="" class="btn seemore">查看更多</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- markdown editor -->
+        <!-- 学生回答model -->
+        <div id="modal1" class="modal bottom-sheet" style="max-height:90%;padding: 20px 0;display: block">
+            <form id="form1" action="/answer/answer" method="post">
+                <!-- 保存该回答的主题的id -->
+                <input type="hidden" value="{{question.id}}" name="q_id">
+                <input type="hidden" value="{{user.id}}" name="u_id">
+                <div class="clear"></div>
+                <div id="editormd" style="margin-bottom:20px">
+                    <textarea name="content_md" id="txt_md">{{ answer }}</textarea>
+                </div>
+                <input name="content_html" id="txt_html" type="hidden">
+            </form>
+            <div class="e-t-wrapp">
+                <a class="btn right" onclick="subme()" style="margin-left: 20px;">提交</a>
+                <a class="btn right" onclick="saveAnswer()">保存</a>
+            </div>
+        </div>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/materialize.min.js"></script>
+    <script src='/static/editor/editormd.min.js'></script>
+</body>
+<script>
+    //md 文本编辑器
+        var testEditor = editormd("editormd", {
+            width: "90%",
+            height: 640,
+            syncScrolling: "single",
+            saveHTMLToTextarea : true,
+            path: "/static/editor/lib/"
+        });
+
+    function checkForm() {
+        return true
+    }
+
+    function checkForm2() {
+        return true
+    }
+
+    function subme() {
+        // alert(6767)
+        $('#txt_html').val(testEditor.getHTML())
+        if (checkForm()) {
+            $('#form1').submit()
+        }
+    }
+
+    function subme2() {
+        // alert(6666)
+        if (checkForm2()) {
+            $('#form2').submit()
+        }
+    }
+    //设置回答的id和回答者uid
+    function setAid(aid,auid) {
+        // document.getElementById('inputAid')
+        $('#inputAid').val(aid)   //答案id
+        $('#inputAuid').val(auid) //回答者
+        // alert($('#inputAid').val())
+    }
+
+    function saveAnswer(){
+        $.post("/answer/tmpsave", $("#form1").serialize(), data => {
+            if (data.errno == 0){
+                alert('保存成功！')
+            } else{
+                alert(data.errmsg)
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        $('.modal').modal()
+        
+        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    })
+</script>
+{% endblock %}
