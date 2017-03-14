@@ -17,7 +17,7 @@ export default class extends Base {
     let quePageData = await question.findByPage(page)
     //从session里uid找user
     let user = await userDao.findById(await this.session('uid'))
-    // this.success(await this.session('uid'))
+    // this.success(user)
     let noReadNum = userDao.getNoReadNum(await this.session('uid'))
     let can_answer = 0, hasAnswerList = ""
     // this.success(think.isEmpty(hasAnswerList))

@@ -17,7 +17,7 @@ export default class extends Base {
     } else {
         this.assign('info', 'error')
     }
-	}
+}
 
 	/**
    * 教师批改
@@ -71,12 +71,15 @@ export default class extends Base {
         let answer = this.post()
         // 设置成暂存
         answer.is_commit = 0
-        if (await answerDao.add(answer)) {
-            // this.findAction()
-            return this.success()
-        } else {
-            return this.fail(1000,'error')
-        }
+		console.log(answer);
+		await answerDao.add(answer)
+		return this.success(answer)
+        // if (await answerDao.add(answer).buildSql()) {
+        //     // this.findAction()
+        //     return this.success(answer)
+        // } else {
+        //     return this.fail(1000,'error')
+        // }
     }
 
 

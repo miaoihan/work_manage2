@@ -47,11 +47,11 @@ export default class extends think.model.relation {
                 return null
             }
         },
-        is_commit: { //是否已提交 0: 无， 1：有
-            default: function() { 
-                return 1
-            }
-        },
+        // is_commit: { //是否已提交 0: 无， 1：有
+        //     default: function() { 
+        //         return 1
+        //     }
+        // },
         del_state: { 
             default: function() { 
                 return 0

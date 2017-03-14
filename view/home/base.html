@@ -43,13 +43,13 @@
         {% if user %}
         <section class="message-modal white z-depth-2" tabindex="1">
             <div class="msg-tittle fz-14">
-                通知
+                通知{{message.link}}
             </div>
             <div class="msg-content fz-14">
                 {% for message in user.messageList %}
                 <div class="item-wrapper" {% if message.is_read == 0 %} style="background: #F4F8FB" {% endif %}>
                     <div class="m-c-item">
-                    <a href="{{message.link}}" onclick="readMessage({{message.id}})">{{message.content}}</a>  
+                        <a href="{{message.link}}" onmousedown="readMessage({{message.id}},'{{message.link}}')">{{message.content}}</a>  
                     </div>
                     <hr class="fenge">
                 </div>
@@ -74,12 +74,15 @@
             message.focus()
         }
         message.blur(function() {
+            // alert('shi qu')
             // blur优先于click时间，所以给个延迟
             setTimeout(() => {
                 message.css({display:'none'})
-            }, 50)
+            }, 100)
         })
-        function readMessage(id) {
+        function readMessage(id,link) {
+            // alert(link)
+            location.href = link
             $.post("/message/readMessage",{msgId: id},function(res){
                 // alert(res)
             });
