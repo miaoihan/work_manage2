@@ -15,8 +15,9 @@
             <div class="nav-wrapper"> <a href="/" class="left brand-logo" style="font-size:22px;">码蜂社</a>
                 <ul id="nav-mobile" class="right" style="margin-right: 20px">
                     {% if user %}
-                    <li><a onclick="openMessage()" id="nav-msg"> 
-                        {{"消息" if noReadNum == 0 else "消息 "+ noReadNum}}
+                    <li>
+                        <a onclick="openMessage()" id="nav-msg"> 
+                            消息<span class="" id="msg-num"> </span>
                         </a>
                     </li>
                     <li><a href="/user/profile?id={{user.id}}"><img src="{{user.logo}}" alt="" class="avatar-nav cicle"> </a></li>
@@ -61,8 +62,8 @@
         <footer>
             <div class="Copyright "> Copyright © 2016 码蜂社 京公网安备 26015792005034号 </div>
         </footer>
-        
-        
+    </body>
+    <script src="/static/js/jquery.min.js"></script>
     <script>
         let message = $('.message-modal')
         function openMessage(){
@@ -80,10 +81,12 @@
                 // alert(res)
             });
         }
-        $.get("/user/noReadNum",function(res){
+        //未读消息
+        $.get("/user/getNoReadNum",function(res){
             // alert(res)
+            let num = res.data
+            if (num != 0)
+                $('#msg-num').text(res.data)
         });
     </script>   
-    </body>
-
 </html>

@@ -61,7 +61,7 @@ export default class extends Base {
     password = shasum.digest('hex');
 
     let user = await model.where({ email: email, password: password }).find()
-      // session 存用户id
+      // session  存用户id
     this.session("uid", user.id);
     // console.log(user);
     if (think.isEmpty(user)) {
@@ -131,6 +131,24 @@ export default class extends Base {
     let user = await userDao.where({ id: id }).find()
     this.assign('user', user)
     return this.display()
+  }
+
+  /**
+   * API接口
+   * 获取未读消息数
+   */
+  async getnoreadnumAction() {
+    let userDao = this.model('user')
+    let user = await userDao.findById(await this.session('uid'))
+    let num = 0
+    if (user) {
+        for (let i of user.messageList) {
+            if (i.is_read == 0)
+                num++
+        }
+    }
+    this.success(num)
+        
   }
 
 

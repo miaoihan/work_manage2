@@ -23,6 +23,14 @@ export default class extends Base {
     let message = user.message
   }
 
+  /**
+   * 获取未读消息数
+   */
+  async getNoReadNumAction() {
+    let noReadNum = this.model('user').getNoReadNum(await this.session('uid'))
+    this.success(noReadNum)
+  }
+
   // async getMessageAction() {
   // 	let msgId = this.post('msgId')
   // 	// 设置成已读
