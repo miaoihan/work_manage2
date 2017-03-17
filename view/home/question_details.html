@@ -18,15 +18,17 @@
                 </div>
                 <div class="ans-text">
                         {% if user %}
-                        <a class="modal-trigger waves-effect waves-light btn right" type="submit" name="action" 
-                                style="background: #ef1255;margin:10px 0 20px;"
-                                href="#modal1">回复
-                        </a>
+                            {% if not hasAnswer %}
+                            <a class="modal-trigger waves-effect waves-light btn right" type="submit" name="action" 
+                                    style="background: #ef1255;margin:10px 0 20px;"
+                                    href="#modal1">回答
+                            </a>
+                            {% endif %}
                         {% else %}
                         <a class="btn waves-effect waves-light right" 
                             href="/user/login" 
                             style="background: #ef1255;margin:10px 0 20px;"
-                            >登陆后回复
+                            >登陆后回答
                         </a>
                         {% endif %}
                 </div>
@@ -51,7 +53,7 @@
                             <div style="margin-top:10px;color:#8590a6;">
                                 <span></span>
                                 {% if not answer.comment and user.role < 2%}
-                                <a href="#modal2" onclick="setAid({{answer.id}},{{answer.u_id}})">回复</a>
+                                <a href="#modal2" onclick="setAid({{answer.id}},{{answer.u_id}})">批改</a>
                                 {% endif %}
                             </div>
                         </div>

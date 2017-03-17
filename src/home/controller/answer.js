@@ -57,7 +57,6 @@ export default class extends Base {
 			//通知学员没通过
 			message.link = `/question/details?id=${qid}`
 			message.content = '你的回答 '+title+' 没有通过'
-
 		}
 		await comment.add(this.post())
 		//update message
@@ -72,14 +71,14 @@ export default class extends Base {
         // 设置成暂存
         answer.is_commit = 0
 		console.log(answer);
-		await answerDao.add(answer)
-		return this.success(answer)
-        // if (await answerDao.add(answer).buildSql()) {
-        //     // this.findAction()
-        //     return this.success(answer)
-        // } else {
-        //     return this.fail(1000,'error')
-        // }
+		// await answerDao.add(answer)
+		// return this.success(answer)
+        if (await answerDao.add(answer).buildSql()) {
+            // this.findAction()
+            return this.success(answer)
+        } else {
+            return this.fail(1000,'error')
+        }
     }
 
 
