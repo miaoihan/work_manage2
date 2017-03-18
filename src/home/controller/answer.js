@@ -8,10 +8,10 @@ export default class extends Base {
    * @return {Promise} []
    */
   async answerAction() {
-    let answer = this.model('answer')
+    let answerDao = this.model('answer')
     let content = this.post('content')
     let qid = this.post('q_id')
-    if (await answer.add(this.post())) {
+    if (await answerDao.save(this.post())) {
         // this.findAction()
         this.redirect(`/question/details?id=${qid}`)
     } else {
@@ -19,7 +19,7 @@ export default class extends Base {
     }
 }
 
-	/**
+  /**
    * 教师批改
    * @return {Promise} []
    */
@@ -54,7 +54,7 @@ export default class extends Base {
 			message.link = `/question/details?id=${qid}`
 			message.content = '你通过了关于'+title+' 的回答，你升了一级！'
 		} else{
-			//通知学员没通过
+			//通知学员没通过                                     
 			message.link = `/question/details?id=${qid}`
 			message.content = '你的回答 '+title+' 没有通过'
 		}
@@ -69,13 +69,13 @@ export default class extends Base {
         let answerDao = this.model('answer')
         let answer = this.post()
         // 设置成暂存
-        answer.is_commit = 0
+        answer.commit_state = 0
 		console.log(answer);
 		// await answerDao.add(answer)
 		// return this.success(answer)
-        if (await answerDao.add(answer).buildSql()) {
+        if (await answerDao.add(answer)) {
             // this.findAction()
-            return this.success(answer)
+            return this.success()
         } else {
             return this.fail(1000,'error')
         }

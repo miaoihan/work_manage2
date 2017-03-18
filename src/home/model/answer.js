@@ -47,7 +47,7 @@ export default class extends think.model.relation {
                 return null
             }
         },
-        // is_commit: { //是否已提交 0: 无， 1：有
+        // commit_state: { // 0. 未提交、为批改 1：已提交、未批改 2：已提交、已批改
         //     default: function() { 
         //         return 1
         //     }
@@ -68,6 +68,17 @@ export default class extends think.model.relation {
 
     getUserList() {
 
+    }
+
+    /**
+     * 通用save方法
+     * @param {*保存的对象} obj 
+     */
+    async save(obj) {
+        if (obj.id)
+            await this.where({ id: obj.id }).update(obj)
+        else
+            await this.add(obj)
     }
 
 

@@ -93,14 +93,14 @@ export default class extends Base {
         // let answerList = await answer.query(sql)
         // let answerList = await answer.join('comment on answer.id = comment.a_id').
         // where({ q_id: id }).order('answer.id DESC').select()
-        let answerList = await answerDao.where({ q_id: id, is_commit: 1 }).order('id DESC').select()
+        let answerList = await answerDao.where({ q_id: id, commit_state: {'>': 0} }).order('id DESC').select()
         // this.success(answerList);
         //判断该用户对该问题有无暂存
         let answer = await answerDao.where({ q_id: id, u_id: await this.session('uid') }).select()
         if ( answer.length > 0 ){
             // this.success(answer[0].content_md)
             // 渲染文本编辑器的暂存内容
-            this.assign('answer', answer[0].content_md)
+            this.assign('answer', answer[0])
         }
         // 判断当前用户是否回答了该问题
         let hasAnswerList = currentUser.has_answer.split(',')

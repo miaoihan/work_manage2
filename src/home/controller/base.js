@@ -4,6 +4,10 @@ export default class extends think.controller.base {
   /**
    * some base method in here
    */
+   save(){
+     console.log('66665888888');
+   }
+
 
   // async __before() {
   //       let user = await this.session('user')

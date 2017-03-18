@@ -110,19 +110,20 @@
                     <div class="seemore-wrap">
                         <a href="" class="btn seemore">查看更多</a>
                     </div>
-                </div>
+                </div> <!-- end answerList -->
             </div>
         </div>
     <!-- markdown editor -->
         <!-- 学生回答model -->
         <div id="modal1" class="modal bottom-sheet" style="max-height:90%;padding: 20px 0;display: block">
             <form id="form1" action="/answer/answer" method="post">
-                <!-- 保存该回答的主题的id -->
+                <!-- 保存该回答的问题的id -->
                 <input type="hidden" value="{{question.id}}" name="q_id">
+                <input type="hidden" value="{{user.id}}" name="u_id">
                 <input type="hidden" value="{{user.id}}" name="u_id">
                 <div class="clear"></div>
                 <div id="editormd" style="margin-bottom:20px">
-                    <textarea name="content_md" id="txt_md">{{ answer }}</textarea>
+                    <textarea name="content_md" id="txt_md">{{ answer.content_md }}</textarea>
                 </div>
                 <input name="content_html" id="txt_html" type="hidden">
             </form>

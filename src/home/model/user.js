@@ -96,6 +96,13 @@ export default class extends think.model.relation {
         return num
     }
 
+    async addAnswer(aid) {
+        let currentUser = await this.findById(await this.session('uid'))
+        let hasAnswerList = currentUser.has_answer + aid + ','
+        //更新已回答列表
+		await currentUser.update({has_answer: has_answer})
+    }
+
 
 
 
