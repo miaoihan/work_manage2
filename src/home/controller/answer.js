@@ -37,6 +37,7 @@ export default class extends Base {
 		let title = this.post('title')
 		// 学员id
 		let auid = this.post('a_u_id')
+		let aid = this.post('a_id')
 		let message = {
 			to: auid,
 			from: 0, //默认系统发送
@@ -53,8 +54,9 @@ export default class extends Base {
 			if (level > old_level){
 				await userDao.where({id: auid}).update({level: level})
 			}
-			let has_answer = user.has_answer + level + ','
+
 			// 已放在回答直接更新
+			// let has_answer = user.has_answer + level + ','
 			// await userDao.where({id: auid}).update({has_answer: has_answer})
 			//通知学员通过
 			message.link = `/question/details?id=${qid}`
@@ -65,8 +67,10 @@ export default class extends Base {
 			message.content = '你的回答 '+title+' 没有通过'
 		}
 		await comment.add(this.post())
-		//update message
+		// update message
 		await this.model('message').add(message)
+		// update answer commit_state
+		await this.model('answer').where({id: aid}).update({commit_state: 2})
 
 		this.redirect(`/question/details?id=${qid}`)
   }
