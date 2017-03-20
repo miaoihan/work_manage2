@@ -8,6 +8,13 @@ export default class extends Base {
    * index action
    * @return {Promise} []
    */
+  
+ async indexAction() {
+    let answerDao = this.model('answer')
+    let answerList = answerDao.where({commit_state: 1}).select()
+    this.assign('answerList',answerList)
+    return this.display()
+  }
 
   async readmessageAction() {
     let msgId = this.post('msgId')

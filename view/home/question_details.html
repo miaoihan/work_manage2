@@ -41,7 +41,7 @@
 				<!-- 回答列表 -->
                 <div class="ans-list">
                     {% for answer in answerList %}
-                    <div class="ans-item row zcard">
+                    <div class="ans-item row zcard" id="{{answer.id}}">
                         <div class="col">
                             <div class="">
                                 <img src="{{answer.user.logo}}" alt="" class="avatar-50">

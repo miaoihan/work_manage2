@@ -35,6 +35,7 @@ export default class extends Base {
 		let qid = this.post('q_id')
 		let level = this.post('level')
 		let title = this.post('title')
+		let scored = this.post('scored')
 		// 学员id
 		let auid = this.post('a_u_id')
 		let aid = this.post('a_id')
@@ -47,7 +48,7 @@ export default class extends Base {
 			is_read: 0
 		} // content and is_read
 		// >60分学员升一级
-		if (this.post('scored') >= 60){
+		if ( scored >= 60){
 			let user = await userDao.where({id: auid}).find() //学员
 			//如果比用户级别高则升级
 			let old_level = user.level
@@ -61,6 +62,8 @@ export default class extends Base {
 			//通知学员通过
 			message.link = `/question/details?id=${qid}`
 			message.content = '你通过了关于'+title+' 的回答，你升了一级！'
+			// uodate scored 
+			await this.model('answer').where({id: aid}).update({scored: scored})
 		} else{
 			//通知学员没通过                                     
 			message.link = `/question/details?id=${qid}`
