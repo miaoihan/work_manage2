@@ -104,14 +104,15 @@ export default class extends Base {
         }
         // 判断当前用户是否回答了该问题
         let hasAnswerList = currentUser.has_answer.split(',')
-        // this.success(hasAnswerList)
+        // this.success(currentUser)
         let hasAnswer  = false //bool
+
         for (let i of hasAnswerList) {
             if (id == i) {
                 hasAnswer = true
             }       
         }
-        
+        // this.success(hasAnswer)
         if (question) {
             this.assign('question', question)
             this.assign('answerList', answerList)

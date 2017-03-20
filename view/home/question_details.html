@@ -18,10 +18,15 @@
                 </div>
                 <div class="ans-text">
                         {% if user %}
-                            {% if not hasAnswer %}
+                            {% if answer.commit_state != 2 %}
                             <a class="modal-trigger waves-effect waves-light btn right" type="submit" name="action" 
                                     style="background: #ef1255;margin:10px 0 20px;"
-                                    href="#modal1">回答
+                                    href="#modal1">
+                                    {% if answer.commit_state == 1 %}
+                                        更新回答
+                                    {% else %}
+                                        回答
+                                    {% endif %}
                             </a>
                             {% endif %}
                         {% else %}
@@ -120,7 +125,7 @@
                 <!-- 保存该回答的问题的id -->
                 <input type="hidden" value="{{question.id}}" name="q_id">
                 <input type="hidden" value="{{user.id}}" name="u_id">
-                <input type="hidden" value="{{user.id}}" name="u_id">
+                <input type="hidden" value="{{answer.id}}" name="id">
                 <div class="clear"></div>
                 <div id="editormd" style="margin-bottom:20px">
                     <textarea name="content_md" id="txt_md">{{ answer.content_md }}</textarea>

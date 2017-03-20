@@ -9,14 +9,20 @@ export default class extends Base {
    */
   async answerAction() {
     let answerDao = this.model('answer')
+	let userDao = this.model('user')
     let content = this.post('content')
     let qid = this.post('q_id')
-    if (await answerDao.save(this.post())) {
+	let currentUser = await userDao.findById(await this.session('uid'))
+	//更新已回答列表
+	let hasAnswerList = currentUser.has_answer + qid 
+	await userDao.where({id: await this.session('uid')}).update({has_answer: hasAnswerList})
+	let answerForm = this.post()
+	// 修改answer状态
+	answerForm.commit_state = 1
+	await answerDao.save(this.post())
         // this.findAction()
-        this.redirect(`/question/details?id=${qid}`)
-    } else {
-        this.assign('info', 'error')
-    }
+	return this.redirect(`/question/details?id=${qid}`)
+
 }
 
   /**
@@ -48,8 +54,8 @@ export default class extends Base {
 				await userDao.where({id: auid}).update({level: level})
 			}
 			let has_answer = user.has_answer + level + ','
-			//更新已回答列表
-			await userDao.where({id: auid}).update({has_answer: has_answer})
+			// 已放在回答直接更新
+			// await userDao.where({id: auid}).update({has_answer: has_answer})
 			//通知学员通过
 			message.link = `/question/details?id=${qid}`
 			message.content = '你通过了关于'+title+' 的回答，你升了一级！'
