@@ -62,7 +62,7 @@ export default class extends Base {
 
     let user = await model.where({ email: email, password: password }).find()
       // session  存用户id
-    this.session("uid", user.id);
+    await this.session("uid", user.id);
     // console.log(user);
     if (think.isEmpty(user)) {
       this.assign('info', '用户名或密码错误')

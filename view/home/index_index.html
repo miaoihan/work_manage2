@@ -90,7 +90,7 @@
                 <input name="content_html" id="txt_html" type="hidden">
             </form>
         </div> <!-- end model -->
-        
+        <script src='/static/editor/editormd.min.js'></script>
         <script>
             $(document).ready(function() {
                 // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
@@ -114,7 +114,7 @@
                         e.preventDefault()
                 })
             });
-
+            
             var testEditor = editormd("editormd", {
                             width: "90%",
                             height: 640,
