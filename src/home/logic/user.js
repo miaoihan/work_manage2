@@ -1,4 +1,6 @@
 'use strict';
+
+import Base from './base.js';
 import fs from 'fs-promise';
 
 /**
@@ -6,13 +8,10 @@ import fs from 'fs-promise';
  * @param  {} []
  * @return {}     []
  */
-export default class extends think.logic.base {
+export default class extends Base {
   async findAction(){
     let currentUser = await this.model('user').findById(await this.session('uid'))
     // 禁止非管理员访问
-    if(think.isEmpty(currentUser)){
-			return this.redirect('/');
-		}
     if (currentUser.role > 2){
       return this.redirect('/');
     }

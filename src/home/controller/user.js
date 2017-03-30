@@ -71,7 +71,7 @@ export default class extends Base {
 
 	async logoutAction() {
 		this.session()
-		this.redirect('login')
+		return this.redirect('login')
 	}
 
 	async editAction() {
