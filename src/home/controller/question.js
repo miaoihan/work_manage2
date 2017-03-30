@@ -83,42 +83,50 @@ export default class extends Base {
     async detailsAction() {
         let questionDao = this.model('question')
         let answerDao = this.model('answer')
-        let id = this.get('id')
-        let question = await questionDao.where({ id: id }).find()
-        let currentUser = await this.model('user').findById(await this.session('uid'))
+        let qid = this.get('id')
+        let uid = await this.session('uid')
+        let question = await questionDao.where({ id: qid }).find()
+        let currentUser = await this.model('user').findById(uid)
         // this.success(currentUser)
-        let noReadNum = this.model('user').getNoReadNum(await this.session('uid'))
+        let noReadNum = this.model('user').getNoReadNum(uid)
         let sql = `select * from answer left join comment on answer.id = comment.a_id 
-                   where answer.q_id = ${id} order by answer.id DESC`
+                   where answer.q_id = ${qid} order by answer.id DESC`
         // let answerList = await answer.query(sql)
         // let answerList = await answer.join('comment on answer.id = comment.a_id').
         // where({ q_id: id }).order('answer.id DESC').select()
-        let answerList = await answerDao.where({ q_id: id, commit_state: {'>': 0} }).order('id DESC').select()
-        // this.success(answerList);
-        //判断该用户对该问题有无暂存
-        let answer = await answerDao.where({ q_id: id, u_id: await this.session('uid') }).select()
+
+        // 当前用户在该问题下的状态
+        let answerList = await answerDao.where({ q_id: qid, commit_state: {'>': 0} }).order('id DESC').select()
+        // this.success(answerList);  
+        let answer = await answerDao.where({ q_id: qid, u_id: uid }).select()
         if ( answer.length > 0 ){
             // this.success(answer[0].content_md)
             // 渲染文本编辑器的暂存内容
             this.assign('answer', answer[0])
         }
-        // 判断当前用户是否回答了该问题
-        let hasAnswerList = currentUser.has_answer.split(',')
-        // this.success(currentUser)
-        let hasAnswer  = false //bool
+        // this kind of methond is too low b
 
-        for (let i of hasAnswerList) {
-            if (id == i) {
-                hasAnswer = true
-            }       
-        }
+        // // 判断当前用户是否回答了该问题
+        // let hasAnswerList = currentUser.has_answer.split(',')
+        // // this.success(currentUser)
+        // let hasAnswer  = false //bool
+
+        // for (let i of hasAnswerList) {
+        //     if (id == i) {
+        //         hasAnswer = true
+        //     }       
+        // }
         // this.success(hasAnswer)
+
+        // 当前用户对该题目的状态
+        // let answer = answerDao.where({q_id: qid, u_id: uid}).find()
+
         if (question) {
             this.assign('question', question)
             this.assign('answerList', answerList)
             this.assign('noReadNum', noReadNum)
             this.assign('user', currentUser)
-            this.assign('hasAnswer', hasAnswer)
+            // this.assign('hasAnswer', hasAnswer)
             return this.display('details')
         }
     }

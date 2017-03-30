@@ -7,16 +7,20 @@ import fs from 'fs-promise';
  * @return {}     []
  */
 export default class extends think.logic.base {
-  /**
-   * index action logic
-   * @return {} []
-   */
-  indexAction(){
-   
+  async findAction(){
+    let currentUser = await this.model('user').findById(await this.session('uid'))
+    // 禁止非管理员访问
+    if(think.isEmpty(currentUser)){
+			return this.redirect('/');
+		}
+    if (currentUser.role > 2){
+      return this.redirect('/');
+    }
   }
 
   async loginAction(){
     
+
   }
 
   async editAction(){

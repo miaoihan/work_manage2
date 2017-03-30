@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/static/css/materialize.min.css">
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/materialize.min.js"></script>
-    
+    {{user.id}}
     <body>
         <!--导航栏-->
         <nav class="nav-top">
@@ -23,6 +23,7 @@
                             消息<span class="" id="msg-num"> </span>
                         </a>
                     </li>
+                    
                     <li><a href="/user/profile?id={{user.id}}"><img src="{{user.logo}}" alt="" class="avatar-nav cicle"> </a></li>
                     <li><a href="/user/logout">登出</a></li>
                     

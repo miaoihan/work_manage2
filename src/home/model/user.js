@@ -33,10 +33,15 @@ export default class extends think.model.relation {
                 return 0;
             }
         },
-        // 0:系统管理员 1: 普通管理员 2: 普通用户
+        // 0:系统管理员 1: 普通管理员 2: 毕业用户 3：学员 4：非学员用户
         role: { //角色，默认是普通用户
             default: function () {
-                return 2;
+                return 4;
+            }
+        },
+        realname: { // 真实姓名
+            default: function () {
+                return "";
             }
         },
         has_answer: { // 已回答的问题，默认“”

@@ -4,23 +4,18 @@ export default class extends think.controller.base {
   /**
    * some base method in here
    */
-   save(){
-     console.log('66665888888');
-   }
 
-
-  // async __before() {
-  //       let user = await this.session('user')
-  //       // let question = this.model('question')
-  //       console.log('###### 打印了 ######');
-  //       if(think.isEmpty(this.get('page'))){
-  //           console.log('###### 打印了6 ######');
-  //           let quePageData = await question.page(1, 10).countSelect();
-  //           console.log('###### 打印了2 ######');
-  //       }else{
-  //           let quePageData = await question.page(this.get("page"), 10).countSelect();
-  //           console.log(quePageData);
-  //       }
-  //       this.assign('user', user)
-  //   }
+  async __before() {
+	  //部分 action 下不检查
+	  let blankActions = ['login'];
+	  this.success(this.http.action)
+	  if(blankActions.indexOf(this.http.action)){
+	  	  return;
+	  }
+	  let currentUser = await this.model('user').findById(await this.session('uid'))
+	  //判断 session 里的 userInfo
+	  if(think.isEmpty(currentUser)){
+	      return this.redirect('/');
+	  }
+  }
 }
