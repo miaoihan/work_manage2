@@ -1,0 +1,103 @@
+{% extends './base.html' %}
+{% block body %}
+    <!--面包屑-->
+    <div class="crumbs-wrapper zcard content-20"> <a href="/" class="">首页</a> / <a href="#!" class="active">批改</a>
+    </div>
+        {% if answerList | length == 0%}
+            暂无可批改的作业
+        {% else %}
+            {% for answer in answerList %}
+            <div>
+                <h5>{{answer.question.title}}</h5>
+                <div class="ans-item row zcard" id="{{answer.id}}">
+                    <div class="col">
+                        <div class="">
+                            <img src="{{answer.user.logo}}" alt="" class="avatar-50">
+                        </div>
+                    </div>
+                    <div class="col s10" style="margin:5px 0 10px -10px;">
+                        <div class="meta">
+                            <span>{{answer.user.realname}}</span>
+                            <span>{{answer.created_time | parseTime}}</span>
+                        </div>
+                        <div class="ans-content">
+                            {{answer.content_html | safe}}
+                        </div>
+                        <div style="margin-top:10px;color:#8590a6;">
+                            <span></span>
+                            {% if not answer.comment and user.role < 2%}
+                            <a href="#modal2" onclick="setAid({{answer.id}},{{answer.u_id}},'{{answer.user.email}}',{{answer.question.id}},{{answer.question.level}},'{{answer.question.title}}')">批改</a>
+                            <!--<a href="#modal2" onclick="setAid({{ans}})">批改</a>-->
+                            {% endif %}
+                        </div>
+                    </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+        <!-- 教师批改modal-->
+                <div id="modal2" class="modal">
+                    <div class="modal-content">
+                        <form action="/answer/comment" method="post" id="form1">
+                            <input type="hidden" name="a_id" id="inputAid">
+                            <input type="hidden" name="u_id" value="{{user.id}}">
+                            <input type="hidden" name="email" id="inputEmail">
+                            <input type="hidden" name="a_u_id" id="inputAuid">
+                            <input type="hidden" name="q_id" id="qid">
+                            <input type="hidden" name="level" id="qlevel" >
+                            <input type="hidden" name="title" id="qtitle" >
+                            <p class="range-field">
+                            打分 ( 0-100 )
+                            <input type="range" id="scored" min="0" max="100" name="scored"/>
+                            </p>
+                            <div class="row">
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                    <textarea id="textarea1" class="materialize-textarea" name="content_html"></textarea>
+                                    <label for="textarea1">评语</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="modal-action waves-effect waves-green btn-flat" onclick="subme()">提交</a>
+                    </div>
+                </div> <!-- end modal <--></-->
+        <script src='/static/editor/editormd.min.js'></script>    
+        <script>
+            //md 文本编辑器
+            var testEditor = editormd("editormd", {
+                width: "90%",
+                height: 640,
+                syncScrolling: "single",
+                saveHTMLToTextarea : true,
+                path: "/static/editor/lib/"
+            });
+            //设置回答的id和回答者uid
+            function setAid(aid,auid,email,qid,qlevel,qtitle) {
+                // document.getElementById('inputAid')
+                $('#inputAid').val(aid)   //答案id
+                $('#inputAuid').val(auid)
+                $('#inputEmail').val(email) //回答者
+                $('#qid').val(qid)
+                $('#qlevel').val(qlevel)
+                $('#qtitle').val(qtitle)
+                // alert($('#inputAid').val())
+            }
+
+            function subme(){
+                $.post("/answer/comment", $("#form1").serialize(), data => {
+                    if (data.errno == 0){
+                        location.href = '/user/check'
+                        // Materialize.toast('批改成功!', 2000) 
+                    } else{
+                        alert(data.errmsg)
+                    }
+                });
+            }
+
+            $(document).ready(function() {
+                $('.modal').modal()
+            })
+        </script>
+{% endblock %}

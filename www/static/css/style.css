@@ -446,7 +446,11 @@ html {
     margin-top: 20px;
 }
 
-footer {}
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
 
 .ucard-username {
     font-weight: 600;

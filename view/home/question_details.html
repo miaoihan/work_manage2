@@ -84,7 +84,7 @@
                     {% endif %}
                     {% endfor %}
                     <!-- end item -->
-                    <!-- 教师批改model-->
+                    <!-- 教师批改modal-->
                     <div id="modal2" class="modal">
                         <div class="modal-content">
                             <form action="/answer/comment" method="post" id="form2">
@@ -112,7 +112,7 @@
                         <div class="modal-footer">
                         <a class="modal-action waves-effect waves-green btn-flat" onclick="subme2()">提交</a>
                         </div>
-                    </div>
+                    </div> <!-- end modal -->
                     <div class="seemore-wrap">
                         <a href="" class="btn seemore">查看更多</a>
                     </div>
@@ -183,7 +183,7 @@
     function saveAnswer(){
         $.post("/answer/tmpsave", $("#form1").serialize(), data => {
             if (data.errno == 0){
-                alert('保存成功！')
+                Materialize.toast('保存成功!', 2000) 
             } else{
                 alert(data.errmsg)
             }
@@ -192,8 +192,6 @@
 
     $(document).ready(function() {
         $('.modal').modal()
-        
-        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
     })
 </script>
 {% endblock %}

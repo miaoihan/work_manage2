@@ -17,6 +17,14 @@ export default class extends Base {
     }
   }
 
+  async checkAction(){
+    let currentUser = await this.model('user').findById(await this.session('uid'))
+    // 禁止非管理员访问
+    if (currentUser.role > 1){
+      return this.redirect('/');
+    }
+  }
+
   async loginAction(){
     
   }

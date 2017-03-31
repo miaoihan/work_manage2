@@ -14,7 +14,7 @@ export default class extends Base {
     let qid = this.post('q_id')
 	let currentUser = await userDao.findById(await this.session('uid'))
 	//更新已回答列表
-	let hasAnswerList = currentUser.has_answer + qid 
+	let hasAnswerList = currentUser.has_answer + qid + ','
 	await userDao.where({id: await this.session('uid')}).update({has_answer: hasAnswerList})
 	let answerForm = this.post()
 	// 修改answer状态
@@ -27,7 +27,7 @@ export default class extends Base {
 
   /**
    * 教师批改
-   * @return {Promise} []
+   * @return {Json or Promise} []
    */
 	async commentAction() {
 		let comment = this.model('comment')
@@ -79,7 +79,9 @@ export default class extends Base {
 		await this.model('message').add(message)
 		// update answer commit_state
 		await this.model('answer').where({id: aid}).update({commit_state: 2})
-
+		// 如果是ajax方式提交，输出Json
+		if (this.isAjax('post'))
+			return this.success()
 		this.redirect(`/question/details?id=${qid}`)
   }
 

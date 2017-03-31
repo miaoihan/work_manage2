@@ -28,6 +28,13 @@ export default class extends think.model.relation {
                 name: "user", //data name
                 key: "u_id", 
                 fKey: "id", //forign key
+            },
+            question: {
+                type: think.model.BELONG_TO, //relation type
+                model: "question", //model name
+                name: "question", //data name
+                key: "q_id", 
+                fKey: "id", //forign key
             }
         }
     }

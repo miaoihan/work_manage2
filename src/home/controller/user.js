@@ -127,6 +127,17 @@ export default class extends Base {
 	}
 
 	/**
+	 * 批改作业
+	 */
+	async checkAction() {
+		let answerDao = this.model('answer')
+		let answerList = await answerDao.where({commit_state: 1}).select()
+		// this.success(answerList)
+		this.assign('answerList',answerList)
+		return this.display()
+	}
+
+	/**
 	 * API接口
 	 * 获取未读消息数
 	 */
