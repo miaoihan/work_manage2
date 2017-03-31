@@ -55,19 +55,24 @@ export default class extends Base {
 			if (level > old_level){
 				await userDao.where({id: auid}).update({level: level})
 			}
-
 			// 已放在回答直接更新
 			// let has_answer = user.has_answer + level + ','
 			// await userDao.where({id: auid}).update({has_answer: has_answer})
 			//通知学员通过
+			// 统一使用 Message.html         
 			message.link = `/question/details?id=${qid}`
-			message.content = '你通过了关于'+title+' 的回答，你升了一级！'
+			message.content = '你通过了关于 '+title+' 的回答，恭喜你升了一级！'
+			
+			this.sendMailAction(message.content, this.post('email'))
 			// uodate scored 
 			await this.model('answer').where({id: aid}).update({scored: scored})
 		} else{
-			//通知学员没通过                                     
+			//通知学员没通过        
+			                    
 			message.link = `/question/details?id=${qid}`
 			message.content = '你的回答 '+title+' 没有通过'
+			// 发送邮件.
+			this.sendMailAction(message.content, this.post('email'))
 		}
 		await comment.add(this.post())
 		// update message

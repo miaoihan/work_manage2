@@ -58,7 +58,7 @@
                             <div style="margin-top:10px;color:#8590a6;">
                                 <span></span>
                                 {% if not answer.comment and user.role < 2%}
-                                <a href="#modal2" onclick="setAid({{answer.id}},{{answer.u_id}})">批改</a>
+                                <a href="#modal2" onclick="setAid({{answer.id}},{{answer.u_id}},'{{answer.user.email}}')">批改</a>
                                 {% endif %}
                             </div>
                         </div>
@@ -90,6 +90,7 @@
                             <form action="/answer/comment" method="post" id="form2">
                                 <input type="hidden" name="a_id" id="inputAid">
                                 <input type="hidden" name="u_id" value="{{user.id}}">
+                                <input type="hidden" name="email" id="inputEmail">
                                 <input type="hidden" name="a_u_id" id="inputAuid">
                                 <input type="hidden" name="q_id" value="{{question.id}}">
                                 <input type="hidden" name="level" value="{{question.level}}" >
@@ -171,10 +172,11 @@
         }
     }
     //设置回答的id和回答者uid
-    function setAid(aid,auid) {
+    function setAid(aid,auid,email) {
         // document.getElementById('inputAid')
         $('#inputAid').val(aid)   //答案id
-        $('#inputAuid').val(auid) //回答者
+        $('#inputAuid').val(auid)
+        $('#inputEmail').val(email) //回答者
         // alert($('#inputAid').val())
     }
 

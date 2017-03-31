@@ -17,5 +17,6 @@ export default class extends think.logic.base {
 	  if(think.isEmpty(currentUser)){
 	      return this.redirect('/user/login');
 	  }
+		this.assign('user', currentUser)
   }
 }

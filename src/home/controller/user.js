@@ -10,35 +10,28 @@ export default class extends Base {
 	 * @return {Promise} []
 	 */
 	
-
 	async registerAction() {
 		if (this.isGet()) {
 			return this.display()
 		}
-		let model = this.model('user')
 		let id = this.post('id')
 		let user = this.post()
-			//生成gravator头像url
+		// 生成gravator头像url
 		let logo = this.model('user').getAvatarUrl(this.post('email'))
-
-		let crypto = require('crypto');
-		let password = this.post('password');
-		let shasum = crypto.createHash('sha1');
-		shasum.update(password);
-		password = shasum.digest('hex');
-		user.password = password
-		user.logo = logo
-			//if is old
-		if (id) {
-			await model.where({ id: id }).update(user)
-			return this.redirect('find')
-		}
-		//if is new
-		if (await model.add(user)) {
-			// this.findAction()
-			this.redirect('/user/login')
+		// 加密存储
+		let crypto = require('crypto')
+		let password = this.post('password')
+		let shasum = crypto.createHash('sha1')
+		shasum.update(password)
+		password = shasum.digest('hex')
+		user.password = password; user.logo = logo
+		if (await this.model('user').add(user)) {
+			// 注册成功后发送邮件
+			let html = '恭喜你成功注册蚂蜂社作业管理系统！,您现在可以登录了<a>http://work.mafengshe.com/user/login</a>'
+			this.sendMailAction('恭喜你成功注册蚂蜂社作业管理系统！', this.post('email'))
+			this.success()
 		} else {
-			this.assign('info', 'error')
+			this.fail()
 		}
 	}
 	/**
@@ -58,15 +51,15 @@ export default class extends Base {
 		password = shasum.digest('hex');
 
 		let user = await model.where({ email: email, password: password }).find()
-			// session  存用户id
-		await this.session("uid", user.id);
 		// console.log(user);
 		if (think.isEmpty(user)) {
-			this.assign('info', '用户名或密码错误')
-			return this.display()
+			return this.fail('用户名或密码错误')
+			// return this.display()
 		}
-		this.assign('user', user)
-		return this.redirect('/')
+		// session  存用户id
+		await this.session("uid", user.id);
+		return this.success()
+		// return this.redirect('/')
 	}
 
 	async logoutAction() {
