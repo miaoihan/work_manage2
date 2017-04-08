@@ -36,17 +36,6 @@ CREATE TABLE `answer` (
 -- ----------------------------
 -- Records of answer
 -- ----------------------------
-INSERT INTO `answer` VALUES ('68', '5', '14', null, '85', '2', '<p>666888</p>\r\n', '666888', '1490865224501', '0');
-INSERT INTO `answer` VALUES ('69', '6', '14', null, '87', '2', '<p>大大阿达</p>\r\n', '大大阿达', '1490921551417', '0');
-INSERT INTO `answer` VALUES ('70', '8', '14', null, '69', '2', '<p>12312asd</p>\r\n', '12312asd', '1490948726664', '0');
-INSERT INTO `answer` VALUES ('71', '9', '14', null, '79', '2', '<p>asdsadsad123132asdg</p>\r\n', 'asdsadsad123132asdg', '1490948736200', '0');
-INSERT INTO `answer` VALUES ('72', '7', '14', null, null, '0', '', '666', '1490951205123', '0');
-INSERT INTO `answer` VALUES ('73', '7', '14', null, null, '0', '', '666777', '1490951212597', '0');
-INSERT INTO `answer` VALUES ('74', '7', '14', null, null, '0', '', '666777你好', '1490951222390', '0');
-INSERT INTO `answer` VALUES ('75', '7', '14', null, null, '0', '', '666777你好安安', '1490951228102', '0');
-INSERT INTO `answer` VALUES ('76', '7', '14', null, null, '2', '<p>666777你好安安</p>\r\n', '666777你好安安', '1490951231708', '0');
-INSERT INTO `answer` VALUES ('77', '11', '14', null, '68', '2', '<p>大声道 燃烧弹撒</p>\r\n', '大声道 燃烧弹撒', '1490951391506', '0');
-INSERT INTO `answer` VALUES ('78', '12', '14', null, '79', '2', '<p>啊实打实大</p>\r\n', '啊实打实大', '1490952005390', '0');
 
 -- ----------------------------
 -- Table structure for comment
