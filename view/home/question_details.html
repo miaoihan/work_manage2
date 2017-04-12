@@ -52,7 +52,7 @@
                                 <span>{{answer.user.realname}}</span>
                                 <span>{{answer.created_time | parseTime}}</span>
                             </div>
-                            <div class="ans-content">
+                            <div class="ans-content" id="ans-content" style="overflow:hidden">
                                 {{answer.content_html | safe}}
                             </div>
                             <div style="margin-top:10px;color:#8590a6;">
@@ -60,6 +60,8 @@
                                 {% if not answer.comment and user.role < 2%}
                                 <a href="#modal2" onclick="setAid({{answer.id}},{{answer.u_id}},'{{answer.user.email}}')">批改</a>
                                 {% endif %}
+                                <div id="read-more" class="right">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -100,13 +102,17 @@
                                 <input type="range" id="scored" min="0" max="100" name="scored"/>
                                 </p>
                                 <div class="row">
-                                    <div class="row">
                                         <div class="input-field col s12">
                                         <textarea id="textarea1" class="materialize-textarea" name="content_html"></textarea>
                                         <label for="textarea1">评语</label>
                                         </div>
-                                    </div>
                                 </div>
+                                <p><input type="checkbox" class="filled-in" id="isGoodWork" />
+                                    <label for="isGoodWork">设为优秀作业</label>
+                                </p>
+                                <p><input type="checkbox" class="filled-in"  id="canSee"/>
+                                    <label for="canSee">可查看其他优秀作业</label>
+                                </p>
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -192,6 +198,33 @@
 
     $(document).ready(function() {
         $('.modal').modal()
+
+        // 内容折叠
+        let slideHeight = 75; // 折叠高度
+        let defHeight = $('#ans-content').height()
+        // 如果超过了
+        if (defHeight >= slideHeight) {
+            $('#ans-content').css('height', slideHeight + 'px')
+            $('#read-more').append('<a href="#">查看更多</a>')
+            $('#read-more a').click(function(){
+			var currHeight = $('#ans-content').height();
+			if(currHeight == slideHeight){
+				$('#ans-content').animate({
+				  height: defHeight
+				}, "normal");
+				$('#read-more a').html('收起');
+				// $('#gradient').fadeOut();
+			}else{
+				$('#ans-content').animate({
+				  height: slideHeight
+				}, "normal");
+				$('#read-more a').html('查看更多');
+				// $('#gradient').fadeIn();
+			}
+			return false;
+		});	
+
+        }
     })
 </script>
 {% endblock %}
