@@ -201,6 +201,7 @@ table {
 
 html {
     box-sizing: border-box;
+    height: 100%;
 }
 
 *,
@@ -303,7 +304,6 @@ body,
 html {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background: #f7f8fa;
-    min-height: 100%;
 }
 
 .nav-top {
