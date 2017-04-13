@@ -13,9 +13,10 @@ export default class extends Base {
     let content = this.post('content')
     let qid = this.post('q_id')
 	let currentUser = await userDao.findById(await this.session('uid'))
-	//更新已回答列表
+	//更新已回答列表 和 该问题回答的查看权
 	let hasAnswerList = currentUser.has_answer + qid + ','
-	await userDao.where({id: await this.session('uid')}).update({has_answer: hasAnswerList})
+	let canseeList = currentUser.cansees + qid + ','
+	await userDao.where({id: await this.session('uid')}).update({has_answer: hasAnswerList,cansees: canseeList})
 	let answerForm = this.post()
 	// 修改answer状态
 	answerForm.commit_state = 1

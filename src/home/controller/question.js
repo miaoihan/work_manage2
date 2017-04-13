@@ -13,7 +13,7 @@ export default class extends Base {
     async __before() {
         let user = await this.session('user')
         // let question = this.model('question')
-        console.log('###### 打印了 ######');
+        // console.log('###### 打印了 ######');
         this.assign('user', user)
     }
 
@@ -104,6 +104,14 @@ export default class extends Base {
             // 渲染文本编辑器的暂存内容
             this.assign('answer', answer[0])
         }
+        // 判断当前用户是否可查看该问题的回答，折叠展开
+        let cansee = false
+        if (currentUser.role < 2) cansee = true
+        else {
+            let canseeList = currentUser.cansees.split(',')
+            if (canseeList.indexOf(qid) != -1)
+                cansee = true
+        }
         // this kind of methond is too low b
 
         // // 判断当前用户是否回答了该问题
@@ -126,6 +134,7 @@ export default class extends Base {
             this.assign('answerList', answerList)
             this.assign('noReadNum', noReadNum)
             this.assign('user', currentUser)
+            this.assign('cansee', cansee)
             // this.assign('hasAnswer', hasAnswer)
             return this.display('details')
         }
