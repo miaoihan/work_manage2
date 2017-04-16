@@ -19,7 +19,14 @@ export default class extends think.model.relation {
                 key: "id",
                 fKey: "to", //forign key
                 order: 'created_time DESC'
-            }
+            },
+            role: {
+                type: think.model.HAS_ONE, //relation type
+                model: "role", //model name
+                name: "role", //data name
+                key: "role", 
+                fKey: "type", //forign key
+            },
         }
     }
 
@@ -33,7 +40,7 @@ export default class extends think.model.relation {
                 return 0;
             }
         },
-        // 0:系统管理员 1: 普通管理员 2: 毕业用户 3：学员 4：非学员用户
+        // 0:系统管理员 1: 普通管理员 2: 毕业用户 3：学员 4：非学员用户  5: 游客
         role: { //角色，默认是普通用户
             default: function () {
                 return 4;
@@ -60,6 +67,10 @@ export default class extends think.model.relation {
                 return "";
             }
         },
+
+        /**
+         * 每张表都自动生成的字段
+         */
         created_time: { //创建时间
             default: () => { //获取当前时间
                 return new Date().getTime()

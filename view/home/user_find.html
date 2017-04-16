@@ -13,7 +13,7 @@
           {% for user in userList %}
             <tr>
                 <td>{{user.realname}}</td>
-                <td>{{user.role}}</td>
+                <td>{{user.role.name}}</td>
                 <td>{{user.level}}</td>
                 <td><a href="/user/edit/?id={{user.id}}">编辑</a></td>
             </tr>
