@@ -80,6 +80,8 @@ export default class extends Base {
 		await this.model('message').add(message)
 		// update answer commit_state
 		await this.model('answer').where({id: aid}).update({commit_state: 2})
+		// 设置该学员对于该问题的查看权限
+		await userDao.addCanseeTo(qid,auid)
 		// 如果是ajax方式提交，输出Json
 		if (this.isAjax('post'))
 			return this.success()

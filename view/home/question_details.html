@@ -16,22 +16,25 @@
             </div>
         </div>
         <div class="ans-text">
-            {% if user %} {% if answer.commit_state != 2 %}
-            <a class="modal-trigger waves-effect waves-light btn right" type="submit" name="action" style="background: #ef1255;margin:10px 0 20px;"
-                href="#modal1">
-                                    {% if answer.commit_state == 1 %}
-                                        更新回答
-                                    {% else %}
-                                        回答
-                                    {% endif %}
-                            </a> {% endif %} {% else %}
-            <a class="btn waves-effect waves-light right" href="/user/login" style="background: #ef1255;margin:10px 0 20px;">登陆后回答
-                        </a> {% endif %}
+            {% if user %} 
+            {% if answer.commit_state != 2 %}
+                <a class="modal-trigger waves-effect waves-light btn right" type="submit" name="action" style="background: #ef1255;margin:10px 0 20px;"
+                    href="#modal1">
+                        {% if answer.commit_state == 1 %}
+                            更新回答
+                        {% else %}
+                            回答
+                        {% endif %}
+                </a> 
+            {% endif %} 
+            {% else %}
+                <a class="btn waves-effect waves-light right" href="/user/login" style="background: #ef1255;margin:10px 0 20px;">登陆后回答</a> 
+            {% endif %}
         </div>
         <div class="clear"></div>
         <!-- 回答列表 -->
         <div class="ans-list">
-            {% for answer in answerList %}
+            {% for answer in answerList %} 
             <div class="ans-item row zcard" id="{{answer.id}}">
                 <div class="col">
                     <div class="">
@@ -43,15 +46,16 @@
                         <span>{{answer.user.realname}}</span>
                         <span>{{answer.created_time | parseTime}}</span>
                     </div>
-                    <div class="ans-content" id="ans-content" style="overflow:hidden">
+                    <div class="ans-content" id="ans-content{{loop.index-1}}" style="overflow:hidden">
                         {{answer.content_html | safe}}
                     </div>
                     <div style="margin-top:10px;color:#8590a6;">
-                        <span></span> {% if not answer.comment and user.role
-                        < 2%} <a href="#modal2" onclick="setAid({{answer.id}},{{answer.u_id}},'{{answer.user.email}}')">批改</a>
-                            {% endif %}
-                            <div id="read-more" class="right">
-                            </div>
+                        <span></span> 
+                        {% if not answer.comment and user.role< 2%} 
+                            <a href="#modal2" onclick="setAid({{answer.id}},{{answer.u_id}},'{{answer.user.email}}')">批改</a>
+                        {% endif %}
+                        <div id="read-more{{loop.index-1}}" class="read-more right">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -96,10 +100,12 @@
                                 <label for="textarea1">评语</label>
                             </div>
                         </div>
-                        <p><input type="checkbox" class="filled-in" id="isGoodWork" name="is_good" />
+                        <p><input type="checkbox" class="filled-in" id="isGoodWork" name="is_good" value="0" onclick="this.value=(this.checked==true)?1:0"
+                            />
                             <label for="isGoodWork">设为优秀作业</label>
                         </p>
-                        <p><input type="checkbox" class="filled-in" id="canSee" name="cansee" />
+                        <p><input type="checkbox" class="filled-in" id="canSee" name="cansee" value="0" onclick="this.value=(this.checked==true)?1:0"
+                            />
                             <label for="canSee">可查看其他优秀作业</label>
                         </p>
                     </form>
@@ -137,14 +143,6 @@
 </div>
 <script src='/static/editor/editormd.min.js'></script>
 <script>
-    //md 文本编辑器
-    var testEditor = editormd("editormd", {
-        width: "90%",
-        height: 640,
-        syncScrolling: "single",
-        saveHTMLToTextarea: true,
-        path: "/static/editor/lib/"
-    });
 
     function checkForm() {
         return true
@@ -188,37 +186,53 @@
     }
 
     $(document).ready(function () {
+        // materialize modal
         $('.modal').modal()
 
         // 内容折叠
         let slideHeight = 75; // 折叠高度
-        let defHeight = $('#ans-content').height()
-        // 如果超过了
-        if (defHeight >= slideHeight) {
-            $('#ans-content').css('height', slideHeight + 'px')
-            $('#read-more').append('<a href="#">查看更多</a>')
-            $('#read-more a').click(function () {
-                // 判断有误查看回答权限
-                if (!{{cansee}}) 
-                    return Materialize.toast('你还不能看答案哦！', 3000) // 
-                var currHeight = $('#ans-content').height();
-                if (currHeight == slideHeight) {
-                    $('#ans-content').animate({
-                        height: defHeight
-                    }, "normal");
-                    $('#read-more a').html('收起');
-                    // $('#gradient').fadeOut();
-                } else {
-                    $('#ans-content').animate({
-                        height: slideHeight
-                    }, "normal");
-                    $('#read-more a').html('查看更多');
-                    // $('#gradient').fadeIn();
-                }
-                return false;
-            });
+        // 遍历所有node
+        $('.ans-content').each((i, node) => {
+            // get node height
+            let defHeight = node.offsetHeight
+            // 如果超过了
+            if (defHeight >= slideHeight) {
+                // 超过则设成预设高度
+                $('#ans-content'+i).css('height', slideHeight + 'px')
+                $('#read-more'+i).append('<a href="#">查看更多</a>')
+                // 监听readmore
+                $(`#read-more${i} a`).click(function () {
+                    // 判断有误查看回答权限
+                    if (!{{cansee}})
+                        return Materialize.toast('你还不能看答案哦！', 3000) // 
+                    var currHeight = $('#ans-content'+i).height();
+                    if (currHeight == slideHeight) {
+                        $('#ans-content'+i).animate({
+                            height: defHeight
+                        }, "normal");
+                        $(`#read-more${i} a`).html('收起');
+                        // $('#gradient').fadeOut();
+                    } else {
+                        $('#ans-content'+i).animate({
+                            height: slideHeight
+                        }, "normal");
+                        $(`#read-more${i} a`).html('查看更多');
+                        // $('#gradient').fadeIn();
+                    }
+                    return false;
+                });
+            }
+        })
 
-        }
     })
+
+    //md 文本编辑器
+    var testEditor = editormd("editormd", {
+        width: "90%",
+        height: 640,
+        syncScrolling: "single",
+        saveHTMLToTextarea: true,
+        path: "/static/editor/lib/"
+    });
 </script>
 {% endblock %}

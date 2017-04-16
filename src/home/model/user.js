@@ -44,12 +44,17 @@ export default class extends think.model.relation {
                 return "";
             }
         },
-        // 权限名称  17/4/13 添加 
-        rightnames: { 
+        cansees: { // 可查看的问题ids
             default: function () {
                 return "";
             }
         },
+        // 权限名称  17/4/13 添加 
+        // rightnames: { 
+        //     default: function () {
+        //         return "";
+        //     }
+        // },
         has_answer: { // 已回答的问题，默认“”
             default: function () {
                 return "";
@@ -77,6 +82,17 @@ export default class extends think.model.relation {
         let rightnames = await this.where({id: uid}).find().rightnames
         rightnames += `,${rname}`
         await this.where({id: uid}).update({rightnames: rightnames})
+    }
+
+    /**
+     * 给某个用户添加问题查看权限
+     * @param {*问题} qid
+     * @param {*用户id} uid 
+     */
+    async addCanseeTo(qid,uid) {
+        let cansees = await this.where({id: uid}).find().cansees
+        cansees += `${qid},`
+        await this.where({id: uid}).update({cansees: cansees})
     }
 
     async findById(id) {

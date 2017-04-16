@@ -24,6 +24,11 @@ export default class extends think.model.relation {
                 return null
             }
         },
+        is_good: { // 是否为优秀作业
+            default: function () {
+                return 0;
+            }
+        },
         del_state: { //
             default: function() { 
                 return 0
