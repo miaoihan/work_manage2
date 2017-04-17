@@ -111,9 +111,6 @@ export default class extends Base {
 	async findAction() {
 		let user = this.model('user')
 		let userList = await user.select()
-		let currentUser = await this.model('user').findById(await this.session('uid'))
-		// this.success(currentUser)
-		this.assign('user', 'currentUser')
 		this.assign('userList', userList)
 		return this.display('find')
 	}

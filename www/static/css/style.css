@@ -447,6 +447,10 @@ html {
     margin-top: 20px;
 }
 
+.ans-content {
+    /*max-height: 75px;*/
+}
+
 footer {
     position: absolute;
     bottom: 0;
