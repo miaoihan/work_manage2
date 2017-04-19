@@ -43,8 +43,8 @@ export default class extends Base {
 		let model = this.model('user')
 			// let user = this.post()
 		let email = this.post('email')
+		// 密码加密
 		let password = this.post('password');
-
 		let crypto = require('crypto');
 		let shasum = crypto.createHash('sha1');
 		shasum.update(password);
