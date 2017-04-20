@@ -54,6 +54,7 @@ export default class extends think.model.relation {
                 return null
             }
         },
+        // 不需要了
         // commit_state: { // 0. 未提交、为批改 1：已提交、未批改 2：已提交、已批改
         //     default: function() { 
         //         return 1
