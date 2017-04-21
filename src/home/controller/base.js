@@ -9,7 +9,7 @@ export default class extends think.controller.base {
 
   async __before() {
 		let currentUser = await this.model('user').findById(await this.session('uid'))
-		// this.success(currentUser)
+		// this.success(2)
 		this.assign('currentUser', currentUser)
   }
 

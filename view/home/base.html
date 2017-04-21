@@ -48,8 +48,8 @@
         </footer>
 
         <!--消息modal-->
-        {% if user %}
-        <section class="message-modal white z-depth-2" tabindex="1">
+        {% if currentUser %}
+        <section class="white z-depth-2" tabindex="1" id="msg-modal">
             <div class="msg-tittle fz-14">
                 通知{{message.link}}
             </div>
@@ -75,7 +75,7 @@
     <link rel="stylesheet" href="/static/editor/css/editormd.min.css">
     
     <script>
-        let message = $('.message-modal')   
+        let message = $('#msg-modal')   
         function openMessage(){
             message.css({display:'block'})
             message.focus()
@@ -87,6 +87,11 @@
                 message.css({display:'none'})
             }, 100)
         })
+        
+            
+        /** 
+        *   ajax 读message
+        **/
         function readMessage(id,link) {
             // alert(link)
             location.href = link
@@ -103,6 +108,13 @@
 
         $(document).ready(function() {
             $('select').material_select();
-        });
+            // 不同设备，message不同样式
+            let clientWidth = document.body.clientWidth
+            if (clientWidth < 500) { // 如果是移动设备
+                message.addClass("message-modal-mob")
+            // alert(clientWidth)
+            } else 
+                message.addClass("message-modal")
+            });
     </script>   
 </html>

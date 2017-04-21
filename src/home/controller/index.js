@@ -34,7 +34,6 @@ export default class extends Base {
     this.assign('quePageData', quePageData)
     this.assign('noReadNum', noReadNum)
     // this.assign('queList', queList)
-    this.assign('user', currentUser)
     return this.display()
     
   }

@@ -10,13 +10,6 @@ export default class extends Base {
      * @return {Promise} []
      */
 
-    async __before() {
-        let user = await this.session('user')
-        // let question = this.model('question')
-        // console.log('###### 打印了 ######');
-        this.assign('user', user)
-    }
-
     //此方法不再更新，转到index
     async findAction() {
         let question = this.model('question')

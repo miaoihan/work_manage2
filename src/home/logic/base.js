@@ -13,6 +13,7 @@ export default class extends think.logic.base {
 	  	  return;
 	  }
 	  let currentUser = await this.model('user').findById(await this.session('uid'))
+		// this.success(1)
 		// 如果写了下面的话，任意匹配/user/asd 就会返回currUser json数据
 		// this.success(currentUser)
 	//   判断是否登录
