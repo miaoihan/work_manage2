@@ -24,7 +24,7 @@ export default class extends think.model.relation {
                 type: think.model.HAS_ONE, //relation type
                 model: "role", //model name
                 name: "role", //data name
-                key: "role", 
+                key: "role_id", 
                 fKey: "type", //forign key
             },
         }

@@ -68,9 +68,8 @@ export default class extends Base {
 	}
 
 	async editAction() {
-		let model = this.model('user')
 		let id = this.get('id')
-		let user = model.where({ id: id }).find()
+		let user = this.model('user').where({ id: id }).find()
 		if (this.isGet()) {
 			this.assign('user', user)
 			return this.display()
@@ -80,11 +79,15 @@ export default class extends Base {
 		let file = this.file('logo') //用户头像
 		let newName = 'pic' + new Date().getTime() // a new name
 		let newPath = '/static/upload/user/' + newName + '.jpg'
-			// this.success(file)
-		await model.where({ id: postID }).update(this.post())
+			// this.success(this.post())
+		try{
+			await this.model('user').where({ id: postID }).update(this.post())
+		} catch(e) {
+			console.log(e);
+		}
+		//用户上传头像了才会更新
 		if (file.size != 0) {
 			try {
-				//用户上传头像了才会更新
 				await fs.move(file.path, think.RESOURCE_PATH + newPath)
 				await model.where({ id: postID }).update({ logo: newPath })
 			} catch (error) {

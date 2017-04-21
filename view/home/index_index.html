@@ -4,7 +4,7 @@
             <div class="crumbs-wrapper zcard content-20"> <a href="/" class="active">首页 </a></div>
             <div style="margin-bottom: 15px;">
                 <!-- Modal Trigger -->
-                {% if user.role < 2 %}
+                {% if currentUser.role.type < 2 %}
                 <a class="modal-trigger waves-effect waves-light btn" onclick="openModal(); ">新任务</a>
                 <a href="/user/check" class="modal-trigger waves-effect waves-light btn">改作业</a> 
                 {% endif %}
@@ -14,7 +14,7 @@
                 <!-- 可回答：蓝色 已回答：绿色 未解锁：红色 -->
                 {% for que in quePageData.data %}
                     <div class="col s12 m3">
-                        {% if user.role < 2 %}
+                        {% if currentUser.role.type < 2 %}
                         <div class="card green">
                             <div class="card-content" style="text-align: center">
                                 <span style="color:#fff;font-size: 32px">

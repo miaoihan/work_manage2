@@ -4,11 +4,30 @@
     <input type="hidden" name="id" value="{{user.id}}">
     <p> 头像：<input type="file" name="logo" value="{{user.logo}}"> </p>
     <p> 昵称：<input type="text" name="nickname" value="{{user.nickname}}"> </p>
-
+    <p> 真实姓名：<input type="text" name="realname" value="{{user.realname}}"> </p>
+    {% if currentUser.role.type < 2 %}
+        <div class="input-field col s12">
+            <select id="role" name="role_id">
+                {% if currentUser.role.type == 0 %}
+                    <option value="0" data-role="0">系统管理员</option>
+                    <option value="1" data-role="1">普通管理员</option>
+                {% endif %}
+                <option value="2" data-role="2">毕业学员</option>
+                <option value="3" data-role="3">学员</option>
+                <option value="4" data-role="4">普通用户</option>
+                <option value="5" data-role="5">游客</option>
+            </select>
+            <label>用户身份</label>
+        </div>
+    {% endif %}
     <a class="btn" onclick="subme()">保存</a>
 </form>
 
 <script>
+    $(document).ready(function() {
+        let option = document.querySelector('option[data-role="{{user.role.type}}"]')
+        option.selected = true;
+    });
     function checkForm() {
         return true
     }
