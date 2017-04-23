@@ -1,8 +1,8 @@
 {
   "apps": [{
-    "name": "C:UsersAdministratorDesktop论坛C:UsersAdministratorDesktop论坛work-manage",
+    "name": "作业管理系",
     "script": "www/production.js",
-    "cwd": "C:\Users\Administrator\Desktop\论坛\work-manage",
+    "cwd": "/alidata/www/default/mfs-homework",
     "exec_mode": "cluster",
     "instances": 0,
     "max_memory_restart": "1G",
