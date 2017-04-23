@@ -99,7 +99,7 @@ export default class extends Base {
         }
         // 判断当前用户是否可查看该问题的回答，折叠展开
         let cansee = false
-        if (currentUser.role < 2) cansee = true
+        if (currentUser.role.type < 2) cansee = true
         else {
             let canseeList = currentUser.cansees.split(',')
             if (canseeList.indexOf(qid) != -1)

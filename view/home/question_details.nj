@@ -1,4 +1,4 @@
-{% extends './base.html' %} {% block body %}
+{% extends './base.nj' %} {% block body %}
 <!--面包屑-->
 <div class="crumbs-wrapper zcard content-20"> <a href="/" class="">首页</a> / <a href="#!" class="active">问答</a>
 </div>
