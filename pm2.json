@@ -1,6 +1,6 @@
 {
   "apps": [{
-    "name": "作业管理系统",
+    "name": "homework",
     "script": "www/production.js",
     "cwd": "/Users/han/Desktop/project/work-manage",
     "exec_mode": "cluster",
