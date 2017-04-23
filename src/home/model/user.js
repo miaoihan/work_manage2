@@ -41,7 +41,7 @@ export default class extends think.model.relation {
             }
         },
         // 0:系统管理员 1: 普通管理员 2: 毕业用户 3：学员 4：非学员用户  5: 游客
-        role: { //角色，默认是普通用户
+        role_id: { //角色，默认是普通用户
             default: function () {
                 return 4;
             }

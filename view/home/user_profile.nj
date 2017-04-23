@@ -11,7 +11,7 @@
     <div class="row">昵称： {{user.nickname}} </div>     
     <div class="row">真实姓名： {{user.realname}} </div>  
     <div class="row"> 
-        <a href="/user/edit?id={{user.id}}" class="btn col s12">编辑个个人资料</a>
+        <a href="/user/edit?id={{user.id}}" class="btn col s12 m3">编辑个个人资料</a>
     </div>   
     <div>
         <div class="info"></div>
