@@ -113,6 +113,17 @@ export default class extends think.model.relation {
             id: id
         }).find()
     }
+    
+    // async isCurrentUser(user) {
+    //     let currentUser = await this.model('user').findById(await this.session('uid'))
+    //     if ()
+    //     if (id == undefined)
+    //         return null
+    //     return await this.where({
+    //         id: id
+    //     }).find()
+    // }
+    
 
     // *findUser(){
     //     let uid = yield http.session('uid') //从session里uid找user

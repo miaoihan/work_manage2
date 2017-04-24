@@ -69,8 +69,13 @@ export default class extends Base {
 
 	async editAction() {
 		let id = this.get('id')
+		let userDao = this.model('user')
 		let user = this.model('user').where({ id: id }).find()
+		let currentUser = await userDao.findById(await this.session('uid'))
 		if (this.isGet()) {
+			// 访问权限控制
+			if (currentUser.role.type > 1 && currentUser.id != id) 
+				return this.redirect('/')
 			this.assign('user', user)
 			return this.display()
 		}
@@ -81,7 +86,7 @@ export default class extends Base {
 		let newPath = '/static/upload/user/' + newName + '.jpg'
 			// this.success(this.post())
 		try{
-			await this.model('user').where({ id: postID }).update(this.post())
+			await userDao.where({ id: postID }).update(this.post())
 		} catch(e) {
 			console.log(e);
 		}
@@ -89,7 +94,7 @@ export default class extends Base {
 		if (file.size != 0) {
 			try {
 				await fs.move(file.path, think.RESOURCE_PATH + newPath)
-				await model.where({ id: postID }).update({ logo: newPath })
+				await userDao.where({ id: postID }).update({ logo: newPath })
 			} catch (error) {
 				throw error
 			}

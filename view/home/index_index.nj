@@ -22,7 +22,7 @@
                                 {{que.level}}
                             </span>
                         </div>
-                        <div class="card-action white">
+                        <div class="card-action white" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
                             <a href="/question/details?id={{que.id}}">{{que.title}}</a>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
                                 {{que.level}}
                             </span>
                         </div>
-                        <div class="card-action white">
+                        <div class="card-action white" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
                             {% if can_answer < que.level%}
                             <span class="disabled" style="color:silver">{{que.title}}</span>
                             {% else %}
