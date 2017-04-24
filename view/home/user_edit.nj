@@ -1,4 +1,5 @@
 {% extends './base.nj' %}
+{% block title %} <title>信息编辑</title> {% endblock %}
 {% block body %}
 <form action="/user/edit" method="post" id="form1" enctype="multipart/form-data">
     <input type="hidden" name="id" value="{{user.id}}">

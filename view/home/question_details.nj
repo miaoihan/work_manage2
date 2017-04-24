@@ -1,4 +1,6 @@
-{% extends './base.nj' %} {% block body %}
+{% extends './base.nj' %} 
+{% block title %} <title>问题详情</title> {% endblock %}
+{% block body %}
 <!--面包屑-->
 <div class="crumbs-wrapper zcard content-20"> <a href="/" class="">首页</a> / <a href="#!" class="active">问答</a>
 </div>
@@ -16,17 +18,20 @@
             </div>
         </div>
         <div class="ans-text">
-            {% if user %} 
-            {% if answer.commit_state != 2 %}
-                <a class="modal-trigger waves-effect waves-light btn right" type="submit" name="action" style="background: #ef1255;margin:10px 0 20px;"
-                    href="#modal1">
-                        {% if answer.commit_state == 1 %}
-                            更新回答
-                        {% else %}
-                            回答
-                        {% endif %}
-                </a> 
-            {% endif %} 
+            {% if currentUser %}
+            {# 普通用户无权回答 #}
+                {% if currentUser.role.type < 4 %} 
+                    {% if answer.commit_state != 2 %}
+                        <a class="modal-trigger waves-effect waves-light btn right" type="submit" name="action" style="background: #ef1255;margin:10px 0 20px;"
+                            href="#modal1">
+                                {% if answer.commit_state == 1 %}
+                                    更新回答
+                                {% else %}
+                                    回答
+                                {% endif %}
+                        </a> 
+                    {% endif %} 
+                {% endif %}
             {% else %}
                 <a class="btn waves-effect waves-light right" href="/user/login" style="background: #ef1255;margin:10px 0 20px;">登陆后回答</a> 
             {% endif %}
@@ -199,9 +204,10 @@
             if (defHeight >= slideHeight) {
                 // 超过则设成预设高度
                 $('#ans-content'+i).css('height', slideHeight + 'px')
-                $('#read-more'+i).append('<a href="#">查看更多</a>')
+                $('#read-more'+i).append('<a href="">查看更多</a>')
                 // 监听readmore
-                $(`#read-more${i} a`).click(function () {
+                $(`#read-more${i} a`).click(function (e) {
+                    e.preventDefault()
                     // 判断有误查看回答权限
                     if (!{{cansee}})
                         return Materialize.toast('你还不能看答案哦！', 3000) // 

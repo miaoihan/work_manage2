@@ -1,74 +1,75 @@
 {% extends './base.nj' %}
+{% block title %} <title>首页</title> {% endblock %}
     {% block body %}
-            <!--面包屑-->
-            <div class="crumbs-wrapper zcard content-20"> <a href="/" class="active">首页 </a></div>
-            <div style="margin-bottom: 15px;">
-                <!-- Modal Trigger -->
-                {% if currentUser.role.type < 2 %}
-                <a class="modal-trigger waves-effect waves-light btn" onclick="openModal(); ">新任务</a>
-                <a href="/user/check" class="modal-trigger waves-effect waves-light btn">改作业</a> 
-                {% endif %}
-            </div>
-            <div class="c-content row">
-                <!-- 任务卡片组 -->
-                <!-- 可回答：蓝色 已回答：绿色 未解锁：红色 -->
-                {% for que in quePageData.data %}
-                    <div class="col s12 m3">
-                        {% if currentUser.role.type < 2 %}
-                        <div class="card green">
-                            <div class="card-content" style="text-align: center">
-                                <span style="color:#fff;font-size: 32px">
-                                    {{que.level}}
-                                </span>
-                            </div>
-                            <div class="card-action white">
-                                <a href="/question/details?id={{que.id}}">{{que.title}}</a>
-                            </div>
+        <!--面包屑-->
+        <div class="crumbs-wrapper zcard content-20"> <a href="/" class="active">首页 </a></div>
+        <div style="margin-bottom: 15px;">
+            <!-- Modal Trigger -->
+            {% if currentUser.role.type < 2 %}
+            <a class="modal-trigger waves-effect waves-light btn" onclick="openModal(); ">新任务</a>
+            <a href="/user/check" class="modal-trigger waves-effect waves-light btn">改作业</a> 
+            {% endif %}
+        </div>
+        <div class="c-content row">
+            <!-- 任务卡片组 -->
+            <!-- 可回答：蓝色 已回答：绿色 未解锁：红色 -->
+            {% for que in quePageData.data %}
+                <div class="col s12 m3">
+                    {% if currentUser.role.type < 2 %}
+                    <div class="card green">
+                        <div class="card-content" style="text-align: center">
+                            <span style="color:#fff;font-size: 32px">
+                                {{que.level}}
+                            </span>
                         </div>
-                        {% else %}
-                        <!-- 未解锁 -->
-                        {% if (can_answer < que.level or not user ) %}
-                        <div class="card deep-orange darken-3">
-                        <!-- 已解锁 -->
-                        {% else %}
-                        {% set color = 'blue' %}
-                        {% for i in hasAnswerList  %}
-                            {% if i == que.level %}
-                                {% set color = 'green' %}
+                        <div class="card-action white">
+                            <a href="/question/details?id={{que.id}}">{{que.title}}</a>
+                        </div>
+                    </div>
+                    {% else %}
+                    <!-- 未解锁 -->
+                    {% if (can_answer < que.level or not user ) %}
+                    <div class="card deep-orange darken-3">
+                    <!-- 已解锁 -->
+                    {% else %}
+                    {% set color = 'blue' %}
+                    {% for i in hasAnswerList  %}
+                        {% if i == que.level %}
+                            {% set color = 'green' %}
+                        {% endif %}
+                    {% endfor %}
+                    <!-- 可回答 -->
+                    <div class="card {{color}}">
+                    {% endif %}
+                        <div class="card-content" style="text-align: center">
+                            <span style="color:#fff;font-size: 32px">
+                                {{que.level}}
+                            </span>
+                        </div>
+                        <div class="card-action white">
+                            {% if can_answer < que.level%}
+                            <span class="disabled" style="color:silver">{{que.title}}</span>
+                            {% else %}
+                            <a href="/question/details?id={{que.id}}">{{que.title}}</a>
                             {% endif %}
-                        {% endfor %}
-                        <!-- 可回答 -->
-                        <div class="card {{color}}">
-                        {% endif %}
-                            <div class="card-content" style="text-align: center">
-                                <span style="color:#fff;font-size: 32px">
-                                    {{que.level}}
-                                </span>
-                            </div>
-                            <div class="card-action white">
-                                {% if can_answer < que.level%}
-                                <span class="disabled" style="color:silver">{{que.title}}</span>
-                                {% else %}
-                                <a href="/question/details?id={{que.id}}">{{que.title}}</a>
-                                {% endif %}
-                            </div>
                         </div>
-                        {% endif %}
                     </div>
-                 {% endfor %} 
-                    <div class="clear"></div>
-                    <!-- 分页 -->
-                    <div style="text-align:center;margin:20px 0;">
-                        <ul class="pagination">
-                            <li class="waves-effect" id="page_pre"><a href="?page={{quePageData.currentPage-1}}"><i class="material-icons">chevron_left</i></a></li>
-                            {% for i in range(1,quePageData.totalPages+1) %}
-                            <li id="page_{{i}}"><a href="?page={{i}}">{{i}}</a></li>
-                            {% endfor %}
-                            <li class="waves-effect" id="page_next"><a href="?page={{quePageData.currentPage+1}}"><i class="material-icons">chevron_right</i></a></li>
-                        </ul>
-                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %} 
+                <div class="clear"></div>
+                <!-- 分页 -->
+                <div style="text-align:center;margin:20px 0;">
+                    <ul class="pagination">
+                        <li class="waves-effect" id="page_pre"><a href="?page={{quePageData.currentPage-1}}"><i class="material-icons">chevron_left</i></a></li>
+                        {% for i in range(1,quePageData.totalPages+1) %}
+                        <li id="page_{{i}}"><a href="?page={{i}}">{{i}}</a></li>
+                        {% endfor %}
+                        <li class="waves-effect" id="page_next"><a href="?page={{quePageData.currentPage+1}}"><i class="material-icons">chevron_right</i></a></li>
+                    </ul>
                 </div>
             </div>
+        </div>
         <!-- markdown editor -->
         <!-- Modal Structure -->
         <div id="modal1" class="modal bottom-sheet" style="max-height:90%;display: block">
