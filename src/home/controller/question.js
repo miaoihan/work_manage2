@@ -73,6 +73,9 @@ export default class extends Base {
         }
     }
 
+    /**
+     * 问题详情
+     */
     async detailsAction() {
         let questionDao = this.model('question')
         let answerDao = this.model('answer')
@@ -82,20 +85,12 @@ export default class extends Base {
         let currentUser = await this.model('user').findById(uid)
         // this.success(currentUser)
         let noReadNum = this.model('user').getNoReadNum(uid)
-        let sql = `select * from answer left join comment on answer.id = comment.a_id 
-                   where answer.q_id = ${qid} order by answer.id DESC`
-        // let answerList = await answer.query(sql)
-        // let answerList = await answer.join('comment on answer.id = comment.a_id').
-        // where({ q_id: id }).order('answer.id DESC').select()
-
         // 当前用户在该问题下的状态
         let answerList = await answerDao.where({ q_id: qid, commit_state: {'>': 0} }).order('id DESC').select()
         // this.success(answerList);  
         let answer = await answerDao.where({ q_id: qid, u_id: uid }).select()
         if ( answer.length > 0 ){
-            // this.success(answer[0].content_md)
-            // 渲染文本编辑器的暂存内容
-            this.assign('answer', answer[0])
+            this.assign('answer', answer[0]) // 渲染文本编辑器的暂存内容
         }
         // 判断当前用户是否可查看该问题的回答，折叠展开
         let cansee = false

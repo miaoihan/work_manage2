@@ -62,6 +62,9 @@ export default class extends Base {
 		// return this.redirect('/')
 	}
 
+	/**
+	 * 用户登出
+	 */
 	async logoutAction() {
 		this.session()
 		return this.redirect('login')
@@ -116,6 +119,9 @@ export default class extends Base {
 		}
 	}
 
+	/**
+	 * 发现用户列表
+	 */
 	async findAction() {
 		let user = this.model('user')
 		let userList = await user.select()
@@ -123,6 +129,9 @@ export default class extends Base {
 		return this.display('find')
 	}
 
+	/**
+	 * 个人资料页
+	 */
 	async profileAction() {
 		let userDao = this.model('user')
 		let id = this.get('id')
