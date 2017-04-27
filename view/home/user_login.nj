@@ -1,342 +1,235 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-  <meta charset="UTF-8">
-  <title>登陆</title>
-  <style>
-    /* CSS Document */
-    /* ---------- FONTAWESOME ---------- */
-    /* ---------- http://fortawesome.github.com/Font-Awesome/ ---------- */
-    /* ---------- http://weloveiconfonts.com/ ---------- */
-    @import url(http://weloveiconfonts.com/api/?family=fontawesome);
-    /* ---------- ERIC MEYER'S RESET CSS ---------- */
-    /* ---------- http://meyerweb.com/eric/tools/css/reset/ ---------- */   
-    @import url(http://meyerweb.com/eric/tools/css/reset/reset.css);
-    /* ---------- FONTAWESOME ---------- */
-    [class*="fontawesome-"]:before {
-      font-family: 'FontAwesome', sans-serif;
-    }
-    /* ---------- GENERAL ---------- */
-    * {
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-    }
-    *:before,
-    *:after {
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-    }
-    body {
-      background: #2c3338;
-      color: #606468;
-      font: 87.5%/1.5em 'Open Sans', sans-serif;
-      margin: 0;
-      overflow-y: auto !important;
-      overflow-x: hidden !important;
-    }
-    a {
-      color: #eee;
-      text-decoration: none;
-    }
-    
-    a:hover {
-      text-decoration: underline;
-    }
-    input {
-      border: none;
-      font-family: 'Open Sans', Arial, sans-serif;
-      font-size: 14px;
-      line-height: 1.5em;
-      padding: 0;
-      -webkit-appearance: none;
-    }
-    p {
-      line-height: 1.5em;
-    }
-    .clearfix {
-      *zoom: 1;
-    }
-    .clearfix:before,
-    .clearfix:after {
-      content: ' ';
-      display: table;
-    }
-    .clearfix:after {
-      clear: both;
-    }
-    .container {
-      left: 50%;
-      position: absolute;
-      top: 50%;
-      -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-      transform: translate(-50%, -50%);
-    }
-    /* ---------- LOGIN ---------- */
-    #login {
-      width: 280px;
-    }
-    #login form span {
-      background-color: #363b41;
-      border-radius: 3px 0px 0px 3px;
-      color: #606468;
-      display: block;
-      float: left;
-      height: 50px;
-      line-height: 50px;
-      text-align: center;
-      width: 50px;
-    }
-    #login form input {
-      height: 50px;
-    }
-    #login form input {
-      background-color: #3b4148;
-      border-radius: 0px 3px 3px 0px;
-      color: #606468;
-      margin-bottom: 1em;
-      padding: 0 16px;
-      width: 230px;
-    }
-    #login form input[type="submit"] {
-      border-radius: 3px;
-      -moz-border-radius: 3px;
-      -webkit-border-radius: 3px;
-      background-color: #ea4c88;
-      color: #eee;
-      font-weight: bold;
-      margin-bottom: 2em;
-      text-transform: uppercase;
-      width: 280px;
-    }
-    #login form input[type="submit"]:hover {
-      background-color: #d44179;
-    }
-    #login>p {
-      text-align: center;
-    }
-    #login>p span {
-      padding-left: 5px;
-    }
-    /*Lets start with the cloud formation rather*/
-    /*The container will also serve as the SKY*/
-    
-    * {
-      margin: 0;
-      padding: 0;
-    }
-    #clouds {
-      padding: 50px 0;
-      background: #c9dbe9;
-      background: -webkit-linear-gradient(top, #c9dbe9 0%, #fff 100%);
-      background: -linear-gradient(top, #c9dbe9 0%, #fff 100%);
-      background: -moz-linear-gradient(top, #c9dbe9 0%, #fff 100%);
-    }
-    /*Time to finalise the cloud shape*/
-    .cloud {
-      width: 200px;
-      height: 60px;
-      background: #fff;
-      border-radius: 200px;
-      -moz-border-radius: 200px;
-      -webkit-border-radius: 200px;
-      position: relative;
-    }
-    .cloud:before,
-    .cloud:after {
-      content: '';
-      position: absolute;
-      background: #fff;
-      width: 100px;
-      height: 80px;
-      position: absolute;
-      top: -15px;
-      left: 10px;
-      border-radius: 100px;
-      -moz-border-radius: 100px;
-      -webkit-border-radius: 100px;
-      -webkit-transform: rotate(30deg);
-      transform: rotate(30deg);
-      -moz-transform: rotate(30deg);
-    }
-    .cloud:after {
-      width: 120px;
-      height: 120px;
-      top: -55px;
-      left: auto;
-      right: 15px;
-    }
-    /*Time to animate*/
-    .x1 {
-      -webkit-animation: moveclouds 15s linear infinite;
-      -moz-animation: moveclouds 15s linear infinite;
-      -o-animation: moveclouds 15s linear infinite;
-    }
-    /*variable speed, opacity, and position of clouds for realistic effect*/
-    .x2 {
-      left: 200px;
-      -webkit-transform: scale(0.6);
-      -moz-transform: scale(0.6);
-      transform: scale(0.6);
-      opacity: 0.6;
-      /*opacity proportional to the size*/
-      /*Speed will also be proportional to the size and opacity*/
-      /*More the speed. Less the time in 's' = seconds*/
-      -webkit-animation: moveclouds 25s linear infinite;
-      -moz-animation: moveclouds 25s linear infinite;
-      -o-animation: moveclouds 25s linear infinite;
-    }
-    .x3 {
-      left: -250px;
-      top: -200px;
-      -webkit-transform: scale(0.8);
-      -moz-transform: scale(0.8);
-      transform: scale(0.8);
-      opacity: 0.8;
-      /*opacity proportional to the size*/
-      -webkit-animation: moveclouds 20s linear infinite;
-      -moz-animation: moveclouds 20s linear infinite;
-      -o-animation: moveclouds 20s linear infinite;
-    }
-    .x4 {
-      left: 470px;
-      top: -250px;
-      -webkit-transform: scale(0.75);
-      -moz-transform: scale(0.75);
-      transform: scale(0.75);
-      opacity: 0.75;
-      /*opacity proportional to the size*/
-      -webkit-animation: moveclouds 18s linear infinite;
-      -moz-animation: moveclouds 18s linear infinite;
-      -o-animation: moveclouds 18s linear infinite;
-    }
-    .x5 {
-      left: -150px;
-      top: -150px;
-      -webkit-transform: scale(0.8);
-      -moz-transform: scale(0.8);
-      transform: scale(0.8);
-      opacity: 0.8;
-      /*opacity proportional to the size*/
-      -webkit-animation: moveclouds 20s linear infinite;
-      -moz-animation: moveclouds 20s linear infinite;
-      -o-animation: moveclouds 20s linear infinite;
-    }
-    @-webkit-keyframes moveclouds {
-      0% {
-        margin-left: 1000px;
-      }
-      100% {
-        margin-left: -1000px;
-      }
-    }
-    @-moz-keyframes moveclouds {
-      0% {
-        margin-left: 1000px;
-      }
-      100% {
-        margin-left: -1000px;
-      }
-    }
-    @-o-keyframes moveclouds {
-      0% {
-        margin-left: 1000px;
-      }
-      100% {
-        margin-left: -1000px;
-      }
-    }
-    .bottom {
-      width: 100%;
-      margin: 0 auto;
-      text-align: center;
-      padding: 10px 0;
-      height: 100px;
-      position: absolute;
-    }
-    .bottom h3 {
-      color: white;
-      font-size: 30px;
-      font-weight: bold;
-      margin-top: 45px;
-      padding-bottom: 45px;
-    }
-    .blue {
-      color: #09c;
-    }
-    .error{
-      margin-bottom: 10px;
-      color: red;
-      text-align: center
-    }
-  </style>
-  <script src="/static/js/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!--<link rel="stylesheet" href="/static/css/materialize.min.css">
+    -->
+    <title>登录注册</title>
+    <style>
+        .form {
+            position: relative;
+            z-index: 1;
+            background: #FFFFFF;
+            max-width: 300px;
+            margin: 0 auto 100px;
+            padding: 30px;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            border-bottom-left-radius: 3px;
+            border-bottom-right-radius: 3px;
+            text-align: center;
+        }
+
+        .form .thumbnail {
+            background: #EF3B3A;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 30px;
+            padding: 50px 30px;
+            border-top-left-radius: 100%;
+            border-top-right-radius: 100%;
+            border-bottom-left-radius: 100%;
+            border-bottom-right-radius: 100%;
+            box-sizing: border-box;
+        }
+
+        .form .thumbnail img {
+            display: block;
+            width: 100%;
+        }
+
+        .form input {
+            outline: 0;
+            background: #f2f2f2;
+            width: 100%;
+            border: 0;
+            margin: 0 0 15px;
+            padding: 15px;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            border-bottom-left-radius: 3px;
+            border-bottom-right-radius: 3px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        .form button {
+            outline: 0;
+            background: #EF3B3A;
+            width: 100%;
+            border: 0;
+            padding: 15px;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            border-bottom-left-radius: 3px;
+            border-bottom-right-radius: 3px;
+            color: #FFFFFF;
+            font-size: 14px;
+            -webkit-transition: all 0.3 ease;
+            transition: all 0.3 ease;
+            cursor: pointer;
+        }
+
+        .form .message {
+            margin: 15px 0 0;
+            color: #b3b3b3;
+            font-size: 12px;
+        }
+
+        .form .message a {
+            color: #EF3B3A;
+            text-decoration: none;
+        }
+
+        .form .register-form {
+            display: none;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .container:before,
+        .container:after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        .container .info {
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        .container .info h1 {
+            margin: 0 0 15px;
+            padding: 0;
+            font-size: 36px;
+            font-weight: 300;
+            color: #1a1a1a;
+        }
+
+        .container .info span {
+            color: #4d4d4d;
+            font-size: 12px;
+        }
+
+        .container .info span a {
+            color: #000000;
+            text-decoration: none;
+        }
+
+        .container .info span .fa {
+            color: #EF3B3A;
+        }
+        /* END Form */
+        /* Demo Purposes */
+
+        body {
+            background: #ccc;
+            font-family: "Roboto", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body:before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: block;
+            background: rgba(255, 255, 255, 0.8);
+            width: 100%;
+            height: 100%;
+        }
+
+        #video {
+            z-index: -99;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            -webkit-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+        }
+    </style>
 </head>
 
 <body>
-  <div id="clouds">
-    <div class="cloud x1"></div>
-    <!-- Time for multiple clouds to dance around -->
-    <div class="cloud x2"></div>
-    <div class="cloud x3"></div>
-    <div class="cloud x4"></div>
-    <div class="cloud x5"></div>
-  </div>
-  <div class="container">
-    <div class="error"></div>
-    <div id="login">
-      <form id="form1" onsubmit="return false">
-
-        <fieldset class="clearfix">
-
-          <p><span class="fontawesome-user"></span><input type="email"  name="email" placeholder="邮箱" id="email" required></p>
-          <!-- JS because of IE support; better: placeholder="Username" -->
-          <p><span class="fontawesome-lock"></span><input type="password" name="password" placeholder="密码" id="password" required></p>
-          <!-- JS because of IE support; better: placeholder="Password" -->
-          <p><input type="submit" value="登录"  id="input-login"></p>
-
-        </fieldset>
-
-      </form>
-
-      <p>尚未注册? <a href="/user/register" class="blue">现在注册</a><span class="fontawesome-arrow-right"></span></p>
-
+    <div class="form" style="margin-top:10%">
+        <div class="thumbnail"><img src="/static/imgs/hat.svg" /></div>
+        <form class="register-form" id="form2">
+            <input type="text" name="realname" placeholder="真实姓名" required />
+            <input type="email" name="email" placeholder="邮箱" id="email" required />
+            <input type="password" name="password" placeholder="密码" id="password" required />
+            <button id="input-register" onclick="register">注册</button>
+            <p class="message">已经注册? <a href="#">登录</a></p>
+        </form>
+        <form class="login-form" id="form1">
+            <input type="email" name="email" placeholder="邮箱" id="email" required />
+            <input type="password" name="password" placeholder="密码" id="password" required />
+            <button id="input-login">登录</button>
+            <p class="message">还没注册? <a href="#">去注册</a></p>
+        </form>
     </div>
-    <!-- end login -->
-
-  </div>
-
-  <script>
-    function checkForm() {
-      let flag = true
-      if ($('#email').val()=='' || $('#password').val()==''){
-        flag = false   
-      }
-      return flag;
-    }
-
-    function subme() {
-      if (checkForm()) {
-        $('#form1').submit()
-      }
-    }
-    // ajax登录认证
-    $("#input-login").click(function(event){
-      if (checkForm()){
-        $.post("/user/login", $("#form1").serialize(), res => {
-          console.log(res);
-          if (res.errno == 0) {
-            location.href = '/'
-          } else {
-            return $('.error').html(res.errmsg)
-          }
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/materialize.min.js"></script>
+    <script>
+        $('.message a').click(function () {
+            $('form').animate({
+                height: "toggle",
+                opacity: "toggle"
+            }, "slow");
         });
-      }
-    });
-  </script>
 
-
+        function checkForm() {
+            let flag = true
+            if ($('#email').val() == '' || $('#password').val() == '') {
+                flag = false
+            }
+            return flag;
+        }
+        // ajax登录认证
+        $("#input-login").click(function (event) {
+            if (checkForm()) {
+                $.post("/user/login", $("#form1").serialize(), res => {
+                    console.log(res);
+                    if (res.errno == 0) {
+                        location.href = '/'
+                    } else {
+                        alert(778)
+                        return 
+                    }
+                });
+            }
+        });
+        // function register() {
+        //     if (checkForm()){
+        //         $.post("/user/register", $("#form2").serialize(), res => {
+        //         if (res.errno == 0) {
+        //             Materialize.toast(res.errmsg, 2000)
+        //             setTimeout(function(){
+        //                 alert(9990)
+        //                 location.href = '/user/login'
+        //             },1500)
+                    
+        //         } else {
+        //             for(let i in res.errmsg){
+        //             return $('.error').html(res.errmsg[i])
+        //             }
+        //         }
+        //         });
+        //     }
+        // }
+    </script>
 </body>
 
 </html>
