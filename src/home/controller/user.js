@@ -25,9 +25,6 @@ export default class extends Base {
 		shasum.update(password)
 		password = shasum.digest('hex')
 		user.password = password; user.logo = logo
-		console.log('************')
-		console.log(await this.model('user').checkUser(user))
-		console.log('************')
 		if (await this.model('user').checkUser(user)) {
 			// this.success(user)
 			if (await this.model('user').add(user)) {

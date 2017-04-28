@@ -218,7 +218,6 @@
                     }
                 });
             }
-            return false
         });
         // register
         $("#input-register").click(function (event) {
