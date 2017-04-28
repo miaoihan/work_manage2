@@ -159,6 +159,15 @@ export default class extends think.model.relation {
 		await currentUser.update({has_answer: has_answer})
     }
 
+    /**
+     * 检查用户是否重复
+     * @param {*用户信息} user 
+     */
+    async checkUser(user) {
+        let user1 = await this.where({email: user.email}).find()
+        return user
+    }
+
 
 
 

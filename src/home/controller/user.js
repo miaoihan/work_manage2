@@ -11,9 +11,9 @@ export default class extends Base {
 	 */
 	
 	async registerAction() {
-		if (this.isGet()) {
+		if (this.isGet()) 
 			return this.display()
-		}
+
 		let id = this.post('id')
 		let user = this.post()
 		// 生成gravator头像url
@@ -25,13 +25,18 @@ export default class extends Base {
 		shasum.update(password)
 		password = shasum.digest('hex')
 		user.password = password; user.logo = logo
-		if (await this.model('user').add(user)) {
-			// 注册成功后发送邮件
-			let html = '恭喜你成功注册蚂蜂社作业管理系统！,您现在可以登录了<a>http://work.mafengshe.com/user/login</a>'
-			this.sendMailAction('恭喜你成功注册蚂蜂社作业管理系统！', this.post('email'))
-			this.success()
+		if (false) {
+			this.success(user)
+			if (await this.model('user').add(user)) {
+				// 注册成功后发送邮件
+				let html = '恭喜你成功注册蚂蜂社作业管理系统！,您现在可以登录了<a>http://work.mafengshe.com/user/login</a>'
+				this.sendMailAction('恭喜你成功注册蚂蜂社作业管理系统！', this.post('email'))
+				this.success()
+			} else {
+				this.fail()
+			}
 		} else {
-			this.fail()
+			this.fail('用户已存在')
 		}
 	}
 	/**
