@@ -165,14 +165,14 @@
 <body>
     <div class="form" style="margin-top:10%">
         <div class="thumbnail"><img src="/static/imgs/hat.svg" /></div>
-        <form class="register-form" id="form2">
-            <input type="text" name="realname" placeholder="真实姓名" required />
+        <form class="register-form" id="form2" onsubmit="return false">
+            <input type="text" name="realname" placeholder="真实姓名" id="realname" required />
             <input type="email" name="email" placeholder="邮箱" id="email" required />
             <input type="password" name="password" placeholder="密码" id="password" required />
             <button id="input-register">注册</button>
             <p class="message">已经注册? <a href="#">登录</a></p>
         </form>
-        <form class="login-form" id="form1">
+        <form class="login-form" id="form1" onsubmit="return false">
             <input type="email" name="email" placeholder="邮箱" id="email" required />
             <input type="password" name="password" placeholder="密码" id="password" required />
             <button id="input-login">登录</button>
@@ -194,12 +194,20 @@
             if ($('#email').val() == '' || $('#password').val() == '') {
                 flag = false
             }
+            // alert(flag)
+            return flag;
+        }
+        function checkForm2() {
+            let flag = true
+            if ($('#realname').val() == '' || $('#email').val() == '' || $('#password').val() == '') {
+                flag = false
+            }
             return flag;
         }
         // ajax login
         $("#input-login").click(function (event) {
             // prevent button
-            event.preventDefault()
+            // event.preventDefault()
             if (checkForm()) {
                 $.post("/user/login", $("#form1").serialize(), res => {
                     console.log(res);
@@ -210,25 +218,32 @@
                     }
                 });
             }
+            return false
         });
         // register
         $("#input-register").click(function (event) {
-            event.preventDefault()
-            if (checkForm()){
+            // event.preventDefault()
+            if (checkForm2()){
                 $.post("/user/register", $("#form2").serialize(), res => {
-                if (res.errno == 0) {
-                    Materialize.toast('注册成功！', 2000)
-                    setTimeout(function(){
-                        location.href = '/user/login'
-                    },1500)
-                    
-                } else {
-                    for(let i in res.errmsg){
-                        Materialize.toast(res.errmsg[0], 2000)
+                    // alert(res.errno+'msg:'+res.errmsg)
+                    if (res.errno == 0) {
+                        Materialize.toast('注册成功！', 2000)
+                        setTimeout(function(){
+                            location.href = '/user/login'
+                        },1500)
+                    } else {
+                        if (res.errno == 1001){
+                            for(let i in res.errmsg){
+                                return Materialize.toast(res.errmsg[i], 2000)
+                            }
+                        } else {
+                            return Materialize.toast(res.errmsg, 2000)
+                        }
+                            
                     }
-                }
                 });
             }
+            // return false
         });
     </script>
 </body>

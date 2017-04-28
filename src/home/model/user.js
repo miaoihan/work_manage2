@@ -165,7 +165,9 @@ export default class extends think.model.relation {
      */
     async checkUser(user) {
         let user1 = await this.where({email: user.email}).find()
-        return user
+        if (user1)
+            return false    
+        return true
     }
 
 

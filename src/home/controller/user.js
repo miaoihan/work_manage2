@@ -25,8 +25,11 @@ export default class extends Base {
 		shasum.update(password)
 		password = shasum.digest('hex')
 		user.password = password; user.logo = logo
-		if (false) {
-			this.success(user)
+		console.log('************')
+		console.log(await this.model('user').checkUser(user))
+		console.log('************')
+		if (await this.model('user').checkUser(user)) {
+			// this.success(user)
 			if (await this.model('user').add(user)) {
 				// 注册成功后发送邮件
 				let html = '恭喜你成功注册蚂蜂社作业管理系统！,您现在可以登录了<a>http://work.mafengshe.com/user/login</a>'
