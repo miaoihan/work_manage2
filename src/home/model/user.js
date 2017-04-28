@@ -164,10 +164,11 @@ export default class extends think.model.relation {
      * @param {*用户信息} user 
      */
     async checkUser(user) {
+        let flag = true
         let user1 = await this.where({email: user.email}).find()
-        if (user1)
-            return false    
-        return true
+        if (!think.isEmpty(user1))
+            flag = false
+        return flag
     }
 
 
