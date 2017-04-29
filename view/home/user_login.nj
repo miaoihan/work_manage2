@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -131,9 +130,9 @@
 
         body {
             background: #ccc;
-            font-family: "Roboto", sans-serif;
+            /*font-family: "Roboto", sans-serif;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            -moz-osx-font-smoothing: grayscale;*/
         }
 
         body:before {
@@ -166,9 +165,9 @@
     <div class="form" style="margin-top:10%">
         <div class="thumbnail"><img src="/static/imgs/hat.svg" /></div>
         <form class="register-form" id="form2" onsubmit="return false">
-            <input type="text" name="realname" placeholder="真实姓名" id="realname" required />
-            <input type="email" name="email" placeholder="邮箱" id="email" required />
-            <input type="password" name="password" placeholder="密码" id="password" required />
+            <input type="text" name="realname" placeholder="真实姓名" id="realname2" required />
+            <input type="email" name="email" placeholder="邮箱" id="email2" required />
+            <input type="password" name="password" placeholder="密码" id="password2" required />
             <button id="input-register">注册</button>
             <p class="message">已经注册? <a href="#">登录</a></p>
         </form>
@@ -199,7 +198,7 @@
         }
         function checkForm2() {
             let flag = true
-            if ($('#realname').val() == '' || $('#email').val() == '' || $('#password').val() == '') {
+            if ($('#realname2').val() == '' || $('#email2').val() == '' || $('#password2').val() == '') {
                 flag = false
             }
             return flag;
