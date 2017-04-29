@@ -168,6 +168,10 @@ export default class extends think.model.relation {
         let user1 = await this.where({email: user.email}).find()
         if (!think.isEmpty(user1))
             flag = false
+        console.log('###### 打印了flag ######');
+        console.log(flag);
+        console.log('###### 打印了 ######');
+        
         return flag
     }
 
