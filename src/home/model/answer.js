@@ -57,9 +57,10 @@ export default class extends think.model.relation {
         // 回答的状态
         // 0. 未提交、未批改 1：已提交、未批改 2：已提交、未通过 3：已提交、已通过  
         commit_state: { 
-            default: function() { 
-                return 1
-            }
+            // nodejs bug
+            // default: function() { 
+            //     return 1
+            // }
         },
         del_state: { 
             default: function() { 
@@ -84,6 +85,11 @@ export default class extends think.model.relation {
      * @param {*保存的对象} obj 
      */
     async save(obj) {
+        console.log('###### 打印了 ######');
+        console.log(obj);
+        console.log(obj.id);
+        console.log('###### 打印了 ######');
+        
         if (obj.id)
             await this.where({ id: obj.id }).update(obj)
         else

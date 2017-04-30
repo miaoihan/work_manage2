@@ -14,9 +14,9 @@
                     <div class="col">
                         <div class="">
                             <img src="{{answer.user.logo}}" alt="" class="avatar-50">
-                        </div>
+                        </div>  
                     </div>
-                    <div class="col s10" style="margin:5px 0 10px -10px;">
+                    <div class="col s10 markdown-body" style="margin:5px 0 10px -10px;">
                         <div class="meta">
                             <span>{{answer.user.realname}}</span>
                             <span>{{answer.created_time | parseTime}}</span>
@@ -63,7 +63,8 @@
                     <div class="modal-footer">
                         <a class="modal-action waves-effect waves-green btn-flat" onclick="subme()">提交</a>
                     </div>
-                </div> <!-- end modal <--></-->
+                </div> <!-- end modal -->
+                
         <script src='/static/editor/editormd.min.js'></script>    
         <script>
             //md 文本编辑器

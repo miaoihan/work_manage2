@@ -54,7 +54,7 @@
                         <span>{{answer.user.realname}}</span>
                         <span>{{answer.created_time | parseTime}}</span>
                     </div>
-                    <div class="ans-content" id="ans-content{{loop.index-1}}" style="overflow:hidden">
+                    <div class="ans-content markdown-body" id="ans-content{{loop.index-1}}" style="overflow:hidden">
                         {{answer.content_html | safe}}
                     </div>
                     <div style="margin-top:10px;color:#8590a6;">
@@ -120,7 +120,7 @@
                 </div>
                 <div class="modal-footer">
                     <button class="modal-action waves-effect waves-green btn-flat" onclick="subme2()">提交</button>
-                </div>
+                </div>  
             </div>
             <!-- end modal -->
             {% if (answerList | length) > 10 %}
@@ -142,14 +142,15 @@
         <input type="hidden" value="{{answer.id}}" name="id">
         <div class="clear"></div>
         <div id="editormd" style="margin-bottom:20px">
-            <textarea name="content_md" id="txt_md" required>{{ answer.content_md }}</textarea>
+            <textarea name="content_md" id="txt_md">{{ answer.content_md }}</textarea>
         </div>
         <input name="content_html" id="txt_html" type="hidden">
-    </form>
-    <div class="e-t-wrapp">
-        <button class="btn right" onclick="subme()" style="margin-left: 20px;">提交</button>
+        <div class="e-t-wrapp">
+        <a class="btn right" onclick="subme()" style="margin-left: 20px;">提交</a>
         <a class="btn right" onclick="saveAnswer()">保存</a>
     </div>
+    </form>
+    
 </div> <!-- end model -->
 
 <!-- 老师新建问题modal -->
@@ -178,7 +179,12 @@
 <script>
 
     function checkForm() {
-        return true
+        let flag = true
+        if (testEditor.getMarkdown() == '' ){
+            Materialize.toast('内容不内为空！', 3000)
+            flag = false
+        }
+        return flag
     }
 
     function checkForm2() {
@@ -230,7 +236,7 @@
                     e.preventDefault()
                     // 判断有误查看回答权限
                     if (!{{cansee}})
-                        return Materialize.toast('你还不能看答案哦！', 3000) // 
+                        return Materialize.toast('你还不能看答案哦！', 3000) 
                     var currHeight = $('#ans-content'+i).height();
                     if (currHeight == slideHeight) {
                         $('#ans-content'+i).animate({
@@ -273,8 +279,9 @@
         // alert(6767)
         $('#txt_html').val(testEditor.getHTML())
         if (checkForm()) {
-            //$('#form1').submit()
-        }
+            $('#form1').submit()
+        } else
+            return false;
     }    
 
     function updateQuestion(){

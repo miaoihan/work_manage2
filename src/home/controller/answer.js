@@ -96,10 +96,10 @@ export default class extends Base {
         let answer = this.post()
         // 设置成暂存
         answer.commit_state = 0
-		console.log(answer);
+		// console.log(answer);
 		// await answerDao.add(answer)
 		// return this.success(answer)
-        if (await answerDao.add(answer)) {
+        if (await answerDao.save(answer)) {
             // this.findAction()
             return this.success()
         } else {
