@@ -59,7 +59,7 @@
                     </div>
                     <div style="margin-top:10px;color:#8590a6;">
                         <span></span> 
-                        {% if (answer.commit_state==1 or answer.commit_state==2) and currentUser.role.type < 2%} 
+                        {% if (answer.commit_state==1 or answer.commit_state==2) and currentUser.role.type < 2 %} 
                             <a href="#modal2" onclick="setAid({{answer.id}},{{answer.u_id}},'{{answer.user.email}}')">批改</a>
                         {% endif %}
                         <div id="read-more{{loop.index-1}}" class="read-more right">
