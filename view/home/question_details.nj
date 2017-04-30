@@ -6,7 +6,7 @@
 </div>
 <div class="row">
     <div class="col m12 s12">
-        <div class="zcard que-dtl">
+        <div class="zcard que-dtl markdown-body">
             <h2>{{question.title}}</h2>
             <div class="que-meta">
                 <span>116</span>

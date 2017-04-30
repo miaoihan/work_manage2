@@ -18,9 +18,9 @@ export default class extends Base {
 	let canseeList = currentUser.cansees + qid + ','
 	await userDao.where({id: await this.session('uid')}).update({has_answer: hasAnswerList,cansees: canseeList})
 	let answerForm = this.post()
-	// 修改answer状态
+	// answer的默状态
 	answerForm.commit_state = 1
-	await answerDao.save(this.post())
+	await answerDao.save(answerForm)
         // this.findAction()
 	return this.redirect(`/question/details?id=${qid}`)
 
@@ -67,9 +67,8 @@ export default class extends Base {
 			this.sendMailAction(message.content, this.post('email'))
 			// uodate scored 
 			await this.model('answer').where({id: aid}).update({scored: scored})
-		} else{
+		} else{ // 低于60分
 			//通知学员没通过        
-			                    
 			message.link = `/question/details?id=${qid}`
 			message.content = '你的回答 '+title+' 没有通过'
 			// 发送邮件.
