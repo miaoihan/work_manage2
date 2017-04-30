@@ -70,23 +70,22 @@
                 </div>
             </div>
         </div>
-        <!-- markdown editor -->
-        <!-- Modal Structure -->
+        <!-- 老师新建问题modal -->
         <div id="modal1" class="modal bottom-sheet" style="max-height:90%;display: block">
-            <form id="form1" action="/question/add" method="post">
+            <form id="form1" action="/question/save" method="post">
                 <div class="e-t-wrapp">
                     <input type="text" placeholder="请输入标题..." style="border:none;font-size: 20px;
-    padding-left: 8px;width: 70%;" name="title">
+    padding-left: 8px;width: 70%;" name="title" required>
                     任务级别:
                         <div class="input-field inline">
-                            <input id="tesk_id" type="text" name="level">
+                            <input id="tesk_id" type="text" name="level" required>
                             <label for="tesk_id" data-error="wrong" data-success="right">级别</label>
                         </div>
-                    <a class="btn right" onclick="subme()">提交</a>
+                    <button class="btn right" onclick="subme()">提交</button>
                 </div>
                 <div class="clear"></div>
                 <div id="editormd">
-                    <textarea name="content_md" id="txt_md"></textarea>
+                    <textarea name="content_md" id="txt_md" required></textarea>
                 </div>
                 <input name="content_html" id="txt_html" type="hidden">
             </form>
@@ -139,7 +138,7 @@
                 $('#txt_md').val(testEditor.getMarkdown())
                 // alert($('#txt_html').val());
                 if (checkForm()) {
-                    $('#form1').submit()
+                    //$('#form1').submit()
                 }
             }
         </script>

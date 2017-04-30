@@ -40,6 +40,7 @@ export default class extends Base {
 		// 学员id
 		let auid = this.post('a_u_id')
 		let aid = this.post('a_id')
+		let commit_state
 		let message = {
 			to: auid,
 			from: 0, //默认系统发送
@@ -50,6 +51,7 @@ export default class extends Base {
 		} // content and is_read
 		// >60分学员升一级
 		if ( scored >= 60){
+			commit_state = 3
 			let user = await userDao.where({id: auid}).find() //学员
 			//如果比用户级别高则升级
 			let old_level = user.level
@@ -68,6 +70,8 @@ export default class extends Base {
 			// uodate scored 
 			await this.model('answer').where({id: aid}).update({scored: scored})
 		} else{ // 低于60分
+			// 设置回答为未批改未通过
+			commit_state = 2
 			//通知学员没通过        
 			message.link = `/question/details?id=${qid}`
 			message.content = '你的回答 '+title+' 没有通过'
@@ -77,8 +81,8 @@ export default class extends Base {
 		await comment.add(this.post())
 		// update message
 		await this.model('message').add(message)
-		// update answer commit_state
-		await this.model('answer').where({id: aid}).update({commit_state: 2})
+		// 修改问题状态
+		await this.model('answer').where({id: aid}).update({commit_state: commit_state})
 		// 设置该学员对于该问题的查看权限
 		await userDao.addCanseeTo(qid,auid)
 		// 如果是ajax方式提交，输出Json

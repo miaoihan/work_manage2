@@ -55,7 +55,8 @@ export default class extends think.model.relation {
             }
         },
         // 回答的状态
-        commit_state: { // 0. 未提交、未批改 1：已提交、未批改 2：已提交、未通过 3：已提交、已通过
+        // 0. 未提交、未批改 1：已提交、未批改 2：已提交、未通过 3：已提交、已通过  
+        commit_state: { 
             default: function() { 
                 return 1
             }

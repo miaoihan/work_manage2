@@ -27,38 +27,27 @@ export default class extends Base {
         return this.display('index/index')
     }
 
-    async addAction() {
+    /**
+     * 增加和编辑
+     */
+    async saveAction() {
         let user = this.session('user')
         let model = this.model('question')
-        let id = this.post('id')
+        let qid = this.post('id')
         let question = this.post()
-        //if is old
-        if (id) {
-            await model.where({ id: id }).update(question)
+        // 编辑
+        if (qid) {
+            await model.where({ id: qid }).update(question)
             // return this.action('home/index', index)
-            return this.redirect('/')
+            return this.redirect(`/question/details?id=${qid}`)
         }
-        //if is new
+        // 新增
         if (await model.add(question)) {
             // this.findAction()
             this.redirect('/')
         } else {
             this.assign('info', 'error')
         }
-    }
-
-    async editAction() {
-        let model = this.model('user')
-        let user = model.where({ id: this.get('id') }).find()
-        if (this.isGet()) {
-            this.assign('user', user)
-            return this.display('add')
-        }
-        let id = this.get('id')
-        let result = await model.where({ id: id }).upadte({
-            name: this.post('name'),
-            password: this.post('password')
-        })
     }
 
     async deleteAction() {
