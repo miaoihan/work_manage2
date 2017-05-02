@@ -27,11 +27,11 @@
                         </div>
                     </div>
                     {% else %}
+                    {% if (can_answer < que.level or not currentUser ) %}
                     <!-- 未解锁 -->
-                    {% if (can_answer < que.level or not user ) %}
                     <div class="card deep-orange darken-3">
-                    <!-- 已解锁 -->
                     {% else %}
+                    <!-- 已解锁 -->
                     {% set color = 'blue' %}
                     {% for i in hasAnswerList  %}
                         {% if i == que.level %}
@@ -47,10 +47,10 @@
                             </span>
                         </div>
                         <div class="card-action white" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
-                            {% if can_answer < que.level%}
-                            <span class="disabled" style="color:silver">{{que.title}}</span>
+                            {% if can_answer < que.level %}
+                                <span class="disabled" style="color:silver">{{que.title}}</span>
                             {% else %}
-                            <a href="/question/details?id={{que.id}}">{{que.title}}</a>
+                                <a href="/question/details?id={{que.id}}">{{que.title}}</a>
                             {% endif %}
                         </div>
                     </div>

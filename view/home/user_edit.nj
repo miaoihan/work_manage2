@@ -14,8 +14,8 @@
                     <option value="1" data-role="1">普通管理员</option>
                 {% endif %}
                 <option value="2" data-role="2">毕业学员</option>
-                <option value="3" data-role="3">学员</option>
-                <option value="4" data-role="4">普通用户</option>
+                <option value="3" data-role="3">普通学员</option>
+                <option value="4" data-role="4">非学员用户</option>
                 <option value="5" data-role="5">游客</option>
             </select>
             <label>用户身份</label>
