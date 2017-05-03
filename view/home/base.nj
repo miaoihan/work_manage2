@@ -70,27 +70,16 @@
             </div>
         </section>
         {% endif %}
-
-        
     </body>
+
     <script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
     <link rel="stylesheet" href="/static/editor/css/editormd.min.css">
     <script>
-        
-        var message = $('#msg-modal')   
         function openMessage(){
             message.css({display:'block'})
             message.focus()
         }
-        message.blur(function() {
-            // alert('shi qu')
-            // blur优先于click时间，所以给个延迟
-            setTimeout(() => {
-                message.css({display:'none'})
-            }, 100)
-        })
         
-            
         /** 
         *   ajax 读message
         **/
@@ -111,8 +100,8 @@
 
         $(document).ready(function() {
             $('select').material_select();
-            // 不同设备，message不同样式
             
+            // 不同设备，message不同样式
             var clientWidth = document.body.clientWidth
             if (clientWidth < 500) { // 如果是移动设备
                 message.addClass("message-modal-mob")
@@ -123,11 +112,21 @@
             // 将md文档li还原成点
             
             var liNode = document.querySelectorAll('.markdown-body ul li')
-            for (
-                var i of liNode){
+            for (var i of liNode){
                 i.style.listStyleType='disc'
             }
         });
+
+        // message
+        var message = $('#msg-modal')
+        message.blur(function() {
+            // alert('shi qu')
+            // blur优先于click时间，所以给个延迟
+            setTimeout(function() {
+                message.css({display:'none'})
+            }, 100)
+        })
+
         // 代码高亮
         hljs.initHighlightingOnLoad();
     </script>   
