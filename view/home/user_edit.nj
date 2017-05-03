@@ -27,7 +27,7 @@
 <script>
     $(document).ready(function() {
         // 角色选项卡
-        let option = document.querySelector('option[data-role="{{user.role.type}}"]')
+        var option = document.querySelector('option[data-role="{{user.role.type}}"]')
         if (option)
             option.selected = true;
     });

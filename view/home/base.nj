@@ -76,7 +76,8 @@
     <script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
     <link rel="stylesheet" href="/static/editor/css/editormd.min.css">
     <script>
-        let message = $('#msg-modal')   
+        
+        var message = $('#msg-modal')   
         function openMessage(){
             message.css({display:'block'})
             message.focus()
@@ -102,7 +103,8 @@
         }
         //未读消息
         $.get("/user/getNoReadNum",function(res){
-            let num = res.data
+            
+            var num = res.data
             if (num != 0)
                 $('#msg-num').text(res.data)
         });
@@ -110,7 +112,8 @@
         $(document).ready(function() {
             $('select').material_select();
             // 不同设备，message不同样式
-            let clientWidth = document.body.clientWidth
+            
+            var clientWidth = document.body.clientWidth
             if (clientWidth < 500) { // 如果是移动设备
                 message.addClass("message-modal-mob")
             // alert(clientWidth)
@@ -118,8 +121,10 @@
                 message.addClass("message-modal")
             
             // 将md文档li还原成点
-            let liNode = document.querySelectorAll('.markdown-body ul li')
-            for (let i of liNode){
+            
+            var liNode = document.querySelectorAll('.markdown-body ul li')
+            for (
+                var i of liNode){
                 i.style.listStyleType='disc'
             }
         });

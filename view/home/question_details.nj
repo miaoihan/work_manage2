@@ -1,4 +1,4 @@
-{% extends './base.nj' %} 
+var{% extends './base.nj' %} 
 {% block title %} <title>问题详情</title> {% endblock %}
 {% block body %}
 <!--面包屑-->
@@ -179,7 +179,7 @@
 <script>
 
     function checkForm() {
-        let flag = true
+        var flag = true
         if (testEditor.getMarkdown() == '' ){
             Materialize.toast('内容不内为空！', 3000)
             flag = false
@@ -221,11 +221,11 @@
         $('.modal').modal()
 
         // 内容折叠
-        let slideHeight = 75; // 折叠高度
+        var slideHeight = 75; // 折叠高度
         // 遍历所有node
         $('.ans-content').each((i, node) => {
             // get node height
-            let defHeight = node.offsetHeight
+            var defHeight = node.offsetHeight
             // 如果超过了
             if (defHeight >= slideHeight) {
                 // 超过则设成预设高度

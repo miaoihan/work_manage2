@@ -116,12 +116,12 @@
             });
             
             var testEditor = editormd("editormd", {
-                            width: "90%",
-                            height: 640,
-                            syncScrolling: "single",
-                            saveHTMLToTextarea : true,
-                            path: "/static/editor/lib/"
-                        });
+                width: "90%",
+                height: 640,
+                syncScrolling: "single",
+                saveHTMLToTextarea : true,
+                path: "/static/editor/lib/"
+            });
 
             function openModal(){
                  $('#editormd').modal('open');
