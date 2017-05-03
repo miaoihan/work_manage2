@@ -181,15 +181,8 @@
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/materialize.min.js"></script>
     <script>
-        $('.message a').click(function () {
-            $('form').animate({
-                height: "toggle",
-                opacity: "toggle"
-            }, "slow");
-        });
-
         function checkForm() {
-            let flag = true
+            var flag = true
             if ($('#email').val() == '' || $('#password').val() == '') {
                 flag = false
             }
@@ -197,51 +190,62 @@
             return flag;
         }
         function checkForm2() {
-            let flag = true
+            var flag = true
             if ($('#realname2').val() == '' || $('#email2').val() == '' || $('#password2').val() == '') {
                 flag = false
             }
             return flag;
         }
-        // ajax login
-        $("#input-login").click(function (event) {
-            // prevent button
-            // event.preventDefault()
-            if (checkForm()) {
-                $.post("/user/login", $("#form1").serialize(), res => {
-                    console.log(res);
-                    if (res.errno == 0) {
-                        location.href = '/'
-                    } else {
-                        return Materialize.toast(res.errmsg, 3000)
-                    }
-                });
-            }
-        });
-        // register
-        $("#input-register").click(function (event) {
-            // event.preventDefault()
-            if (checkForm2()){
-                $.post("/user/register", $("#form2").serialize(), res => {
-                    // alert(res.errno+'msg:'+res.errmsg)
-                    if (res.errno == 0) {
-                        Materialize.toast('注册成功！', 2000)
-                        setTimeout(function(){
-                            location.href = '/user/login'
-                        },1500)
-                    } else {
-                        if (res.errno == 1001){
-                            for(let i in res.errmsg){
-                                return Materialize.toast(res.errmsg[i], 2000)
-                            }
+        
+        $(document).ready(function() {
+            
+            $('.message a').click(function () {
+                $('form').animate({
+                    height: "toggle",
+                    opacity: "toggle"
+                }, "slow");
+            });
+
+            // ajax login
+            $("#input-login").click(function (event) {
+                // prevent button
+                // event.preventDefault()
+                if (checkForm()) {
+                    $.post("/user/login", $("#form1").serialize(), function(res) {
+                        //console.log(res);
+                        if (res.errno == 0) {
+                            location.href = '/'
                         } else {
-                            return Materialize.toast(res.errmsg, 2000)
+                            return Materialize.toast(res.errmsg, 3000)
                         }
-                            
-                    }
-                });
-            }
-            // return false
+                    });
+                }
+            });
+            // register
+            $("#input-register").click(function (event) {
+                // event.preventDefault()
+                if (checkForm2()){
+                    $.post("/user/register", $("#form2").serialize(), function(res) {
+                        // alert(res.errno+'msg:'+res.errmsg)
+                        if (res.errno == 0) {
+                            Materialize.toast('注册成功！', 2000)
+                            setTimeout(function(){
+                                location.href = '/user/login'
+                            },1500)
+                        } else {
+                            if (res.errno == 1001){
+                                for(var i in res.errmsg){
+                                    return Materialize.toast(res.errmsg[i], 2000)
+                                }
+                            } else {
+                                return Materialize.toast(res.errmsg, 2000)
+                            }
+                                
+                        }
+                    });
+                }
+                // return false
+            });
         });
     </script>
 </body>
