@@ -43,7 +43,8 @@ var{% extends './base.nj' %}
         <!-- 回答列表 -->
         <div class="ans-list">
             {% for answer in answerList %} 
-            <div class="ans-item row zcard" id="{{answer.id}}">
+            <div class="ans-item row zcard" id="ans-{{answer.id}}">
+                <span class="ans-scored"> {{answer.scored}}分 </span>
                 <div class="col">
                     <div class="">
                         <img src="{{answer.user.logo}}" alt="" class="avatar-50">
@@ -140,14 +141,15 @@ var{% extends './base.nj' %}
         <input type="hidden" value="{{question.id}}" name="q_id">
         <input type="hidden" value="{{user.id}}" name="u_id">
         <input type="hidden" value="{{answer.id}}" name="id">
+        <input type="hidden" value="{{answer.commit_state}}" name="commit_state">
         <div class="clear"></div>
         <div id="editormd" style="margin-bottom:20px">
-            <textarea name="content_md" id="txt_md">{{ answer.content_md }}</textarea>
+            <textarea name="content_md" id="txt_md">{{ answer.content_catch }}</textarea>
         </div>
         <input name="content_html" id="txt_html" type="hidden">
         <div class="e-t-wrapp">
         <a class="btn right" onclick="subme()" style="margin-left: 20px;">提交</a>
-        <a class="btn right" onclick="saveAnswer()">保存</a>
+        <a class="btn right" onclick="saveAnswer()">暂存后离开</a>
     </div>
     </form>
     
@@ -207,9 +209,10 @@ var{% extends './base.nj' %}
     }
 
     function saveAnswer() {
-        $.post("/answer/tmpsave", $("#form1").serialize(), data => {
+        $.post("/answer/tmpsave", $("#form1").serialize(), function(data) {
             if (data.errno == 0) {
-                Materialize.toast('保存成功!', 2000)
+                Materialize.toast('保存成功!', 3000)
+                $('#modal1').modal('close');
             } else {
                 alert(data.errmsg)
             }
@@ -223,7 +226,7 @@ var{% extends './base.nj' %}
         // 内容折叠
         var slideHeight = 75; // 折叠高度
         // 遍历所有node
-        $('.ans-content').each((i, node) => {
+        $('.ans-content').each(function(i,node) {
             // get node height
             var defHeight = node.offsetHeight
             // 如果超过了
@@ -241,13 +244,13 @@ var{% extends './base.nj' %}
                     if (currHeight == slideHeight) {
                         $('#ans-content'+i).animate({
                             height: '100%'
-                        }, "normal");
+                        }, 100);
                         $(`#read-more${i} a`).html('收起');
                         // $('#gradient').fadeOut();
                     } else {
                         $('#ans-content'+i).animate({
                             height: slideHeight
-                        }, "normal");
+                        }, 100);
                         $(`#read-more${i} a`).html('展开');
                         // $('#gradient').fadeIn();
                     }

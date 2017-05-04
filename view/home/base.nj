@@ -11,6 +11,7 @@
     <link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">  
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/materialize.min.js"></script>
+    
     <body style="position:relative;min-height:100%">
         <!--导航栏-->
         <nav class="nav-top">
@@ -112,8 +113,10 @@
             // 将md文档li还原成点
             
             var liNode = document.querySelectorAll('.markdown-body ul li')
-            for (var i of liNode){
-                i.style.listStyleType='disc'
+            if (liNode){
+                for (var i in liNode){
+                    liNode[i].style.listStyleType='disc'
+                }
             }
         });
 

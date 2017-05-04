@@ -10,7 +10,6 @@ export default class extends Base {
   async answerAction() {
     let answerDao = this.model('answer')
 	let userDao = this.model('user')
-    let content = this.post('content')
     let qid = this.post('q_id')
 	let currentUser = await userDao.findById(await this.session('uid'))
 	//更新已回答列表 和 该问题回答的查看权
@@ -18,10 +17,11 @@ export default class extends Base {
 	let canseeList = currentUser.cansees + qid + ','
 	await userDao.where({id: await this.session('uid')}).update({has_answer: hasAnswerList,cansees: canseeList})
 	let answerForm = this.post()
-	// answer的默状态
+	// 设置answer为已提交
 	answerForm.commit_state = 1
+	// 同步缓存区
+	answerForm.content_catch = this.post('content_md')
 	await answerDao.save(answerForm)
-        // this.findAction()
 	return this.redirect(`/question/details?id=${qid}`)
 
 }
@@ -94,17 +94,35 @@ export default class extends Base {
 	async tmpsaveAction() {
         let answerDao = this.model('answer')
         let answer = this.post()
-        // 设置成暂存
-        answer.commit_state = 0
-		// console.log(answer);
-		// await answerDao.add(answer)
-		// return this.success(answer)
-        if (await answerDao.save(answer)) {
-            // this.findAction()
-            return this.success()
-        } else {
-            return this.fail(1000,'error')
-        }
+		let aid = this.post('id')
+		let commit_state = this.post('commit_state')
+		let content = this.post('content_md')
+		// 如果尚未提交
+		if (!commit_state || commit_state==0){
+			// 暂存区内容
+			answer.content_catch = content
+			// if (await answerDao.add(answer)) {
+			// 	return this.success()
+			// } else {
+			// 	return this.fail(1000,'暂存失败，请稍后再试')
+			// }
+			try {
+				await answerDao.save(answer)
+				return this.success()
+			} catch (e) {
+				// return this.fail(1000,'暂存失败，请稍后再试')
+				return this.fail(1000,e)
+			}
+			
+		}
+		// 如果已经提交
+		try {
+			answerDao.where({id: aid}).update({content_catch: content})
+			return this.success()
+		} catch (e) {
+			// return this.fail(1000,'暂存失败，请稍后再试')
+			return this.fail(1000,e)
+		}
     }
 
 

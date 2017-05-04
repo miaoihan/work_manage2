@@ -451,6 +451,13 @@ html {
     /*max-height: 75px;*/
 }
 
+.ans-scored {
+    /*position: absolute;*/
+    font-size: 30px;
+    color: red;
+    font-weight: 700
+}
+
 footer {
     position: absolute;
     bottom: 0;

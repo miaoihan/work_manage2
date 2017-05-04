@@ -85,11 +85,10 @@ export default class extends think.model.relation {
      * @param {*保存的对象} obj 
      */
     async save(obj) {
-        console.log('###### 打印了 ######');
-        console.log(obj);
-        console.log(obj.id);
-        console.log('###### 打印了 ######');
-        
+        // console.log('###### 打印了 ######');
+        // console.log(obj);
+        // console.log(obj.id);
+        // console.log('###### 打印了 ######');
         if (obj.id)
             await this.where({ id: obj.id }).update(obj)
         else
