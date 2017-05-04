@@ -230,17 +230,17 @@ var{% extends './base.nj' %}
             if (defHeight >= slideHeight) {
                 // 超过则设成预设高度
                 $('#ans-content'+i).css('height', slideHeight + 'px')
-                $('#read-more'+i).append('<a href="">查看更多</a>')
+                $('#read-more'+i).append('<a href="">展开</a>')
                 // 监听readmore
                 $(`#read-more${i} a`).click(function (e) {
                     e.preventDefault()
-                    // 判断有误查看回答权限
+                    // 判断有无查看回答权限
                     if (!{{cansee}})
                         return Materialize.toast('你还不能看答案哦！', 3000) 
                     var currHeight = $('#ans-content'+i).height();
                     if (currHeight == slideHeight) {
                         $('#ans-content'+i).animate({
-                            height: defHeight
+                            height: '100%'
                         }, "normal");
                         $(`#read-more${i} a`).html('收起');
                         // $('#gradient').fadeOut();
@@ -248,7 +248,7 @@ var{% extends './base.nj' %}
                         $('#ans-content'+i).animate({
                             height: slideHeight
                         }, "normal");
-                        $(`#read-more${i} a`).html('查看更多');
+                        $(`#read-more${i} a`).html('展开');
                         // $('#gradient').fadeIn();
                     }
                     return false;
