@@ -44,7 +44,14 @@ var{% extends './base.nj' %}
         <div class="ans-list">
             {% for answer in answerList %} 
             <div class="ans-item row zcard" id="ans-{{answer.id}}">
-                <span class="ans-scored"> {{answer.scored}}分 </span>
+                {#分数#}
+                {% if answer.scored %}
+                    {% if answer.scored >= 60 %}
+                        <span class="ans-scored"> {{answer.scored}}分 </span>
+                    {% else %}
+                        <span class="ans-scored"> 未通过 </span>
+                    {% endif %}
+                {% endif %}
                 <div class="col">
                     <div class="">
                         <img src="{{answer.user.logo}}" alt="" class="avatar-50">
@@ -91,7 +98,7 @@ var{% extends './base.nj' %}
             <!-- 教师批改modal-->
             <div id="modal2" class="modal">
                 <div class="modal-content">
-                    <form action="/answer/comment" method="post" id="form2">
+                    <form action="/answer/comment" method="post" id="form2" >
                         <input type="hidden" name="a_id" id="inputAid">
                         <input type="hidden" name="u_id" value="{{user.id}}">
                         <input type="hidden" name="email" id="inputEmail">
@@ -105,7 +112,7 @@ var{% extends './base.nj' %}
                         </p>
                         <div class="row">
                             <div class="input-field col s12">
-                                <textarea id="textarea1" class="materialize-textarea" name="content_html"></textarea>
+                                <textarea id="textarea1" class="materialize-textarea" name="content_html" required></textarea>
                                 <label for="textarea1">评语</label>
                             </div>
                         </div>
@@ -120,7 +127,8 @@ var{% extends './base.nj' %}
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button class="modal-action waves-effect waves-green btn-flat" onclick="subme2()">提交</button>
+                    <button class="modal-action waves-effect waves-green btn-flat" type="submit"
+                            onclick="subme2()">提交</button>
                 </div>  
             </div>
             <!-- end modal -->
@@ -162,7 +170,7 @@ var{% extends './base.nj' %}
         <div class="e-t-wrapp">
             <input type="text"  name="title" value="{{question.title}}" 
                    placeholder="请输入标题..." style="border:none;font-size: 20px;padding-left: 8px;width: 70%;" required>
-            任务级别:
+            任务级别: 
                 <div class="input-field inline">
                     <input id="tesk_id" type="text" name="level" value="{{question.level}}" required>
                     <label for="tesk_id" data-error="wrong" data-success="right">级别</label>
@@ -183,14 +191,19 @@ var{% extends './base.nj' %}
     function checkForm() {
         var flag = true
         if (testEditor.getMarkdown() == '' ){
-            Materialize.toast('内容不内为空！', 3000)
+            Materialize.toast('内容不能为空！', 3000)
             flag = false
         }
         return flag
     }
 
     function checkForm2() {
-        return true
+        var flag = true
+        if ($('#textarea1').val() == '') {
+            Materialize.toast('评语不能为空！', 3000)
+            flag = false
+        }
+        return flag;
     }
 
     function subme2() {

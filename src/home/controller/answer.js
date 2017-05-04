@@ -37,9 +37,9 @@ export default class extends Base {
 		let level = this.post('level')
 		let title = this.post('title')
 		let scored = this.post('scored')
-		// 学员id
-		let auid = this.post('a_u_id')
-		let aid = this.post('a_id')
+		let content = this.post('content_html') // 评语内容
+		let auid = this.post('a_u_id') 			// 学员id
+		let aid = this.post('a_id')				// 回答id
 		let commit_state
 		let message = {
 			to: auid,
@@ -64,21 +64,22 @@ export default class extends Base {
 			//通知学员通过
 			// 统一使用 Message.html         
 			message.link = `/question/details?id=${qid}`
-			message.content = '你通过了关于 '+title+' 的回答，恭喜你升了一级！'
-			
-			this.sendMailAction(message.content, this.post('email'))
-			// uodate scored 
-			await this.model('answer').where({id: aid}).update({scored: scored})
+			message.content = `你通过了关于 ${title} 的回答，最终得分是 ${scored}分，恭喜你升了一级！`
+			let emailContent = `你通过了关于 <a href="http://work.mafengshe.com/question/details?id=${qid}">${title}</a> 的回答，最终得分是 ${scored}分，老师对你的评语是：</br> ${content}`
+			this.sendMailAction(emailContent, this.post('email'))
 		} else{ // 低于60分
 			// 设置回答为未批改未通过
 			commit_state = 2
 			//通知学员没通过        
 			message.link = `/question/details?id=${qid}`
 			message.content = '你的回答 '+title+' 没有通过'
+			let emailContent = `你的回答 <a href="http://work.mafengshe.com/question/details?id=${qid}">${title}</a> 没有通过，最终得了 ${scored}分，老师对你的评语是：</br> ${content}`
 			// 发送邮件.
-			this.sendMailAction(message.content, this.post('email'))
+			this.sendMailAction(emailContent, this.post('email'))
 		}
 		await comment.add(this.post())
+		// uodate scored 
+		await this.model('answer').where({id: aid}).update({scored: scored})
 		// update message
 		await this.model('message').add(message)
 		// 修改问题状态

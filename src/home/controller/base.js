@@ -3,17 +3,31 @@
 import nodemailer from 'nodemailer';
 
 export default class extends think.controller.base {
-  /**
-   * some base method in here
-   */
+	/**
+	 * some base method in here
+	 */
 
-  async __before() {
+	async __before() {
 		let currentUser = await this.model('user').findById(await this.session('uid'))
-		// this.success(2)
 		this.assign('currentUser', currentUser)
-  }
+		//部分 action 下不检查
+		let blankActions = ['index', 'login', 'register'];
+		// this.success(this.http.action)
+		if (blankActions.indexOf(this.http.action) != -1) {
+			return;
+		}
 
-	sendMailAction(html,email){
+		// this.success(1)
+		// 如果写了下面的话，任意匹配/user/asd 就会返回currUser json数据
+		// this.success(currentUser)
+		// 判断是否登录
+		if (think.isEmpty(currentUser)) {
+			return this.redirect('/user/login');
+		}
+
+	}
+
+	sendMailAction(html, email) {
 		// create reusable transporter object using the default SMTP transport
 		let transporter = nodemailer.createTransport({
 			service: '"qiye.aliyun"',
@@ -31,11 +45,11 @@ export default class extends think.controller.base {
 			html: `${html}` // html body
 		};
 		// send mail with defined transport object
-			transporter.sendMail(mailOptions, (error, info) => {
-				if (error) {
-					return console.log(error);
-				}
-				console.log('Message %s sent: %s', info.messageId, info.response);
-			});
+		transporter.sendMail(mailOptions, (error, info) => {
+			if (error) {
+				return console.log(error);
+			}
+			console.log('Message %s sent: %s', info.messageId, info.response);
+		});
 	}
 }
