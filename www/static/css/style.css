@@ -564,6 +564,7 @@ footer {
     height: 338px;
     /*padding: 0 15px;*/
     border-bottom: 1px solid #ebebeb;
+    overflow: scroll;
 }
 
 .m-c-item{
@@ -583,7 +584,8 @@ footer {
 
 .msg-footer{
     padding: 0 10px;
-    text-align: center
+    text-align: center;
+    line-height: 42px;
 }
 
 .msg-footer div{

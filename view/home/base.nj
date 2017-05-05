@@ -67,7 +67,7 @@
             </div>
             <div class="msg-footer fz-14">
                 <!--<div class="m-f-d1"><a href="">全部标记为已读</a> </div>-->
-                <div><a href="">查看全部消息</a></div>
+                <a href="">查看全部消息</a>
             </div>
         </section>
         {% endif %}
