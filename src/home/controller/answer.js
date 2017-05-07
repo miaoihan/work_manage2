@@ -162,7 +162,7 @@ export default class extends Base {
 		if (file && file.size != 0) {
 			try {
 				await fs.move(file.path, think.RESOURCE_PATH + newPath)
-				this.success(newName)
+				this.success(newPath)
 			} catch (error) {
 				this.fail(error)
 				throw error;

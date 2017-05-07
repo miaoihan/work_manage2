@@ -318,11 +318,15 @@ var{% extends './base.nj' %}
         }
     }
 
-    $(function() {
     var testEditor = editormd("editormd", {
         width: "90%",
         height: 640,
         path : '/static/editor/lib/',
+        onchange : function() {
+                        $("#output").html("onchange : this.id =>" + this.id + ", markdown =>" + this.getValue());
+                        console.log("onchange =>", this, this.id, this.settings, this.state);
+                    },
+
         toolbarIcons : function() {
             // Or return editormd.toolbarModes[name]; // full, simple, mini
             // Using "||" set icons align right.
@@ -389,24 +393,45 @@ var{% extends './base.nj' %}
         },
 
         onload : function(){
-            $("[type=\"file\"]").bind("change", function(){
-                alert(13213)
-                if(!$('#mdUpload')[0].value){return;}
-                var formData = new FormData()
-                // HTML 文件类型input，由用户选择
-                formData.append("image", $('#mdUpload')[0].files[0]);
-                alert(formData)
-                // 图片上传到服务器
-                $.post("/answer/upload",formData,function(res){
-                    alert(res.dada)
-                    testEditor.cm.replaceSelection('![](' + 'mafengshe.com'+ res.date + ')');
-                });
-                
-            });
+            
         }
     });
-});
 
+    /* 
+    *   图片上传
+    */
+    $("[type=\"file\"]").bind("change", function(){
+        if(!$('#mdUpload')[0].value){return;}
+        // HTML 文件类型input，由用户选择
+        var formData = new FormData($("#mdUploadForm")[0]);  
+        // 图片上传到服务器
+        $.ajax({  
+            url: '/answer/upload' ,  
+            type: 'POST',  
+            data: formData,  
+            //async: false,  
+            cache: false,
+            // 下面两个必须  
+            contentType: false,  
+            processData: false,  
+            success: function (res) {  
+                //alert(res.data)
+                testEditor.cm.replaceSelection('![](' + location.origin + res.data + ')');
+            },  
+            error: function (res) {  
+                alert(res.data);  
+            }  
+        });  
+    });
+
+    document.getElementById('txt_md').addEventListener( 'paste', function( event ){
+        // dosomething...
+        alert(8889)
+    });
+    document.getElementById('txt_md').addEventListener( 'click', function( event ){
+        // dosomething...
+        alert(8889)
+    });
     
 </script>
 {% endblock %}
