@@ -90,7 +90,7 @@ export default class extends Base {
 		let postID = this.post('id')
 			//图片上传
 		let file = this.file('logo') //用户头像
-		let newName = 'pic' + new Date().getTime() // a new name
+		let newName = 'avator' + new Date().getTime() // a new name
 		let newPath = '/static/upload/user/' + newName + '.jpg'
 		try{
 			await userDao.where({ id: postID }).update(this.post())

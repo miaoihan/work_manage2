@@ -20,7 +20,7 @@
                     {% if currentUser %}
                     <li>
                         <a onclick="openMessage()" id="nav-msg"> 
-                            消息<span class="" id="msg-num"> </span>
+                            消息<span class="" data-badge-caption="" id="msg-num"> </span>
                         </a>
                     </li>
                     <li><a href="/user/profile?id={{currentUser.id}}"><img src="{{currentUser.logo}}" alt="" class="avatar-nav cicle"> </a></li>
@@ -51,7 +51,7 @@
 
         <!--消息modal-->
         {% if currentUser %}
-        <section class="white z-depth-2" tabindex="1" id="msg-modal">
+        <section class="white z-depth-2" tabindex="1" id="msg-modal" style="display:none">
             <div class="msg-tittle fz-14">
                 通知
             </div>
@@ -93,10 +93,11 @@
         }
         //未读消息
         $.get("/user/getNoReadNum",function(res){
-            
             var num = res.data
-            if (num != 0)
+            if (num != 0){
                 $('#msg-num').text(res.data)
+                $('#msg-num').addClass('new badge')
+            }
         });
 
         $(document).ready(function() {
@@ -111,13 +112,16 @@
                 message.addClass("message-modal")
             
             // 将md文档li还原成点
-            
-            var liNode = document.querySelectorAll('.markdown-body ul li')
-            if (liNode){
+            {#var liNode = document.querySelectorAll('.markdown-body ul li')
+            if (liNode.length){
                 for (var i in liNode){
                     liNode[i].style.listStyleType='disc'
                 }
-            }
+            }#}
+            $(".markdown-body ul li").each(function(){
+                //$(this).attr("class","");
+                $(this).attr("style","list-style-type:disc");
+            })
         });
 
         // message
