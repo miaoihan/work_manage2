@@ -266,13 +266,13 @@ var{% extends './base.nj' %}
                     if (currHeight == slideHeight) {
                         $('#ans-content'+i).animate({
                             height: '100%'
-                        }, 100);
+                        }, 0);
                         $(`#read-more${i} a`).html('收起');
                         // $('#gradient').fadeOut();
                     } else {
                         $('#ans-content'+i).animate({
                             height: slideHeight
-                        }, 100);
+                        }, 0);
                         $(`#read-more${i} a`).html('展开');
                         // $('#gradient').fadeIn();
                     }
@@ -321,6 +321,7 @@ var{% extends './base.nj' %}
     var testEditor = editormd("editormd", {
         width: "90%",
         height: 640,
+        saveHTMLToTextarea : true,
         path : '/static/editor/lib/',
         toolbarIcons : function() {
             // Or return editormd.toolbarModes[name]; // full, simple, mini
@@ -379,6 +380,7 @@ var{% extends './base.nj' %}
             processData: false,  
             success: function (res) {  
                 //alert(res.data)
+                // 插入图片
                 testEditor.cm.replaceSelection('![](' + location.origin + res.data + ')');
             },  
             error: function (res) {  

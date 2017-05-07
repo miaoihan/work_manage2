@@ -57,6 +57,13 @@
                                     <label for="textarea1">评语</label>
                                     </div>
                                 </div>
+                                <p><input type="checkbox" class="filled-in" id="isGoodWork" name="is_good" value="0" onclick="this.value=(this.checked==true)?1:0"/>
+                                    <label for="isGoodWork">设为优秀作业</label>
+                                </p>
+                                <p><input type="checkbox" class="filled-in" id="canSee" name="cansee" value="0" onclick="this.value=(this.checked==true)?1:0"
+                                    />
+                                    <label for="canSee">可查看其他优秀作业</label>
+                                </p>
                             </div>
                         </form>
                     </div>

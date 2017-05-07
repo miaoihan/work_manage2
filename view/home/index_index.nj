@@ -81,13 +81,14 @@
                             <input id="tesk_id" type="text" name="level" required>
                             <label for="tesk_id" data-error="wrong" data-success="right">级别</label>
                         </div>
-                    <button class="btn right" onclick="subme()">提交</button>
+                    
                 </div>
                 <div class="clear"></div>
                 <div id="editormd">
                     <textarea name="content_md" id="txt_md"></textarea>
                 </div>
                 <input name="content_html" id="txt_html" type="hidden">
+                <button class="btn right" onclick="subme()" style="margin:5px 42px 25px">提交</button>
             </form>
         </div> <!-- end model -->
 
@@ -131,9 +132,20 @@
                 return true
             }
 
+            function subme() {
+                // console.log(testEditor.getHTML());
+                $('#txt_html').val(testEditor.getHTML())
+                $('#txt_md').val(testEditor.getMarkdown())
+                // alert($('#txt_html').val());
+                if (checkForm()) {
+                    //$('#form1').submit()
+                }
+            }
+
             var testEditor = editormd("editormd", {
                 width: "90%",
                 height: 640,
+                saveHTMLToTextarea : true,
                 path : '/static/editor/lib/',
                 toolbarIcons : function() {
                     // Or return editormd.toolbarModes[name]; // full, simple, mini
@@ -199,15 +211,7 @@
                 });  
             });
 
-            function subme() {
-                // console.log(testEditor.getHTML());
-                $('#txt_html').val(testEditor.getHTML())
-                $('#txt_md').val(testEditor.getMarkdown())
-                // alert($('#txt_html').val());
-                if (checkForm()) {
-                    //$('#form1').submit()
-                }
-            }
+            
             
         </script>
 {% endblock %}
