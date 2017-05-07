@@ -85,11 +85,18 @@
                 </div>
                 <div class="clear"></div>
                 <div id="editormd">
-                    <textarea name="content_md" id="txt_md" required></textarea>
+                    <textarea name="content_md" id="txt_md"></textarea>
                 </div>
                 <input name="content_html" id="txt_html" type="hidden">
             </form>
         </div> <!-- end model -->
+
+        <!-- md图片上传 -->
+        <div style="display:none">
+            <form id="mdUploadForm" runat="server" method="post" enctype="multipart/form-data"> 
+                <input type="file" name="image" id="mdUpload" accept="image/gif,image/jpeg,image/jpg,image/png">
+            </form>
+        </div>
         <script src='/static/editor/editormd.min.js'></script>
         <script>
             $(document).ready(function() {
@@ -115,14 +122,6 @@
                 })
             });
             
-            var testEditor = editormd("editormd", {
-                width: "90%",
-                height: 640,
-                syncScrolling: "single",
-                saveHTMLToTextarea : true,
-                path: "/static/editor/lib/"
-            });
-
             function openModal(){
                  $('#editormd').modal('open');
                 //  alert(667)
@@ -131,6 +130,74 @@
             function checkForm() {
                 return true
             }
+
+            var testEditor = editormd("editormd", {
+                width: "90%",
+                height: 640,
+                path : '/static/editor/lib/',
+                toolbarIcons : function() {
+                    // Or return editormd.toolbarModes[name]; // full, simple, mini
+                    // Using "||" set icons align right.
+                    return ["undo", "redo", "|", "bold", "hr","imageUpload","|",  "info",  "file",  "||", "watch", "fullscreen"]
+                },
+                toolbarIconsClass : {
+                    imageUpload: "fa fa-picture-o"
+                },
+                // 用于增加自定义工具栏的功能，可以直接插入HTML标签，不使用默认的元素创建图标
+                toolbarCustomIcons : {
+                    //image   : '<input type="file" accept=".md" />',
+                },
+                // 自定义工具栏按钮的事件处理
+                toolbarHandlers : {
+                    /**
+                    * @param {Object}      cm         CodeMirror对象
+                    * @param {Object}      icon       图标按钮jQuery元素对象
+                    * @param {Object}      cursor     CodeMirror的光标对象，可获取光标所在行和位置
+                    * @param {String}      selection  编辑器选中的文本
+                    */
+
+                    imageUpload : function(cm, icon, cursor, selection) {
+                        $('#mdUpload').click()
+                    }
+                },
+
+                lang : {
+                    toolbar : {
+                        imageUpload : "上传图片",
+                        undo : "撤销 (Ctrl+Z)"
+                    }
+                },
+                onload : function(){
+                    
+                }
+            });
+
+            /* 
+            *   图片上传
+            */
+            $("[type=\"file\"]").bind("change", function(){
+                if(!$('#mdUpload')[0].value){return;}
+                // HTML 文件类型input，由用户选择
+                var formData = new FormData($("#mdUploadForm")[0]);  
+                // 图片上传到服务器
+                $.ajax({  
+                    url: '/answer/upload' ,  
+                    type: 'POST',  
+                    data: formData,  
+                    //async: false,  
+                    cache: false,
+                    // 下面两个必须  
+                    contentType: false,  
+                    processData: false,  
+                    success: function (res) {  
+                        //alert(res.data)
+                        testEditor.cm.replaceSelection('![](' + location.origin + res.data + ')');
+                    },  
+                    error: function (res) {  
+                        alert(res.data);  
+                    }  
+                });  
+            });
 
             function subme() {
                 // console.log(testEditor.getHTML());
@@ -141,5 +208,6 @@
                     //$('#form1').submit()
                 }
             }
+            
         </script>
 {% endblock %}

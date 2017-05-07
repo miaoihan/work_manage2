@@ -37,7 +37,8 @@ export default class extends Base {
 	 * @return {Json or Promise} []
 	 */
 	async commentAction() {
-		let comment = this.model('comment')
+		let commentDao = this.model('comment')
+		// this.success(this.post())
 		let userDao = this.model('user')
 		let qid = this.post('q_id')
 		let level = this.post('level')
@@ -46,6 +47,7 @@ export default class extends Base {
 		let content = this.post('content_html') // 评语内容
 		let auid = this.post('a_u_id') // 学员id
 		let aid = this.post('a_id') // 回答id
+		let commentForm = this.post()
 		let commit_state
 		let message = {
 			to: auid,
@@ -89,12 +91,13 @@ export default class extends Base {
 			// 发送邮件.
 			this.sendMailAction(emailContent, this.post('email'))
 		}
-		await comment.add(this.post())
+		await commentDao.add(this.post())
 		// uodate scored 
 		await this.model('answer').where({
 			id: aid
 		}).update({
-			scored: scored
+			scored: scored,
+			is_good: this.post('is_good')
 		})
 		// update message
 		await this.model('message').add(message)

@@ -54,6 +54,13 @@ export default class extends think.model.relation {
                 return null
             }
         },
+        // is_good: { // 是否为优秀作业
+        // },
+        content_catch: { // md缓存
+            default: function () {
+                return '';
+            }
+        },
         // 回答的状态
         // 0. 未提交、未批改 1：已提交、未批改 2：已提交、未通过 3：已提交、已通过  
         commit_state: { 
