@@ -9,6 +9,14 @@
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/materialize.min.css">
     <link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">  
+    <style>
+        .que-content ul li{
+            list-style-type: disc;
+        }
+        .markdown-body ul li{
+            list-style-type: disc;
+        }
+    </style>
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/materialize.min.js"></script>
     
@@ -118,10 +126,10 @@
                     liNode[i].style.listStyleType='disc'
                 }
             }#}
-            $(".markdown-body ul li").each(function(){
+            {#$(".markdown-body ul li").each(function(){
                 //$(this).attr("class","");
                 $(this).attr("style","list-style-type:disc");
-            })
+            })#}
         });
 
         // message

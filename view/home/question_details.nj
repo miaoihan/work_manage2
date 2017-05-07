@@ -184,7 +184,7 @@ var{% extends './base.nj' %}
                     <input id="tesk_id" type="text" name="level" value="{{question.level}}" required>
                     <label for="tesk_id" data-error="wrong" data-success="right">级别</label>
                 </div>
-            <button class="btn right" onclick="updateQuestion()">提交</button>
+            <button class="btn right" onclick="updateQuestion()" style="margin-bottom:15px;">提交</button>
         </div>
         <div class="clear"></div>
         <div id="editormd2">
@@ -199,7 +199,7 @@ var{% extends './base.nj' %}
 
     function checkForm() {
         var flag = true
-        if (testEditor.getMarkdown() == '' ){
+        if (testEditor2.getValue() == '' ){
             Materialize.toast('内容不能为空！', 3000)
             flag = false
         }
