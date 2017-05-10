@@ -88,7 +88,7 @@ var{% extends './base.nj' %}
                         <span>{{answer.comment.user.realname}}</span>
                         <span>{{answer.comment.created_time | parseTime}}</span>
                     </div>
-                    <div class="ans-content">
+                    <div class="ans-content ans-comment">
                         {{answer.comment.content_html | safe}}
                     </div>
                 </div>
@@ -108,11 +108,11 @@ var{% extends './base.nj' %}
                         <input type="hidden" name="title" value="{{question.title}}">
                         <p class="range-field">
                             打分 ( 0-100 )
-                            <input type="range" id="scored" min="0" max="100" name="scored" required/>
+                            <input type="range" id="scored" min="0" max="100" name="scored" value="{{answer.scored}}" required/>
                         </p>
                         <div class="row">
                             <div class="input-field col s12">
-                                <textarea id="textarea1" class="materialize-textarea" name="content_html" required></textarea>
+                                <textarea id="textarea1" class="materialize-textarea" name="content_html" required>{{answer.comment.content_html}}</textarea>
                                 <label for="textarea1">评语</label>
                             </div>
                         </div>
@@ -244,6 +244,18 @@ var{% extends './base.nj' %}
     $(document).ready(function () {
         // materialize modal
         $('.modal').modal()
+        // 评语转换
+        {#$('.ans-comment').each(function(i,node){
+            var html = node.html
+            console.log(html)
+            node.html = node.html.replace(/\n|\r\n/g,"<br>")
+        })#}
+        var comNodes = document.querySelectorAll('.ans-comment')
+        for (var i=0; i < comNodes.length; i++){
+            var html = comNodes[i].innerHTML
+            html = html.replace(/^\n|\r\n/,"") // 去除第一行/n
+            comNodes[i].innerHTML = html.replace(/\n|\r\n/g,"<br>")
+        }
 
         // 内容折叠
         var slideHeight = 75; // 折叠高度
@@ -251,7 +263,7 @@ var{% extends './base.nj' %}
         $('.ans-content').each(function(i,node) {
             // get node height
             var defHeight = node.offsetHeight
-            // 如果超过了
+            // 如果超过了html·
             if (defHeight >= slideHeight) {
                 // 超过则设成预设高度
                 $('#ans-content'+i).css('height', slideHeight + 'px')
