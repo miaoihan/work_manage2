@@ -449,7 +449,7 @@ html {
 
 .ans-scored {
     /*position: absolute;*/
-    /*float: right;*/
+    float: right;
     margin-right: 15px;
     font-size: 30px;
     color: red;
