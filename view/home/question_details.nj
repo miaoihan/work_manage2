@@ -195,6 +195,7 @@ var{% extends './base.nj' %}
 </div> <!-- end model -->
 
 <script src='/static/editor/editormd.min.js'></script>
+<script src='/static/js/marked.min.js'></script>
 <script>
 
     function checkForm() {
@@ -253,7 +254,8 @@ var{% extends './base.nj' %}
         var comNodes = document.querySelectorAll('.ans-comment')
         for (var i=0; i < comNodes.length; i++){
             var html = comNodes[i].innerHTML
-            html = html.replace(/^\n|\r\n/,"") // 去除第一行/n
+            html = $.trim(html.replace(/^\n|\r\n/,"")) // 去除第一行/n
+            html = marked(html); // mdToHtml
             comNodes[i].innerHTML = html.replace(/\n|\r\n/g,"<br>")
         }
 
