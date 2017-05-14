@@ -87,6 +87,10 @@ var{% extends './base.nj' %}
                     <div class="meta">
                         <span>{{answer.comment.user.realname}}</span>
                         <span>{{answer.comment.created_time | parseTime}}</span>
+                        {% if currentUser.role.type < 2 %} 
+                            <span class="right"><a href="#modal4" onclick="setAid({{answer.id}},{{answer.u_id}},'{{answer.user.email}}')">
+                            编辑</a></span>
+                        {% endif %}
                     </div>
                     <div class="ans-content ans-comment">
                         {{answer.comment.content_html | safe}}
@@ -98,7 +102,7 @@ var{% extends './base.nj' %}
             <!-- 教师批改modal-->
             <div id="modal2" class="modal">
                 <div class="modal-content">
-                    <form action="/answer/comment" method="post" id="form2" >
+                    <form action="/answer/editcomment" method="post" id="form2" >
                         <input type="hidden" name="a_id" id="inputAid">
                         <input type="hidden" name="u_id" value="{{user.id}}">
                         <input type="hidden" name="email" id="inputEmail">
@@ -125,13 +129,46 @@ var{% extends './base.nj' %}
                             <label for="canSee">可查看其他优秀作业</label>
                         </p>
                     </form>
-                </div>
+                </div> 
                 <div class="modal-footer">
                     <button class="modal-action waves-effect waves-green btn-flat" type="submit"
                             onclick="subme2()">提交</button>
                 </div>  
             </div>
+
             <!-- end modal -->
+            <!-- 批改编辑 -->
+                <div id="modal4" class="modal">
+                <div class="modal-content">
+                    <form action="/answer/comment" method="post" id="form2" >
+                        <input type="hidden" name="a_id" id="inputAid">
+                        <input type="hidden" name="u_id" value="{{user.id}}">
+                        <input type="hidden" name="email" id="inputEmail">
+                        <input type="hidden" name="a_u_id" id="inputAuid">
+                        <input type="hidden" name="q_id" value="{{question.id}}">
+                        <input type="hidden" name="level" value="{{question.level}}">
+                        <input type="hidden" name="title" value="{{question.title}}">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <textarea id="textarea1" class="materialize-textarea" name="content_html" required>{{answer.comment.content_html}}</textarea>
+                                <label for="textarea1">评语</label>
+                            </div>
+                        </div>
+                        <p><input type="checkbox" class="filled-in" id="isGoodWork" name="is_good" value="0" onclick="this.value=(this.checked==true)?1:0"
+                            />
+                            <label for="isGoodWork">设为优秀作业</label>
+                        </p>
+                        <p><input type="checkbox" class="filled-in" id="canSee" name="cansee" value="0" onclick="this.value=(this.checked==true)?1:0"
+                            />
+                            <label for="canSee">可查看其他优秀作业</label>
+                        </p>
+                    </form>
+                </div> <!-- end modal -->
+                <div class="modal-footer">
+                    <button class="modal-action waves-effect waves-green btn-flat" type="submit"
+                            onclick="subme2()">提交</button>
+                </div>  
+            </div>
             {% if (answerList | length) > 10 %}
                 <div class="seemore-wrap">
                     <a href="" class="btn seemore">查看更多</a>

@@ -154,6 +154,30 @@ export default class extends Base {
 	}
 
 	/**
+	 * 教师批改
+	 * @return {Json or Promise} []
+	 */
+	async editCommentAction() {
+		let commentDao = this.model('comment')
+		// this.success(this.post())
+		let userDao = this.model('user')
+		let qid = this.post('q_id')
+		let level = this.post('level')
+		let title = this.post('title')
+		let scored = this.post('scored')
+		let content = this.post('content_html') // 评语内容
+		let auid = this.post('a_u_id') // 学员id
+		let aid = this.post('a_id') // 回答id
+
+		await commentDao.add(this.post())
+
+		// 如果是ajax方式提交，输出Json
+		if (this.isAjax('post'))
+			return this.success()
+		this.redirect(`/question/details?id=${qid}`)
+	}
+
+	/**
 	 * 图片上传api
 	 */
 	async uploadAction() {
