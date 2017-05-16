@@ -94,7 +94,7 @@ var{% extends './base.nj' %}
                             </span>
                         {% endif %}
                     </div>
-                    <div class="ans-content ans-comment">
+                    <div class="ans-content ans-comment markdown-body">
                         {{answer.comment.content_html | safe}}
                     </div>
                 </div>
@@ -127,7 +127,7 @@ var{% extends './base.nj' %}
             <!-- 教师批改modal-->
             <div id="modal2" class="modal">
                 <div class="modal-content">
-                    <form action="/answer/editcomment" method="post" id="form2" >
+                    <form action="/answer/comment" method="post" id="form2" >
                         <input type="hidden" name="a_id" id="inputAid">
                         <input type="hidden" name="u_id" value="{{user.id}}">
                         <input type="hidden" name="email" id="inputEmail">
@@ -141,7 +141,7 @@ var{% extends './base.nj' %}
                         </p>
                         <div class="row">
                             <div class="input-field col s12">
-                                <textarea id="textarea1" class="materialize-textarea" name="content_html" required>{{answer.comment.content_html}}</textarea>
+                                <textarea id="textarea1" class="materialize-textarea" name="content_html" required></textarea>
                                 <label for="textarea1">评语</label>
                             </div>
                         </div>
@@ -294,18 +294,19 @@ var{% extends './base.nj' %}
     $(document).ready(function () {
         // materialize modal
         $('.modal').modal()
-        // 评语转换
         {#$('.ans-comment').each(function(i,node){
             var html = node.html
-            console.log(html)
+            // console.log(html)
             node.html = node.html.replace(/\n|\r\n/g,"<br>")
         })#}
+        // 评语格式转换
         var comNodes = document.querySelectorAll('.ans-comment')
         for (var i=0; i < comNodes.length; i++){
             var html = comNodes[i].innerHTML
             html = $.trim(html.replace(/^\n|\r\n/,"")) // 去除第一行/n
             html = marked(html); // mdToHtml
-            comNodes[i].innerHTML = html.replace(/\n|\r\n/g,"<br>")
+            comNodes[i].innerHTML = html
+            {#comNodes[i].innerHTML = html.replace(/\n|\r\n/g,"<br>")#}
         }
 
         // 内容折叠
