@@ -88,8 +88,10 @@ var{% extends './base.nj' %}
                         <span>{{answer.comment.user.realname}}</span>
                         <span>{{answer.comment.created_time | parseTime}}</span>
                         {% if currentUser.role.type < 2 %} 
-                            <span class="right"><a href="#modal4" onclick="setAid({{answer.id}},{{answer.u_id}},'{{answer.user.email}}')">
-                            编辑</a></span>
+                            <span class="right">
+                                <a href="#cmodal-{{answer.comment.id}}" >
+                                   编辑</a>
+                            </span>
                         {% endif %}
                     </div>
                     <div class="ans-content ans-comment">
@@ -97,8 +99,31 @@ var{% extends './base.nj' %}
                     </div>
                 </div>
             </div>
+
+            <!-- 批改编辑modal -->
+            <div id="cmodal-{{answer.comment.id}}" class="modal">
+                <div class="modal-content">
+                    <form action="/answer/editcomment" method="post" id="form4" >
+                        <input type="hidden" name="qid" value="{{question.id}}">
+                        <input type="hidden" name="cid" id="inputCommId" value="{{answer.comment.id}}">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <textarea id="textarea1" class="materialize-textarea" name="content_html" required>{{answer.comment.content_html}}</textarea>
+                                <label for="textarea1">评语</label>
+                            </div>
+                        </div>
+                    </form>
+                </div> 
+
+                <div class="modal-footer">
+                    <button class="modal-action waves-effect waves-green btn-flat" type="submit"
+                            onclick="subme4()">提交</button>
+                </div>  
+            </div><!-- end modal -->
+
             {% endif %} {% endfor %}
             <!-- end item -->
+
             <!-- 教师批改modal-->
             <div id="modal2" class="modal">
                 <div class="modal-content">
@@ -135,40 +160,10 @@ var{% extends './base.nj' %}
                             onclick="subme2()">提交</button>
                 </div>  
             </div>
-
             <!-- end modal -->
-            <!-- 批改编辑 -->
-                <div id="modal4" class="modal">
-                <div class="modal-content">
-                    <form action="/answer/comment" method="post" id="form2" >
-                        <input type="hidden" name="a_id" id="inputAid">
-                        <input type="hidden" name="u_id" value="{{user.id}}">
-                        <input type="hidden" name="email" id="inputEmail">
-                        <input type="hidden" name="a_u_id" id="inputAuid">
-                        <input type="hidden" name="q_id" value="{{question.id}}">
-                        <input type="hidden" name="level" value="{{question.level}}">
-                        <input type="hidden" name="title" value="{{question.title}}">
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <textarea id="textarea1" class="materialize-textarea" name="content_html" required>{{answer.comment.content_html}}</textarea>
-                                <label for="textarea1">评语</label>
-                            </div>
-                        </div>
-                        <p><input type="checkbox" class="filled-in" id="isGoodWork" name="is_good" value="0" onclick="this.value=(this.checked==true)?1:0"
-                            />
-                            <label for="isGoodWork">设为优秀作业</label>
-                        </p>
-                        <p><input type="checkbox" class="filled-in" id="canSee" name="cansee" value="0" onclick="this.value=(this.checked==true)?1:0"
-                            />
-                            <label for="canSee">可查看其他优秀作业</label>
-                        </p>
-                    </form>
-                </div> <!-- end modal -->
-                <div class="modal-footer">
-                    <button class="modal-action waves-effect waves-green btn-flat" type="submit"
-                            onclick="subme2()">提交</button>
-                </div>  
-            </div>
+
+            
+
             {% if (answerList | length) > 10 %}
                 <div class="seemore-wrap">
                     <a href="" class="btn seemore">查看更多</a>
@@ -259,10 +254,27 @@ var{% extends './base.nj' %}
             $('#form2').submit()
         }
     }
+
+    function subme4() {
+         {#alert(6666)#}
+        if (checkForm2()) {
+            $('#form4').submit()
+        }
+    }
+
     //设置回答的id和回答者uid
     function setAid(aid, auid, email) {
         // document.getElementById('inputAid')
         $('#inputAid').val(aid) //答案id
+        $('#inputAuid').val(auid)
+        $('#inputEmail').val(email) //回答者
+        // alert($('#inputAid').val())
+    }
+
+    //批改编辑传值
+    function setCommId(cid) {
+        // document.getElementById('inputAid')
+        $('#setCommId').val(cid) //答案id
         $('#inputAuid').val(auid)
         $('#inputEmail').val(email) //回答者
         // alert($('#inputAid').val())
@@ -414,8 +426,10 @@ var{% extends './base.nj' %}
 
     /* 
     *   图片上传
+    *   HTML5FormData对象
     */
     $("[type=\"file\"]").bind("change", function(){
+        // 没有上传
         if(!$('#mdUpload')[0].value){return;}
         // HTML 文件类型input，由用户选择
         var formData = new FormData($("#mdUploadForm")[0]);  
