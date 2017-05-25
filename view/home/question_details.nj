@@ -161,9 +161,7 @@ var{% extends './base.nj' %}
                 </div>  
             </div>
             <!-- end modal -->
-
             
-
             {% if (answerList | length) > 10 %}
                 <div class="seemore-wrap">
                     <a href="" class="btn seemore">查看更多</a>
@@ -450,7 +448,7 @@ var{% extends './base.nj' %}
                 testEditor.cm.replaceSelection('![](' + location.origin + res.data + ')');
             },  
             error: function (res) {  
-                alert(res.data);  
+                alert('图片上传过大或网络错误！');  
             }  
         });  
     });

@@ -66,11 +66,7 @@ export default class extends Base {
 			//如果比用户级别高则升级
 			let old_level = user.level
 			if (level > old_level) {
-				await userDao.where({
-					id: auid
-				}).update({
-					level: level
-				})
+				await userDao.where({id: auid}).update({level: level})
 			}
 			// 已放在回答直接更新
 			// let has_answer = user.has_answer + level + ','
@@ -102,11 +98,7 @@ export default class extends Base {
 		// update message
 		await this.model('message').add(message)
 		// 修改问题状态
-		await this.model('answer').where({
-			id: aid
-		}).update({
-			commit_state: commit_state
-		})
+		await this.model('answer').where({}).update({commit_state: commit_state})
 		// 设置该学员对于该问题的查看权限
 		await userDao.addCanseeTo(qid, auid)
 		// 如果是ajax方式提交，输出Json
