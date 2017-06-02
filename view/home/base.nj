@@ -16,6 +16,7 @@
         .markdown-body ul li{
             list-style-type: disc;
         }
+
     </style>
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/materialize.min.js"></script>

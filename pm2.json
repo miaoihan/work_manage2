@@ -1,7 +1,7 @@
 {
   "apps": [{
-    "cwd": "/alidata/www/default/mfs-homework",
-    "name": "homework",
+    "cwd": "/alidata/www/default/mfs-homework2",
+    "name": "homework2",
     "script": "www/production.js",
     "exec_mode": "cluster",
     "instances": 0,
